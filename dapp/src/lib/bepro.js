@@ -289,7 +289,7 @@ const getCollection = async () => {
     const nftContract = await getERC721Contract(contractAddress);
 
     const enabled = process.env.REACT_APP_COLLECTION_ENABLED === 'true';
-    // const approved = await nftContract?.methods.isApprovedForAll(address, contractAddress).call();
+    const approved = await nftContract?.methods.isApprovedForAll(address, contractAddress).call();
     const name = await nftContract?.methods.name().call();
     const paused = await nftContract?.methods.paused().call();
     const revealed = await nftContract?.methods.revealed().call();
@@ -306,7 +306,7 @@ const getCollection = async () => {
     const whitelistClaimed = address ? await nftContract?.methods.whitelistClaimed(address).call() : false;
 
     const collection = {
-      approved: true,
+      approved,
       enabled,
       contractAddress,
       name,
@@ -326,6 +326,7 @@ const getCollection = async () => {
     };
 
     if (collection) {
+      console.log('collection', collection);
       return collection;
     }
   }

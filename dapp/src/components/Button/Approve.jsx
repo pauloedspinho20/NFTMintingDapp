@@ -33,9 +33,9 @@ const ButtonApprove = ({ contractAddress }) => {
       disabled={ enabling }
       onClick={ onClick }
       theme="white-gradient"
-      title="Enable Pool"
+      title="Approve contract"
     >
-      { enabling ? 'Enabling...' : 'Enable Pool' }
+      { enabling ? 'Approving...' : 'Approve contract' }
     </Button>
   );
 };

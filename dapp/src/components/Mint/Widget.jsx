@@ -29,11 +29,11 @@ const MintWidget = ({
   maxSupply,
   totalSupply,
   maxMintAmountPerTx,
-  /*  uriPrefix,
-  hiddenMetadataUri, */
+  uriPrefix,
+  hiddenMetadataUri,
   whitelistMintEnabled,
-  /*  whitelistClaimed,
-  isAddressWhitelisted, */
+  whitelistClaimed,
+  isAddressWhitelisted,
 }) => {
   const { address, ethBalance } = useBepro();
   const [ amount, setAmount ] = useState(1);
@@ -43,7 +43,7 @@ const MintWidget = ({
   useEffect(() => {
     setTotal(cost * amount);
   }, [ amount, cost ]);
-  /*
+
   console.log('MintWidget', approved,
     enabled,
     contractAddress,
@@ -60,7 +60,7 @@ const MintWidget = ({
     hiddenMetadataUri,
     whitelistMintEnabled,
     whitelistClaimed,
-    isAddressWhitelisted); */
+    isAddressWhitelisted);
 
   return (
     <div
@@ -305,11 +305,11 @@ MintWidget.propTypes = {
   maxSupply: number,
   totalSupply: number,
   maxMintAmountPerTx: number,
-  /*   uriPrefix: string,
-  hiddenMetadataUri: string, */
+  uriPrefix: string,
+  hiddenMetadataUri: string,
   whitelistMintEnabled: bool,
-/*   whitelistClaimed: bool,
-  isAddressWhitelisted: bool, */
+  whitelistClaimed: bool,
+  isAddressWhitelisted: bool,
 };
 
 MintWidget.defaultProps = {
@@ -325,11 +325,11 @@ MintWidget.defaultProps = {
   maxSupply: null,
   totalSupply: null,
   maxMintAmountPerTx: null,
-  /*   uriPrefix: null,
-  hiddenMetadataUri: null, */
+  uriPrefix: null,
+  hiddenMetadataUri: null,
   whitelistMintEnabled: null,
-/*   whitelistClaimed: null,
-  isAddressWhitelisted: null, */
+  whitelistClaimed: null,
+  isAddressWhitelisted: null,
 };
 
 export default MintWidget;
