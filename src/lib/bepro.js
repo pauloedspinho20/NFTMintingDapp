@@ -294,7 +294,7 @@ const getCollection = async () => {
     const paused = await nftContract?.methods.paused().call();
     const revealed = await nftContract?.methods.revealed().call();
     const symbol = await nftContract?.methods.symbol().call();
-    const balanceOf = Number(await nftContract?.methods.balanceOf(address).call());
+    const balanceOf = address ? Number(await nftContract?.methods.balanceOf(address).call()) : 0;
     const cost = Number(Numbers.fromDecimals(await nftContract?.methods.cost().call(), 18));
     const maxSupply = Number(await nftContract?.methods.maxSupply().call());
     const totalSupply = Number(await nftContract?.methods.totalSupply().call());
@@ -303,7 +303,7 @@ const getCollection = async () => {
     const hiddenMetadataUri = await nftContract?.methods.hiddenMetadataUri().call();
 
     const whitelistMintEnabled = await nftContract?.methods.whitelistMintEnabled().call();
-    const whitelistClaimed = await nftContract?.methods.whitelistClaimed(address).call();
+    const whitelistClaimed = address ? await nftContract?.methods.whitelistClaimed(address).call() : false;
 
     const collection = {
       approved: true,
