@@ -1,0 +1,38 @@
+{
+  "files": {
+    "main.css": "/NFTMintingDapp/static/css/main.aee0eacd.chunk.css",
+    "main.js": "/NFTMintingDapp/static/js/main.02e3d03b.chunk.js",
+    "main.js.map": "/NFTMintingDapp/static/js/main.02e3d03b.chunk.js.map",
+    "runtime-main.js": "/NFTMintingDapp/static/js/runtime-main.5e01a377.js",
+    "runtime-main.js.map": "/NFTMintingDapp/static/js/runtime-main.5e01a377.js.map",
+    "static/css/2.9eaba6c7.chunk.css": "/NFTMintingDapp/static/css/2.9eaba6c7.chunk.css",
+    "static/js/2.a6cf6649.chunk.js": "/NFTMintingDapp/static/js/2.a6cf6649.chunk.js",
+    "static/js/2.a6cf6649.chunk.js.map": "/NFTMintingDapp/static/js/2.a6cf6649.chunk.js.map",
+    "static/js/3.85b1f7db.chunk.js": "/NFTMintingDapp/static/js/3.85b1f7db.chunk.js",
+    "static/js/3.85b1f7db.chunk.js.map": "/NFTMintingDapp/static/js/3.85b1f7db.chunk.js.map",
+    "static/js/4.994dfcb7.chunk.js": "/NFTMintingDapp/static/js/4.994dfcb7.chunk.js",
+    "static/js/4.994dfcb7.chunk.js.map": "/NFTMintingDapp/static/js/4.994dfcb7.chunk.js.map",
+    "static/js/5.d3a1a1fd.chunk.js": "/NFTMintingDapp/static/js/5.d3a1a1fd.chunk.js",
+    "static/js/5.d3a1a1fd.chunk.js.map": "/NFTMintingDapp/static/js/5.d3a1a1fd.chunk.js.map",
+    "index.html": "/NFTMintingDapp/index.html",
+    "static/css/2.9eaba6c7.chunk.css.map": "/NFTMintingDapp/static/css/2.9eaba6c7.chunk.css.map",
+    "static/css/main.aee0eacd.chunk.css.map": "/NFTMintingDapp/static/css/main.aee0eacd.chunk.css.map",
+    "static/js/2.a6cf6649.chunk.js.LICENSE.txt": "/NFTMintingDapp/static/js/2.a6cf6649.chunk.js.LICENSE.txt",
+    "static/js/3.85b1f7db.chunk.js.LICENSE.txt": "/NFTMintingDapp/static/js/3.85b1f7db.chunk.js.LICENSE.txt",
+    "static/media/binance-network-switch.ae99cfec.svg": "/NFTMintingDapp/static/media/binance-network-switch.ae99cfec.svg",
+    "static/media/style.scss": "/NFTMintingDapp/static/media/ico-check.5f2c1f6c.svg",
+    "static/media/ethereum-network-switch.46ef415e.svg": "/NFTMintingDapp/static/media/ethereum-network-switch.46ef415e.svg",
+    "static/media/Modal.scss": "/NFTMintingDapp/static/media/ico-close-popup.fda1f330.svg",
+    "static/media/Metamask.scss": "/NFTMintingDapp/static/media/ico-metamask.ebd0c482.svg",
+    "static/media/TrustWallet.scss": "/NFTMintingDapp/static/media/ico-trustwallet.8e230f9b.svg",
+    "static/media/WalletConnect.scss": "/NFTMintingDapp/static/media/ico-walletconnect.4d26faa2.svg",
+    "static/media/loading.ca0bcd65.svg": "/NFTMintingDapp/static/media/loading.ca0bcd65.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.5e01a377.js",
+    "static/css/2.9eaba6c7.chunk.css",
+    "static/js/2.a6cf6649.chunk.js",
+    "static/css/main.aee0eacd.chunk.css",
+    "static/js/main.02e3d03b.chunk.js"
+  ]
+}
