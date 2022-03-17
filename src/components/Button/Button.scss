@@ -5,12 +5,22 @@
 
   font-weight: 700;
   text-transform: uppercase;
-  border: 0;
+  border: 1px solid transparent;
+  border-radius: 5px;
   background: #fff;
   color: $black;
   display: inline-block;
   position: relative;
   text-align: center;
+  box-shadow: 0 3px 11px 3px rgba($purple, 0.1);
+  transition: all 0.25s;
+
+  &:hover {
+    border: 1px solid transparent;
+    border-radius: 5px;
+    box-shadow: none;
+    transition: all 0.25s;
+  }
 
   &:not([disabled]) {
     cursor: pointer;
@@ -105,6 +115,11 @@
     color: $white;
   }
 
+  &.btn--bg-blue {
+    background: $blue;
+    color: $white;
+  }
+
   &.btn--bg-green {
     background: $yellow;
     color: $white;
@@ -113,7 +128,6 @@
   &.btn--bg-white {
     background: $white;
     color: $black;
-    font-weight: 500;
 
     &::after {
       mix-blend-mode: normal;
@@ -170,7 +184,44 @@
   &.btn--bg-white-gradient {
     background: $gradient_white;
     color: $black;
-    font-weight: 500;
+
+    &:hover:not([disabled]) {
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+
+  &.btn--bg-orange {
+    background: $orange;
+    color: $white;
+  }
+
+  &.btn--bg-orange-gradient {
+    background: $gradient_orange;
+    color: $black;
+
+    &:hover:not([disabled]) {
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+
+  &.btn--bg-yellow {
+    background: $yellow;
+    color: $black;
+
+    &:hover:not([disabled]) {
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+
+  &.btn--bg-yellow-gradient {
+    background: $gradient_yellow;
+    color: $black;
 
     &:hover:not([disabled]) {
       &::after {

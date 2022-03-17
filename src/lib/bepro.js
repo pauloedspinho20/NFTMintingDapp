@@ -326,7 +326,6 @@ const getCollection = async () => {
     };
 
     if (collection) {
-      console.log('collection', collection);
       return collection;
     }
   }
@@ -337,40 +336,42 @@ const getCollection = async () => {
 /*
 * MINT COLLECTION
 */
-const mintCollection = async (productId, amount, contractAddress, contractType) => {
+const mintCollection = async (value, _mintAmount, contractAddress) => {
   const web3 = await getWeb3();
 
   if (web3) {
     const address = await getAddress();
-    const nftContract = await getERC721Contract(contractAddress, contractType);
-    const amountWithDecimals = Numbers.toSmartContractDecimals(amount, 18);
+    const nftContract = await getERC721Contract(contractAddress);
 
     if (address) {
       try {
+        const gasPrice = await web3.eth.getGasPrice();
         const gas = await nftContract?.methods
-          .mintCollection(productId, amountWithDecimals)
-          .estimateGas({ from: address })
+          .mint(_mintAmount)
+          .estimateGas({
+            from: address,
+            gasPrice,
+            value: Numbers.toSmartContractDecimals(value, 18),
+          })
           .catch(error => {
             // eslint-disable-next-line no-console
             console.error('estimateGas error', error);
           });
 
-        const gasPrice = await web3.eth.getGasPrice();
-
-        const result = await nftContract?.methods.mintCollection(
-          productId,
-          amountWithDecimals,
+        const result = await nftContract?.methods.mint(
+          _mintAmount,
         ).send({
           from: address,
           gas,
           gasPrice,
+          value: Numbers.toSmartContractDecimals(value, 18),
         }).on('error', error => { // If the transaction was rejected by the network with a receipt, the second parameter will be the receipt.
           // eslint-disable-next-line no-console
           console.error('mintCollection error', error);
         });
 
         if (!result) {
-          addError('failed to subscribe');
+          addError('failed to mint');
         }
         return result;
       }
@@ -379,10 +380,10 @@ const mintCollection = async (productId, amount, contractAddress, contractType) 
         console.error(ex);
         switch (ex.code) {
           case 4001:
-            addError('subscribe cancelled', true);
+            addError('mint cancelled', true);
             break;
           default:
-            addError('failed to subscribe');
+            addError('failed to mint');
             break;
         }
 
@@ -566,16 +567,6 @@ const libBepro = {
     await reInitializeBepro();
     resolve.bepro(null);
     eeBepro.emit('disconnect');
-  },
-
-  getBalance: async () => {
-    const address = await getAddress();
-    const erc20 = await getERC20Contract();
-    const amount = await erc20?.methods.balanceOf(address).call();
-    if (amount) {
-      return amount ? Number(Numbers.fromDecimals(amount, 18)) : 0;
-    }
-    return null;
   },
 
   getETHBalance: async () => {

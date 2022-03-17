@@ -20,8 +20,11 @@
 
 .black { color: $black; }
 .white { color: $white; }
-.green { color: $yellow; }
+.blue { color: $blue; }
+.yellow { color: $yellow; }
+.orange { color: $orange; }
 .purple { color: $purple; }
+.red { color: $red; }
 .blue_dark { color: $blue; }
 .blue_light { color: $blue; }
 
@@ -78,7 +81,13 @@ body {
 }
 
 a {
-  color: $yellow;
+  color: $orange;
+  font-weight: 500;
+
+  &:hover {
+    color: $yellow;
+    text-decoration: underline;
+  }
 }
 
 a,
@@ -403,7 +412,7 @@ img {
 .white-grad-title-35 { font-size: 2.188rem; }
 .white-grad-title-30 { font-size: 1rem; }
 
-.green-grad-subtitle {
+.yellow-grad-subtitle {
   font-size: 0.75rem;
   line-height: 1em;
   font-weight: 300;

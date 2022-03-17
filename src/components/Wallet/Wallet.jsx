@@ -1,6 +1,6 @@
 import Button from 'components/Button/Button';
 import Price from 'components/Price';
-
+import ButtonAddress from 'components/Button/Address';
 import useBepro from 'hooks/useBepro';
 import useModal from 'hooks/useModal';
 
@@ -34,7 +34,7 @@ const Wallet = () => {
 
         </div>
         <div className="wallet-connected-status">
-          { address }
+          <ButtonAddress>{ address }</ButtonAddress>
         </div>
       </>
     );

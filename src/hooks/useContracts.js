@@ -9,7 +9,7 @@ import bepro from 'lib/bepro';
 import { chains } from 'config';
 
 const getPoolsDefaults = () => ({
-  collections: new Map(),
+  collection: null,
 });
 
 const { getGlobalState, setGlobalState, useGlobalState } = createGlobalState({
@@ -50,11 +50,16 @@ export const updateContracts = async () => {
 
 const setOperation = operation => {
   const collectionData = getGlobalState('collectionData');
+  const { collection } = collectionData;
 
-  collectionData.operation = operation;
+  collection.operation = operation;
+
+  console.log('setOperation', operation, collection, collectionData);
 
   setGlobalState('collectionData', {
     ...collectionData,
+    collection,
+    operation,
   });
 
   updateContracts();
@@ -85,7 +90,7 @@ bepro.on('chainChanged', chainId => {
   });
 });
 
-const useContracts = () => {
+const useContracts = contractAddress => {
   const [ collectionData ] = useGlobalState('collectionData');
   const { networkActive, getCollection } = useBepro();
   const { network } = useNetworkHash();
@@ -97,6 +102,10 @@ const useContracts = () => {
       collection: getCollection(),
     });
   }, [ actualNetwork, getCollection ]);
+
+  if (contractAddress) {
+    return collectionData?.collection || {};
+  }
 
   return {
     ...collectionData,

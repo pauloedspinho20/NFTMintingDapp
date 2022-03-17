@@ -5,7 +5,7 @@ import classnames from 'classnames';
 
 import ModalConnectWallet from 'components/Modal/ConnectWallet';
 import ModalError from 'components/Modal/Error';
-import ModalFollowMetamask from 'components/Modal/FollowMetamask';
+import ModalConfirmTransaction from 'components/Modal/ConfirmTransaction';
 import ModalMint from 'components/Modal/Mint';
 import ModalTransactionSuccessful from 'components/Modal/TransactionSuccessful';
 
@@ -42,7 +42,7 @@ const AppWrapper = ({ children }) => {
     <>
       <ModalConnectWallet />
       <ModalError />
-      <ModalFollowMetamask />
+      <ModalConfirmTransaction />
       <ModalMint />
       <ModalTransactionSuccessful />
 

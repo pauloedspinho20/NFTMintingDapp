@@ -25,7 +25,9 @@ const Modal = ({
           label="close"
           onClick={ onClose || close }
           type="button"
-        />
+        >
+          x
+        </button>
         <BootstrapModal.Body className={ `${className}--wrapper` }>
           { children }
         </BootstrapModal.Body>

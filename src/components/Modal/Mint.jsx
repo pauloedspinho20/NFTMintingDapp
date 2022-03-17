@@ -12,22 +12,19 @@ import useModal from 'hooks/useModal';
 
 const ModalMint = () => {
   const { ethBalance, mintCollection } = useBepro();
+  const [ value, setValue ] = useState(0);
   const { setOperation } = useContracts();
   const confirm = useModal('mint');
-  const follow = useModal('follow-metamask');
+  const follow = useModal('confirm-transaction');
 
   const {
     amount,
     contractAddress,
     cost,
-    maxMintAmountPerTx,
 
   } = confirm.show || {};
 
   const insufficientBalance = ethBalance < cost;
-
-  const [ value, setValue ] = useState(0);
-  const [ confirmed, setConfirmed ] = useState(false);
 
   useEffect(() => {
     if (!confirm.show) {
@@ -37,70 +34,9 @@ const ModalMint = () => {
 
   useEffect(() => {
     if (cost) {
-      setValue(cost + amount);
+      setValue(cost * amount);
     }
   }, [ cost, amount ]);
-
-  if (confirmed) {
-    return (
-      <Modal name="mint">
-        <div className="popup--title">Confirm Mint</div>
-        <div className="popup--desc">
-          Do you want to mint a NFT?
-          <ul className="eth-price-exchange-display">
-            <li className="eth-price-indication">
-              <Price
-                eth={ FormNumber.number(value) }
-                options={ { exact: true } }
-                output="eth"
-                showLabel
-              />
-            </li>
-          </ul>
-        </div>
-
-        <ul className="popup--actions">
-          <li>
-            <Button
-              className="btn-primary"
-              onClick={ async () => {
-                confirm.close();
-                setConfirmed(false);
-                setValue();
-                setOperation(contractAddress, 'minting');
-
-                follow.open({ title: 'Confirm Mint' });
-                if (!await mintCollection(
-                  FormNumber.number(value),
-                  contractAddress,
-                )) {
-                  // If operation succeeds, this variable will be set when fetching new pool data
-
-                  setOperation(contractAddress, null);
-                }
-
-                follow.close();
-                updateContracts();
-              } }
-              size="m"
-              theme="blue-gradient"
-            >
-              Yes
-            </Button>
-          </li>
-          <li>
-            <Button
-              className="btn-secondary"
-              onClick={ () => setConfirmed(false) }
-              size="m"
-            >
-              No
-            </Button>
-          </li>
-        </ul>
-      </Modal>
-    );
-  }
 
   if (insufficientBalance) {
     return (
@@ -174,81 +110,63 @@ const ModalMint = () => {
 
   return (
     <Modal name="mint">
-      <div className="popup--title">Mint</div>
+      <div className="popup--title">Confirm Mint</div>
       <div className="popup--desc">
-        Mint NFTs
-      </div>
-
-      <div className="form-element-container input-txt--fevr">
-        <div className="price-wrapper">
-          <FormNumber
-            className="input-txt"
-            max={ maxMintAmountPerTx }
-            onChange={ setValue }
-            value={ value }
-          />
-        </div>
-        <div className="row balance-info">
-          <div className="col-6">
-            <h4 className="text-left">
-              { 'COST ' }
-              <Price
-                eth={ cost }
-                options={ { exact: true } }
-                output="eth"
-              />
-              { ' — ' }
-              <Price
-                fevr={ value }
-                options={ { exact: true } }
-                output="eth"
-              />
-            </h4>
-          </div>
-          <div className="col-6">
-            <div className="fevr-available">
-              <h4 className="text-right green">
-                BALANCE:
-                { ' ' }
-                <Price
-                  fevr={ ethBalance }
-                  options={ { exact: true } }
-                  output="eth"
-                  showLabel
-                />
-              </h4>
-            </div>
-          </div>
-        </div>
+        Do you want to mint
+        { ' ' }
+        { amount }
+        { ' ' }
+        NFT
+        { amount > 1 && 's' }
+        ?
+        <ul className="eth-price-exchange-display">
+          <li className="eth-price-indication">
+            <Price
+              eth={ FormNumber.number(value) }
+              options={ { exact: true } }
+              output="eth"
+              showLabel
+            />
+          </li>
+        </ul>
       </div>
 
       <ul className="popup--actions">
         <li>
           <Button
             className="btn-primary"
-            onClick={ () => {
-              if (value) {
-                setConfirmed(true);
+            onClick={ async () => {
+              confirm.close();
+              setValue();
+              setOperation('minting');
+
+              follow.open({ title: 'Confirm Mint' });
+              if (!await mintCollection(
+                value,
+                amount,
+                contractAddress,
+              )) {
+                // If operation succeeds, this variable will be set when fetching new pool data
+
+                setOperation('');
               }
+
+              follow.close();
+              updateContracts();
             } }
-            disabled={
-              FormNumber.number(value) < 1
-              || FormNumber.number(value) > maxMintAmountPerTx
-              || ethBalance < cost
-            }
             size="m"
-            theme="blue-gradient"
+            theme="orange"
           >
-            Mint
+            Yes
           </Button>
         </li>
         <li>
           <Button
-            className="btn-secondary"
             onClick={ confirm.close }
             size="m"
+
           >
-            Cancel
+            No
           </Button>
         </li>
       </ul>

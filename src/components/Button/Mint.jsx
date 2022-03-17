@@ -16,40 +16,34 @@ const ButtonMint = ({ amount, contractAddress }) => {
     enabled,
     name,
     paused,
-    revealed,
     symbol,
     balanceOf,
     cost,
     maxSupply,
     maxMintAmountPerTx,
     uriPrefix,
-    hiddenMetadataUri,
     whitelistMintEnabled,
     whitelistClaimed,
     isAddressWhitelisted,
     operation,
   } = useContracts(contractAddress);
 
-  console.log('operation', operation, ethBalance < cost, paused);
   const onClick = async () => {
     open({
       amount,
-      approved,
       enabled,
       contractAddress,
       name,
-      paused,
-      revealed,
       symbol,
       balanceOf,
       cost,
       maxSupply,
       maxMintAmountPerTx,
       uriPrefix,
-      hiddenMetadataUri,
       whitelistMintEnabled,
       whitelistClaimed,
       isAddressWhitelisted,
+      operation,
     });
   };
 
@@ -58,13 +52,14 @@ const ButtonMint = ({ amount, contractAddress }) => {
       className="btn--size-min-150 btn-mint"
       disabled={
         paused
+        || !approved
         || !enabled
         || operation
-        || ethBalance < cost
+        || ethBalance < (cost * amount)
       }
       onClick={ onClick }
       size="m"
-      theme="blue-gradient"
+      theme="orange"
     >
       { operation === 'minting' ? 'Minting...' : 'Mint' }
     </Button>
