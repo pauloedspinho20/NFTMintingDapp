@@ -1,0 +1,30 @@
+@import 'scss/init';
+
+.pg-error,
+.pg-error #main-content {
+  min-height: 100vh;
+}
+
+.container--error {
+  text-align: center;
+  padding-bottom: 250px;
+}
+
+.e404--main-img {
+  width: 90%;
+  max-width: 560px;
+  display: block;
+  margin: 0 auto;
+  pointer-events: none;
+}
+
+.e404--title {
+  font-size: 2.2rem;
+  margin-top: -30px;
+  margin-bottom: 15px;
+}
+
+.e404--desc {
+  padding: 0 20px;
+  margin-bottom: 40px;
+}

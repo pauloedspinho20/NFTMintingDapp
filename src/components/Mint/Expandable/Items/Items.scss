@@ -1,0 +1,72 @@
+.expandable-items--container {
+  .expandable-items--trigger {
+    width: 100%;
+    display: block;
+    color: $white;
+    font-size: 1rem;
+    font-weight: 300;
+    position: relative;
+    padding: 15px 45px 15px 20px;
+    text-align: left;
+    line-height: 1.3rem;
+    cursor: pointer;
+
+    &::after {
+      content: '';
+      width: 20px;
+      height: 20px;
+      display: block;
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: url('~scss/media/ico-plus.svg') 50% 50% no-repeat;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  }
+
+  .expandable-items--item {
+    display: block;
+    border: 1px solid rgba($white, 0.6);
+    margin-bottom: 12px;
+    transition: all 0.2s;
+
+    &:hover,
+    &.expandable-items--item-active {
+      background: rgba($black, 0.15);
+    }
+
+    &.expandable-items--item-active {
+      border-color: $yellow;
+
+      .expandable-items--trigger {
+        color: $yellow;
+
+        &::after {
+          transform: rotate(45deg);
+          background-image: url('~scss/media/ico-plus-green.svg');
+        }
+      }
+    }
+  }
+
+  .expandable-items--content {
+    margin: 0 20px;
+    padding: 18px 0 10px;
+    border-top: 1px solid rgba($white, 0.3);
+    font-size: 0.85rem;
+
+    p {
+      margin-bottom: 10px;
+    }
+
+    a,
+    button {
+      color: $yellow;
+      text-decoration: underline;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+}

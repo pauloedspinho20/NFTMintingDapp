@@ -1,0 +1,152 @@
+{
+  "ok": true,
+  "bsc": {
+      "staking_pools": {
+          "locked": [
+              {
+                  "productId": 4,
+                  "title": "FEVR",
+                  "description": "Stake FEVR, earn FEVR",
+                  "contractAddress": "0x8c00c3c5836B51cF424150ed36BC93160d3e8cb7",
+                  "contractVersion": 2,
+                  "min_deposit": 100000,
+                  "enabled": true,
+                  "min_nfts": 1
+              },
+              {
+                  "productId": 2,
+                  "title": "FEVR",
+                  "description": "Stake FEVR, earn FEVR",
+                  "contractAddress": "0xe1Cfee71fF8b67332b1b884e90A6502Df5b32bb6",
+                  "contractVersion": 1,
+                  "min_deposit": 100000,
+                  "enabled": true,
+                  "min_nfts": 25
+              }
+          ],
+          "flexible": [
+              {
+                  "productId": 3,
+                  "title": "FEVR",
+                  "description": "Stake FEVR, earn FEVR",
+                  "contractAddress": "0x8c00c3c5836B51cF424150ed36BC93160d3e8cb7",
+                  "contractVersion": 2,
+                  "min_deposit": 100000,
+                  "enabled": true,
+                  "min_nfts": 25
+              }
+          ],
+          "lp_tokens": [
+              {
+                  "productId": 1,
+                  "title": "FEVR",
+                  "description": "Stake FEVR-BNB, earn FEVR",
+                  "contractAddress": "0x8c00c3c5836B51cF424150ed36BC93160d3e8cb7",
+                  "contractVersion": 2,
+                  "min_deposit": 100000,
+                  "enabled": false,
+                  "min_nfts": 25
+              }
+          ]
+      },
+      "endpoint": "https://speedy-nodes-nyc.moralis.io/71333d7b6703c67d19234c26/bsc/mainnet",
+      "erc20": "0xEee15566e4aBDd1f12ca3D8B31f8b98eb9C3bEB2",
+      "erc721": "0x618dcd507d1dcedaed7df0df54728326fd33d22e"
+  },
+  "kovan": {
+      "staking_pools": {
+          "locked": [
+              {
+                  "productId": 2,
+                  "title": "FEVR KOVAN",
+                  "description": "Stake FEVR, earn FEVR",
+                  "contractAddress": "0x14a1d90C5ef2e958367c369963e669fD980B1E7a",
+                  "contractVersion": 1,
+                  "min_deposit": 500000,
+                  "enabled": true,
+                  "min_nfts": 0
+              },
+              {
+                  "productId": 3,
+                  "title": "FEVR KOVAN",
+                  "description": "Stake FEVR, earn FEVR",
+                  "contractAddress": "0x44C68B6D860e883D8703466181C43A86d34C2a3c",
+                  "contractVersion": 2,
+                  "min_deposit": 500000,
+                  "enabled": true,
+                  "min_nfts": 0
+              }
+          ],
+          "flexible": [
+              {
+                  "productId": 8,
+                  "title": "FEVR KOVAN",
+                  "description": "Stake FEVR, earn FEVR",
+                  "contractAddress": "0x44C68B6D860e883D8703466181C43A86d34C2a3c",
+                  "contractVersion": 2,
+                  "min_deposit": 100000,
+                  "enabled": true,
+                  "min_nfts": 0,
+                  "whitelistContract": "0x098CaB89903B0e811de8CF686c2082CC586930F4"
+              },
+              {
+                  "productId": 7,
+                  "title": "FEVR KOVAN",
+                  "description": "Stake FEVR, earn FEVR",
+                  "contractAddress": "0x44C68B6D860e883D8703466181C43A86d34C2a3c",
+                  "contractVersion": 2,
+                  "min_deposit": 100000,
+                  "enabled": true,
+                  "min_nfts": 0
+              },
+              {
+                  "productId": 6,
+                  "title": "FEVR KOVAN",
+                  "description": "Stake FEVR, earn FEVR",
+                  "contractAddress": "0x44C68B6D860e883D8703466181C43A86d34C2a3c",
+                  "contractVersion": 2,
+                  "min_deposit": 100000,
+                  "enabled": true,
+                  "min_nfts": 0
+              },
+              {
+                  "productId": 1,
+                  "title": "FEVR KOVAN",
+                  "description": "Stake FEVR, earn FEVR",
+                  "contractAddress": "0x44C68B6D860e883D8703466181C43A86d34C2a3c",
+                  "contractVersion": 2,
+                  "min_deposit": 100000,
+                  "enabled": true,
+                  "min_nfts": 0
+              }
+          ],
+          "lp_tokens": [
+              {
+                  "productId": 9,
+                  "title": "FEVR-ETH KOVAN",
+                  "description": "Stake FEVR-ETH, earn FEVR",
+                  "contractAddress": "0x44C68B6D860e883D8703466181C43A86d34C2a3c",
+                  "erc20": "0x6ef614b20a6647d929c7911f3b176883682cc00c",
+                  "contractVersion": 2,
+                  "min_deposit": 1,
+                  "enabled": true,
+                  "min_nfts": 0
+              },
+              {
+                  "productId": 5,
+                  "title": "FEVR-ETH KOVAN",
+                  "description": "Stake FEVR-ETH, earn FEVR",
+                  "contractAddress": "0x44C68B6D860e883D8703466181C43A86d34C2a3c",
+                  "erc20": "0x6ef614b20a6647d929c7911f3b176883682cc00c",
+                  "contractVersion": 2,
+                  "min_deposit": 1,
+                  "enabled": true,
+                  "min_nfts": 0
+              }
+          ]
+      },
+      "endpoint": "https://speedy-nodes-nyc.moralis.io/71333d7b6703c67d19234c26/eth/kovan",
+      "erc20": "0xDDaf39Cd8375F18a3505bba7ef1F67A407F50915",
+      "erc721": "0xC46a887f6359559D305A5C17e7f6390BFA65Eb26"
+  }
+}

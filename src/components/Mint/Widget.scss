@@ -1,0 +1,521 @@
+@import 'scss/init';
+
+.minting-wrapper {
+  padding-bottom: 80px;
+
+  @include breakpoint(until-portrait) {
+    background-position: 50% 60%;
+    background-attachment: fixed;
+    background-size: 100% auto;
+  }
+}
+
+.minting-container--complementary-info {
+  width: 100%;
+  display: block;
+  margin-top: 25px;
+  margin-bottom: -10px;
+  text-align: center;
+  font-size: 0.75rem;
+  line-height: 1.4em;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  background: $gradient_white;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+  text-shadow: 0 6px 4px rgba($black, 0.3);
+}
+
+.expandable-items--container {
+  margin-top: 30px;
+
+  @include breakpoint(until-desktop) {
+    .expandable-items--content {
+      margin-top: 35px;
+    }
+
+    .expandable-items--item {
+      display: flex;
+      justify-content: center;
+
+      .minting-details-trigger {
+        position: relative;
+      }
+    }
+  }
+
+  .expandable-items--content {
+    &::before {
+      content: ' ';
+      background: $yellow;
+      display: block;
+      height: 1px;
+      width: 100%;
+    }
+  }
+
+  .minting-details-trigger {
+    background: $gradient_white;
+    background-clip: text;
+    box-shadow: none;
+    -webkit-text-fill-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-size: 0.75rem;
+    line-height: 1.4em;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-shadow: 0 6px 4px rgba($black, 0.3);
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: initial;
+    margin-left: auto;
+    margin-right: auto;
+
+    img.arrow {
+      transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      margin-left: 5px;
+      margin-bottom: 3px;
+      cursor: pointer;
+    }
+
+    &:not(.collapsed) {
+      img.arrow {
+        transform: rotateX(-180deg);
+      }
+    }
+  }
+
+  .minting-container--complementary-info {
+    margin-bottom: 30px;
+  }
+}
+
+.minting--container {
+  // height: 100%;
+  width: 100%;
+  background: rgba($white, 0.03);
+  border: 1px solid rgba($white, 0.3);
+  border-radius: 10px;
+  box-shadow: 0 4px 24px rgba($black, 0.1);
+  backdrop-filter: blur(45px);
+  position: relative;
+
+  &.minting--main-container {
+    padding: 20px 30px 40px;
+
+    @include breakpoint(until-portrait) { padding: 20px 20px 40px; }
+  }
+
+  &.minting--info-container {
+    padding: 50px 20px 0;
+    margin-bottom: 15px;
+
+    @include breakpoint(mobile) { padding: 50px 0 0; }
+  }
+
+  .collection-status-badge {
+    @include no-select();
+
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    background: transparent;
+    overflow: hidden;
+    pointer-events: none;
+
+    @include breakpoint(until-portrait) { transform: scale(0.85) translate(11px, -11px); }
+
+    span {
+      width: 250px;
+      height: 34px;
+      display: block;
+      background: $gradient_blue;
+      box-shadow: -10px 9px 14px rgba($black, 0.15);
+      transform: rotate(45deg) translate(-18px, -57px);
+      transform-origin: 0 0;
+      text-align: center;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-size: 0.688rem;
+      line-height: 34px;
+      font-weight: 700;
+      color: $white;
+      text-shadow: 0 1px 2px rgba($black, 0.15);
+    }
+  }
+
+  .minting-container--title {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-bottom: 1px solid rgba($white, 0.3);
+    padding-bottom: 25px;
+    position: relative;
+    margin-bottom: 40px;
+
+    @include breakpoint(until-portrait) {
+      display: block;
+      text-align: center;
+    }
+
+    .minting-container--title-img {
+      width: 70px;
+      height: auto;
+
+      @include breakpoint(until-portrait) {
+        width: 50px;
+      }
+    }
+
+    .minting-container--title-txt {
+      margin-left: 10px;
+
+      &.flexible {
+        margin-bottom: 30px;
+      }
+
+      h3 {
+        font-size: 2.1rem;
+
+        @include breakpoint(until-portrait) {
+          font-size: 1.8rem;
+        }
+      }
+    }
+  }
+
+  &.collection-status--active {
+    background: rgba($white, 0.02);
+    border: 2px solid rgba($yellow, 0.7);
+    box-shadow: 0 23px 24px rgba($black, 0.1), 0 0 18px rgba($blue, 0.3);
+  }
+
+  .minting-item {
+    margin-bottom: 30px;
+
+    .minting-item-lbl {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: $orange;
+      margin-bottom: 10px;
+    }
+
+    .minting-item-subtitle {
+      font-size: 0.9rem;
+      line-height: 1.2rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+
+      &.minting-item-lbl {
+        position: relative;
+        display: inline-block;
+      }
+
+      .icon-info {
+        position: absolute;
+        top: calc(50% - 1px);
+        right: -16px;
+        transform: translateY(-50%);
+        margin: 0;
+      }
+
+      &.minting-item-subtitle--smaller {
+        font-size: 0.625rem;
+      }
+
+      &.minting-item-subtitle--green {
+        background: $gradient_blue;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      &.minting-item-subtitle--purple {
+        background: $gradient_purple;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+
+    .minting-item-amount {
+      font-size: 1.4rem;
+      line-height: 1.4rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .minting-item-exchange {
+      margin-top: 4px;
+      background: $white;
+      background-clip: text;
+    }
+
+    &.minting-item--nodata {
+      .minting-item-amount { opacity: 0.3; }
+      .minting-item-exchange { opacity: 0.2; }
+    }
+  }
+
+  &[class^='collection-status--'],
+  &[class*=' collection-status--'] {
+    .minting-container--title {
+      position: relative;
+      border: 0;
+      overflow: hidden;
+      padding-bottom: 38px;
+      margin-bottom: 28px;
+    }
+
+    .minting-container--title-badge,
+    .minting-container--title-badge-flexible {
+      bottom: 0;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+
+      &::before,
+      &::after {
+        content: '';
+        width: 500px;
+        height: 1px;
+        background: rgba($yellow, 0.7);
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+
+    .minting-container--title-badge {
+      width: auto;
+      min-width: 150px;
+      height: 25px;
+      font-size: 0.9rem;
+      line-height: 25px;
+      font-weight: 500;
+      text-transform: uppercase;
+      padding: 1px 20px 0;
+      border-radius: 15px;
+      color: $white;
+      background: $gradient_white;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      border: 1px solid rgba($yellow, 0.7);
+      padding-top: 0;
+      padding-bottom: 0;
+
+      &::before { right: calc(100% + 1px); }
+      &::after { left: calc(100% + 1px); }
+    }
+
+    .minting-container--title-badge-flexible {
+      .minting-item-subtitle {
+        margin-bottom: 10px;
+      }
+      &::before { right: calc(110% + 1px); }
+      &::after { left: calc(110% + 1px); }
+    }
+  }
+
+  &.collection-status--whitelist,
+  &.collection-status--ended {
+    .minting-container--title-badge,
+    .minting-container--title-badge-flexible {
+      border-color: rgba($white, 0.7);
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+
+      &::before,
+      &::after { background: rgba($white, 0.7); }
+    }
+
+    .minting-item .minting-item-lbl {
+      background: $gradient_white;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .expandable-items--container {
+      .expandable-items--content {
+        &::before {
+          background: $gradient_white;
+        }
+      }
+    }
+  }
+
+  &.collection-status--whitelist {
+    background: linear-gradient(178.9deg, rgba($white, 0.2) 31.24%, rgba(116, 133, 122, 0.2) 182.59%);
+    border: 2px solid rgba($white, 0.7);
+    box-shadow: 0 4px 4px rgba($white, 0.25), 0 0 10px rgba($white, 0.3);
+
+    .collection-status-badge span {
+      background: $gradient_white;
+      color: $black;
+    }
+  }
+
+  &.collection-status--ended {
+    background: linear-gradient(170.84deg, rgba(75, 75, 75, 0.4) 32%, rgba(23, 23, 23, 0.4) 68.02%);
+    border: 2px solid rgba(175, 175, 175, 0.7);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+
+    .collection-status-badge span {
+      background: linear-gradient(178.9deg, #444 31.24%, #0c100e 182.59%);
+      box-shadow: -10px 5px 14px rgba(0, 0, 0, 0.1);
+      color: $white;
+    }
+  }
+
+  &.collection-status--staked {
+    background: linear-gradient(141.32deg, rgba($blue, 0.25) 4.58%, rgba($blue, 0.4) 122.96%);
+    border: 2px solid rgba($blue, 0.8);
+    box-shadow: 0 4px 4px rgba($black, 0.25), 0 0 10px $blue;
+
+    .collection-status-badge span {
+      background: $gradient_blue;
+      color: $white;
+    }
+
+    .minting-item .minting-item-lbl {
+      background: $gradient_blue;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  &.collection-status--full {
+    background: linear-gradient(119.91deg, rgba($purple, 0.2) -18.1%, rgba($purple, 0.2) 82.06%);
+    border: 2px solid rgba($purple, 0.9);
+    box-shadow: 0 23px 24px rgba($black, 0.1), 0 4px 4px rgba($black, 0.25), 0 0 10px $purple;
+
+    .collection-status-badge span {
+      background: $gradient_purple;
+      color: $white;
+    }
+
+    .minting-container--title-badge,
+    .minting-container--title-badge-flexible {
+      border-color: rgba($purple, 0.7);
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+
+      &::before,
+      &::after { background: rgba($purple, 0.7); }
+    }
+
+    .minting-item .minting-item-lbl {
+      background: $purple;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .expandable-items--container {
+      .expandable-items--content {
+        &::before {
+          background: $purple;
+        }
+      }
+    }
+  }
+
+  .minting-main-value {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .minting-items {
+    min-height: 250px;
+    text-align: center;
+
+    &.minting-items--coming-soon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .white-grad-title {
+        display: block;
+        margin-bottom: 7px;
+
+        @include breakpoint(until-portrait) {
+          font-size: 1.6rem !important;
+        }
+      }
+
+      p { opacity: 0.8; }
+    }
+  }
+
+  .btn:disabled,
+  .btn[disabled] {
+    opacity: 0.15;
+  }
+
+  .minting-actions {
+    margin-top: 10px;
+    position: relative;
+
+    .btn {
+      @include breakpoint(until-mobile) {
+        width: 100%;
+        margin-bottom: 10px;
+        margin-left: 0 !important;
+      }
+
+      @include breakpoint(until-desktop) {
+        width: 100%;
+        margin-bottom: 10px;
+        margin-left: 0 !important;
+      }
+
+      &:nth-child(2) {
+        margin-bottom: 0;
+        margin-left: 25px;
+      }
+    }
+
+    &.minting-actions--status-disabled {
+      .btn {
+        opacity: 0.15;
+        position: relative;
+        z-index: 10;
+        pointer-events: none;
+      }
+    }
+
+    &.minting-actions--blurred {
+      .btn {
+        filter: blur(5px);
+      }
+    }
+  }
+}
+
+.minting-actions--notice {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  font-weight: 300;
+  background: $gradient_white;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

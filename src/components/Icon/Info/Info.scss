@@ -1,0 +1,59 @@
+
+.icon-info {
+  margin-left: 5px;
+  margin-bottom: 2px;
+
+  span {
+    img {
+      transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      cursor: pointer;
+    }
+
+    &:hover {
+      img {
+        transform: scale(1.2);
+      }
+    }
+  }
+}
+
+.tooltip {
+  z-index: 1080;
+  display: block;
+  margin: 0;
+  font-size: 10px;
+  font-weight: 400;
+  font-family: inherit;
+  line-height: 12px;
+  opacity: 0;
+
+  &.show {
+    opacity: 1;
+  }
+
+  .tooltip-inner {
+    max-width: initial;
+    padding: 0.75rem;
+    color: #fff;
+    text-align: center;
+    background-color: #2e3c53;
+    opacity: 1;
+    border-radius: 2px;
+  }
+}
+
+.bs-tooltip-start[data-popper-placement^='left'] .tooltip-arrow::before {
+  border-left-color: #2e3c53;
+}
+
+.bs-tooltip-top[data-popper-placement^='top'] .tooltip-arrow::before {
+  border-top-color: #2e3c53;
+}
+
+.bs-tooltip-end[data-popper-placement^='right'] .tooltip-arrow::before {
+  border-right-color: #2e3c53;
+}
+
+.bs-tooltip-bottom[data-popper-placement^='bottom'] .tooltip-arrow::before {
+  border-bottom-color: #2e3c53;
+}

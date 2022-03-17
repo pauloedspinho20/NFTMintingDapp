@@ -1,0 +1,71 @@
+.in-transaction {
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 16px 0;
+
+  .popup--container & {
+    padding: 0;
+  }
+}
+
+.in-transaction--image {
+  width: 48px;
+  height: 48px;
+  margin-right: 16px;
+  animation-name: in-transaction;
+  animation-duration: 3500ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes in-transaction {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes in-transaction-spin {
+  0% {
+    transform: scale(0.9) rotate3d(0, 1, 0, 0deg);
+  }
+
+  10% {
+    transform: scale(1) rotate3d(0, 1, 0, 180deg);
+  }
+
+  15% {
+    transform: scale(0.9) rotate3d(0, 1, 0, 270deg);
+  }
+
+  20% {
+    transform: scale(0.9) rotate3d(0, 1, 0, 360deg);
+  }
+
+  25% {
+    transform: scale(0.9) rotate3d(0, 1, 0, 360deg);
+  }
+
+  35% {
+    transform: scale(1) rotate3d(0, 1, 0, 180deg);
+  }
+
+  40% {
+    transform: scale(0.9) rotate3d(0, 1, 0, 90deg);
+  }
+
+  45% {
+    transform: scale(0.9) rotate3d(0, 1, 0, 0deg);
+  }
+
+  50% {
+    transform: scale(0.9) rotate3d(0, 1, 0, 0deg);
+  }
+
+  100% {
+    transform: scale(0.9) rotate3d(0, 1, 0, 0deg);
+  }
+}

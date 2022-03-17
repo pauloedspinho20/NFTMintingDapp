@@ -1,0 +1,12 @@
+@import 'scss/init';
+
+.ico-metamask {
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  background: url('./assets/ico-metamask.svg') 50% 50% no-repeat;
+  background-size: 100% auto;
+  margin-top: -15px;
+  margin-bottom: -12px;
+  margin-left: 15px;
+}

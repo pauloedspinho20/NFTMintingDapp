@@ -1,0 +1,57 @@
+@import 'scss/init';
+
+.pg-maintenance,
+.pg-maintenance #main-content {
+  width: 100vw;
+  height: 100vh;
+  min-height: 700px;
+}
+
+.pg-maintenance #main-content {
+  padding-top: 0;
+}
+
+.pg-maintenance .realfevr-logo {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+
+  img {
+    height: 45px;
+  }
+}
+
+.container--maintenance {
+  position: relative;
+  z-index: 2;
+}
+
+.maintenance--txt {
+  margin-top: -110px;
+}
+
+.maintenance--title {
+  font-size: 2.4rem;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.maintenance--desc {
+  font-size: 1.2rem;
+  padding: 0 20px;
+  margin-bottom: 40px;
+}
+
+.maintenance--bg {
+  width: 100vw;
+  height: 100vh;
+  min-height: 700px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  // background: url('./assets/maintenance-bg.png') 50% 70% no-repeat;
+  background-size: cover;
+}

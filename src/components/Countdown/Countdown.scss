@@ -1,0 +1,124 @@
+@import 'scss/init';
+
+.release-countdown {
+  margin: 40px 0 20px;
+  text-align: left;
+
+  @include breakpoint(until-portrait) {
+    text-align: center;
+  }
+
+  &.release-countdown--only-title {
+    margin: 90px 0 20px;
+
+    @include breakpoint(until-portrait) {
+      margin: 60px 0 20px;
+    }
+  }
+
+  &.rc-center {
+    text-align: center;
+  }
+
+  .pg-packs & {
+    margin-top: -50px;
+    margin-bottom: 80px;
+    position: relative;
+    z-index: 95;
+  }
+
+  ul {
+    @include clearfix();
+
+    display: inline-block;
+
+    li {
+      min-width: 90px;
+      display: block;
+      float: left;
+      text-align: center;
+      position: relative;
+
+      @include breakpoint(until-portrait) {
+        min-width: 65px;
+      }
+
+      @include breakpoint(until-mobile) {
+        min-width: 55px;
+      }
+
+      .release-countdown--seconds {
+        text-align: left;
+        transform: translateX(16px);
+
+        @include breakpoint(until-portrait) {
+          transform: translateX(10px);
+        }
+
+        @include breakpoint(until-mobile) {
+          transform: translateX(8px);
+        }
+      }
+
+      &:not(:last-child) {
+        &::after {
+          content: ':';
+          height: auto;
+          font-size: 1.563rem;
+          line-height: 1em;
+          font-weight: 500;
+          position: absolute;
+          top: 36%;
+          right: 0;
+          transform: translate(5px, -50%);
+          opacity: 0.8;
+
+          @include breakpoint(until-portrait) {
+            transform: translate(4px, -50%);
+          }
+        }
+      }
+    }
+  }
+
+  .release-countdown-nr {
+    display: block;
+    font-size: 3rem;
+    line-height: 1em;
+    font-weight: 500;
+    margin-bottom: -10px;
+
+    @include breakpoint(until-portrait) {
+      font-size: 2.5rem;
+    }
+
+    @include breakpoint(until-mobile) {
+      font-size: 2.2rem;
+    }
+  }
+
+  small {
+    display: block;
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 500;
+    opacity: 0.7;
+
+    &.small-seconds {
+      transform: translateX(-2px);
+
+      @include breakpoint(until-portrait) {
+        transform: translateX(0);
+      }
+    }
+  }
+
+  h3.mid-title {
+    text-align: center;
+
+    @include breakpoint(until-portrait) {
+      font-size: 1.25rem;
+    }
+  }
+}

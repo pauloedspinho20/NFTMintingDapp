@@ -1,0 +1,43 @@
+{
+  "ok": true,
+  "rinkeby": {
+    "collections": [
+        {
+            "productId": 4,
+            "title": "The Spades",
+            "description": "Collection of the The Spades",
+            "contractAddress": "0xF1049759984D2A0C9068FEe5336178afdA137C97",
+            "contractVersion": 1,
+            "enabled": true
+        },
+        {
+          "productId": 4,
+          "title": "The Spades",
+          "description": "Collection of the The Spades",
+          "contractAddress": "0xF1049759984D2A0C9068FEe5336178afdA137C97",
+          "contractVersion": 1,
+          "enabled": true
+      }
+    ]
+  },
+  "eth": {
+    "collections": [
+        {
+            "productId": 4,
+            "title": "The Spades",
+            "description": "Collection of the The Spades",
+            "contractAddress": "0xF1049759984D2A0C9068FEe5336178afdA137C97",
+            "contractVersion": 1,
+            "enabled": true
+        },
+        {
+          "productId": 4,
+          "title": "The Spades",
+          "description": "Collection of the The Spades",
+          "contractAddress": "0xF1049759984D2A0C9068FEe5336178afdA137C97",
+          "contractVersion": 1,
+          "enabled": true
+      }
+    ]
+  }
+}
