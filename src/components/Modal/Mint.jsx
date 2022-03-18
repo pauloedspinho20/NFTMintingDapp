@@ -15,6 +15,7 @@ const ModalMint = () => {
   const { setOperation } = useContracts();
   const confirm = useModal('mint');
   const follow = useModal('confirm-transaction');
+  const show = useModal('transaction-successful');
 
   const {
     amount,
@@ -151,7 +152,10 @@ const ModalMint = () => {
                 amount,
                 contractAddress,
                 whitelistMint,
-              )) {
+              ).then(request => {
+                follow.close();
+                show.open({ transactionHash: request.transactionHash });
+              })) {
                 // If operation succeeds, this variable will be set when fetching new pool data
                 setOperation('');
               }

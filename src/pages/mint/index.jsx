@@ -31,7 +31,8 @@ const MintPage = () => {
               <div className="col-12 col-lg-6 mb-30">
                 <Notice>
                   <div>
-                    { `NOT MAINNET! This app is using ${networkWanted} network.` }
+                    <b>NOT MAINNET! </b>
+                    { `This app is using ${networkWanted} network.` }
                   </div>
 
                   { networkActive === networkWanted ? (

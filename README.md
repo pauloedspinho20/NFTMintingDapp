@@ -4,12 +4,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## TODO
 
-- Notice component for trasaction hash and errors
 - WalletConnect and Trust Wallet
 - Smart contract owner auto mint on deploy
 - Max tokens per address?
 - Collection Gallery with OpenSea link and IPFS provider image url with external link
-- Deploy Fleek IPFS (Docker image problem with node.js version)
 - Bepro main branch or Moralis provider
 - Next.js
 - Pagination and menus

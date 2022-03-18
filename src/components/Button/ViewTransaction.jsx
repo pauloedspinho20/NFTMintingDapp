@@ -1,17 +1,20 @@
 import { node, string } from 'prop-types';
 
 import Button from 'components/Button/Button';
+import useBepro from 'hooks/useBepro';
 
 const ButtonViewTransaction = ({ children, transactionHash, ...props }) => {
-  const txUrl = 'https://bscscan.com/tx/';
+  const {
+    networkActive,
+  } = useBepro();
+  const txUrl = networkActive === 'rinkeby' ? 'https://rinkeby.etherscan.io/tx/' : 'https://etherscan.io/tx/';
 
   return !!transactionHash && (
     <Button
-      className="btn-primary"
       external
       onClick={ () => console.log('transactionHash: ', transactionHash) }
       size="m"
-      theme="blue-gradient"
+      theme="orange"
       title="Transaction details"
       to={ `${txUrl}${transactionHash}` }
       { ...props }

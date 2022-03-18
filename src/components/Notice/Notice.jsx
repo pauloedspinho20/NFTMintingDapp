@@ -4,7 +4,7 @@ import './Notice.scss';
 
 const Notice = ({ children, ...props }) => !!children && (
 <div
-  className="notice"
+  className="notice text-center"
   { ...props }
 >
   { children }
