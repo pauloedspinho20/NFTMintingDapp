@@ -42,7 +42,6 @@ function App() {
           <main id="main-content">
             <Switch>
               <Route exact path="/" component={ MintPage } />
-              <Route path="/NFTMintingDapp" component={ MintPage } />
               <Route path="/privacy-policy" component={ Privacy } />
               <Route path="/terms-conditions" component={ Terms } />
               <Route component={ FourOhFour } status={ 404 } />

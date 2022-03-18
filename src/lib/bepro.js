@@ -312,7 +312,6 @@ const getCollection = async () => {
           ? getTokenURI.replace('ipfs://', 'https://ipfs.io/ipfs/')
           : getTokenURI
         );
-        console.log('tokenURI', tokenURI);
         if (tokenURI) {
           const url = !revealed ? hiddenMetadataUri : (tokenURI);
           const response = await fetch(url);

@@ -1,6 +1,5 @@
 import {
-  arrayOf,
-  bool, number, string,
+  arrayOf, bool, number, string, shape,
 } from 'prop-types';
 import classnames from 'classnames';
 
@@ -87,7 +86,13 @@ MintCollection.propTypes = {
   paused: bool,
   revealed: bool,
   symbol: string,
-  userTokens: arrayOf({}),
+  userTokens: arrayOf(shape({
+    description: string,
+    image: string,
+    tokenId: string,
+    tokenName: string,
+    tokenURI: string,
+  })),
   whitelistMintEnabled: bool,
 };
 
