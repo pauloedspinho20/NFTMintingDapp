@@ -2,6 +2,23 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## TODO
+
+- Notice component for trasaction hash and errors
+- Smart contract owner auto mint on deploy
+- Max tokens per address?
+- Collection Gallery with OpenSea link and IPFS provider image url with external link
+- Deploy Fleek IPFS (Docker image problem with node.js version)
+- Bepro main branch or Moralis provider
+- Next.js
+- Pagination and menus
+- Roadmap
+- KPI section with values from smart contract and OpenSea
+- Landing page
+- About page with gitdocs
+- Add Art Engine to project
+- Add IPFS deployer to project?
+
 ## Available Scripts
 
 In the project directory, you can run:
