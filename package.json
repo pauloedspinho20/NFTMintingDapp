@@ -24,6 +24,8 @@
     "humanize-duration": "^3.27.0",
     "ipfs-http-client": "^53.0.1",
     "js-cookie": "^3.0.1",
+    "keccak256": "^1.0.6",
+    "merkletreejs": "^0.2.31",
     "moment": "^2.29.1",
     "patch-package": "^6.4.7",
     "promise-status-async": "^1.2.9",

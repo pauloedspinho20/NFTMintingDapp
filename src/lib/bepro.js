@@ -1,3 +1,6 @@
+import { MerkleTree } from 'merkletreejs';
+import keccak256 from 'keccak256';
+
 import EventEmitter from 'events';
 import Web3 from 'web3';
 
@@ -12,6 +15,7 @@ import providerWalletConnect from 'lib/provider/walletConnect';
 import cookieConsent from 'utils/cookieConsent';
 
 import { chains } from 'config';
+import whitelistAddresses from 'whitelist.json';
 import Numbers from './utils/Numbers';
 
 // ABIs
@@ -277,6 +281,24 @@ const getContractAddress = () => (
     : process.env.REACT_APP_CONTRACT_ADDRESS_RINKEBY
 );
 
+const getMerkleTree = merkleTree => {
+  if (merkleTree === undefined) {
+    const leafNodes = whitelistAddresses.map(addr => keccak256(addr));
+
+    merkleTree = new MerkleTree(leafNodes, keccak256, { sortPairs: true });
+  }
+
+  return merkleTree;
+};
+
+// const getProofForAddress = address => getMerkleTree().getHexProof(keccak256(address));
+
+/* const getRawProofForAddress = address =>
+ getProofForAddress(address).toString().replaceAll('\'', '').replaceAll(' ', ''); */
+
+const whitelistContains = address => (
+  getMerkleTree().getLeafIndex(Buffer.from(keccak256(address))) >= 0
+);
 /*
 * GET COLLECTION
 */
@@ -287,9 +309,9 @@ const getCollection = async () => {
     const address = await getAddress();
     const contractAddress = getContractAddress();
     const nftContract = await getERC721Contract(contractAddress);
-
+    // const merkleRoot = await nftContract?.methods.merkleRoot().call();
     const enabled = process.env.REACT_APP_COLLECTION_ENABLED === 'true';
-    const approved = await nftContract?.methods.isApprovedForAll(address, contractAddress).call();
+    const approved = address ? await nftContract?.methods.isApprovedForAll(address, contractAddress).call() : false;
     const name = await nftContract?.methods.name().call();
     const paused = await nftContract?.methods.paused().call();
     const revealed = await nftContract?.methods.revealed().call();
@@ -301,9 +323,9 @@ const getCollection = async () => {
     const maxMintAmountPerTx = Number(await nftContract?.methods.maxMintAmountPerTx().call());
     const uriPrefix = await nftContract?.methods.uriPrefix().call();
     const hiddenMetadataUri = await nftContract?.methods.hiddenMetadataUri().call();
-
     const whitelistMintEnabled = await nftContract?.methods.whitelistMintEnabled().call();
     const whitelistClaimed = address ? await nftContract?.methods.whitelistClaimed(address).call() : false;
+    const isAddressWhitelisted = address && whitelistContains(address);
 
     const collection = {
       approved,
@@ -322,7 +344,7 @@ const getCollection = async () => {
       hiddenMetadataUri,
       whitelistMintEnabled,
       whitelistClaimed,
-      isAddressWhitelisted: true,
+      isAddressWhitelisted,
     };
 
     if (collection) {

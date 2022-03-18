@@ -5,14 +5,10 @@ import ButtonConnectWallet from 'components/Button/ConnectWallet';
 import IconMetamask from 'components/Icon/Metamask/Metamask';
 import IconTrustWallet from 'components/Icon/TrustWallet/TrustWallet';
 import IconWalletConnect from 'components/Icon/WalletConnect/WalletConnect';
-import Image from 'components/Image';
 import Modal from 'components/Modal/Modal';
 
 import useBepro from 'hooks/useBepro';
 import useModal from 'hooks/useModal';
-
-import ImgNetworkSwitchBinance from './assets/binance-network-switch.svg';
-import ImgNetworkSwitchEthereum from './assets/ethereum-network-switch.svg';
 
 const ModalConnectWallet = () => {
   const {
@@ -53,29 +49,15 @@ const ModalConnectWallet = () => {
     >
       { show?.wrongNetwork && (
         <>
-          <div className="popup--title">Your wallet is currently in the wrong network</div>
+          <div className="popup--title">Wrong network</div>
           <div className="popup--desc">
-            <Image
-              className="network-switch--img"
-              src={ networkWanted === 'bsc' ? ImgNetworkSwitchBinance : ImgNetworkSwitchEthereum }
-            />
             <br />
-            Please switch your wallet network to
+            Switch your wallet network to
             { ' ' }
             <strong>
               { networkWanted === 'eth' && 'Ethereum' }
               { networkWanted === 'rinkeby' && 'Rinkeby' }
             </strong>
-            .
-            <br />
-            { 'Learn how to ' }
-            <a
-              href="https://help.idex.io/en/articles/4852233-how-to-switch-networks-on-metamask"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              change network in wallet
-            </a>
             .
           </div>
         </>

@@ -33,6 +33,8 @@ export const updateConnection = async () => {
       return;
     }
 
+    console.log('address', address);
+
     const state = getGlobalState('bepro');
     if (
       state.address !== address
