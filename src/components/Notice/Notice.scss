@@ -1,0 +1,10 @@
+@import 'scss/init';
+
+.notice {
+  display: inline-flex;
+  flex-direction: column;
+  background: $yellow;
+  width: 100%;
+  padding: 1rem 2rem;
+  border-radius: 5px;
+}
