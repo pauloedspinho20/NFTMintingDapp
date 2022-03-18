@@ -9,13 +9,15 @@
 }
 
 .in-transaction--image {
-  width: 48px;
+  width: 48px !important;
   height: 48px;
-  margin-right: 16px;
+  margin: 18px !important;
   animation-name: in-transaction;
   animation-duration: 3500ms;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
+  display: initial !important;
+  mix-blend-mode: initial !important;
 }
 
 @keyframes in-transaction {

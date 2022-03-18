@@ -24,8 +24,7 @@ InTransaction.propTypes = {
 };
 
 InTransaction.defaultProps = {
-
-  label: 'Loading...',
+  label: '',
 };
 
 export default InTransaction;

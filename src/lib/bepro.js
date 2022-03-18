@@ -19,7 +19,6 @@ import whitelistAddresses from 'whitelist.json';
 import Numbers from './utils/Numbers';
 
 // ABIs
-const erc20ContractAbi = require('lib/abis/ERC20Contract.json');
 const erc721ContractV1Abi = require('lib/abis/ERC721ContractV1.json');
 
 const env = process.env.REACT_APP_ENVIRONMENT;
@@ -175,25 +174,6 @@ const getERC721Contract = async contractAddress => {
 };
 
 /*
-* GET ERC20 CONTRACT
-*/
-const getERC20Contract = async () => {
-  const web3 = await getWeb3();
-  const { tokenAddress } = await params;
-
-  if (web3) {
-    const contract = new web3.eth.Contract(
-      erc20ContractAbi,
-      tokenAddress,
-    );
-
-    return contract;
-  }
-
-  return null;
-};
-
-/*
 * GET WALLET PROVIDER
 */
 const getProvider = wallet => {
@@ -211,61 +191,56 @@ const getProvider = wallet => {
 };
 
 /*
-* CHECK IF WALLET ADDRESS IS APPROVED ON ERC20 CONTRACT
-*/
-const isContractApproved = async nftContract => {
-  const address = await getAddress();
-  const spender = nftContract?._address;
-  const erc20 = await getERC20Contract();
-
-  if (address && spender) {
-    const allowance = await erc20?.methods.allowance(
-      address,
-      spender,
-    ).call();
-    return allowance;
-  }
-
-  return 0;
-};
-
-/*
 * APPROVE STAKING CONTRACT
 */
 const approveContract = async contractAddress => {
-  const nftContract = await getERC721Contract(contractAddress);
-  const address = await getAddress();
-  const spender = nftContract?._address;
-  const erc20 = await getERC20Contract();
-  const totalSupply = await erc20?.methods.totalSupply().call();
+  const web3 = await getWeb3();
 
-  if (address && totalSupply && nftContract) {
-    try {
-      const result = await erc20?.methods.approve(
-        spender, // spender
-        totalSupply, // amount
-      ).send({
-        from: address,
-      });
+  if (web3) {
+    const nftContract = await getERC721Contract(contractAddress);
+    const address = await getAddress();
 
-      if (!result) {
-        addError('failed to approve');
+    if (address && nftContract) {
+      try {
+      /*   const gasPrice = await web3.eth.getGasPrice();
+        const gas = await nftContract?.methods
+          .setApprovalForAll(address, contractAddress)
+          .estimateGas({
+            from: address,
+            gasPrice,
+          })
+          .catch(error => {
+            // eslint-disable-next-line no-console
+            console.error('estimateGas error', error);
+          }); */
+
+        const result = await nftContract?.methods.setApprovalForAll(
+          contractAddress, address,
+        ).send({
+          from: address,
+          /*  gas,
+          gasPrice, */
+        });
+
+        if (!result) {
+          addError('Failed to approve');
+        }
+        return result;
       }
-      return result;
-    }
-    catch (ex) {
-      // eslint-disable-next-line no-console
-      console.error(ex);
-      switch (ex.code) {
-        case 4001:
-          addError('approve cancelled', true);
-          break;
-        default:
-          addError('failed to approve');
-          break;
-      }
+      catch (ex) {
+        // eslint-disable-next-line no-console
+        console.error(ex);
+        switch (ex.code) {
+          case 4001:
+            addError('Contract approval cancelled', true);
+            break;
+          default:
+            addError('Failed to approve');
+            break;
+        }
 
-      return null;
+        return null;
+      }
     }
   }
 
@@ -291,12 +266,12 @@ const getMerkleTree = merkleTree => {
   return merkleTree;
 };
 
-// const getProofForAddress = address => getMerkleTree().getHexProof(keccak256(address));
+const getProofForAddress = address => getMerkleTree().getHexProof(keccak256(address));
 
 /* const getRawProofForAddress = address =>
  getProofForAddress(address).toString().replaceAll('\'', '').replaceAll(' ', ''); */
 
-const whitelistContains = address => (
+const whitelistContains = async address => (
   getMerkleTree().getLeafIndex(Buffer.from(keccak256(address))) >= 0
 );
 /*
@@ -325,7 +300,7 @@ const getCollection = async () => {
     const hiddenMetadataUri = await nftContract?.methods.hiddenMetadataUri().call();
     const whitelistMintEnabled = await nftContract?.methods.whitelistMintEnabled().call();
     const whitelistClaimed = address ? await nftContract?.methods.whitelistClaimed(address).call() : false;
-    const isAddressWhitelisted = address && whitelistContains(address);
+    const isAddressWhitelisted = address && await whitelistContains(address);
 
     const collection = {
       approved,
@@ -359,7 +334,7 @@ const getCollection = async () => {
 /*
 * MINT COLLECTION
 */
-const mintCollection = async (value, _mintAmount, contractAddress) => {
+const mintCollection = async (value, _mintAmount, contractAddress, whitelistMint) => {
   const web3 = await getWeb3();
 
   if (web3) {
@@ -369,6 +344,41 @@ const mintCollection = async (value, _mintAmount, contractAddress) => {
     if (address) {
       try {
         const gasPrice = await web3.eth.getGasPrice();
+
+        // WHITELIST MINT
+        if (whitelistMint) {
+          const merkleProof = await getProofForAddress(address);
+          const gas = await nftContract?.methods
+            .whitelistMint(_mintAmount, merkleProof)
+            .estimateGas({
+              from: address,
+              gasPrice,
+              value: Numbers.toSmartContractDecimals(value, 18),
+            })
+            .catch(error => {
+            // eslint-disable-next-line no-console
+              console.error('estimateGas error', error);
+            });
+
+          const result = await nftContract?.methods.whitelistMint(
+            _mintAmount, merkleProof,
+          ).send({
+            from: address,
+            gas,
+            gasPrice,
+            value: Numbers.toSmartContractDecimals(value, 18),
+          }).on('error', error => { // If the transaction was rejected by the network with a receipt, the second parameter will be the receipt.
+          // eslint-disable-next-line no-console
+            console.error('mintCollection error', error);
+          });
+
+          if (!result) {
+            addError('Failed to mint.');
+          }
+          return result;
+        }
+
+        // NORMAL MINT
         const gas = await nftContract?.methods
           .mint(_mintAmount)
           .estimateGas({
@@ -394,7 +404,7 @@ const mintCollection = async (value, _mintAmount, contractAddress) => {
         });
 
         if (!result) {
-          addError('failed to mint');
+          addError('Failed to mint.');
         }
         return result;
       }
@@ -403,10 +413,10 @@ const mintCollection = async (value, _mintAmount, contractAddress) => {
         console.error(ex);
         switch (ex.code) {
           case 4001:
-            addError('mint cancelled', true);
+            addError('Mint cancelled.', true);
             break;
           default:
-            addError('failed to mint');
+            addError('Failed to mint.');
             break;
         }
 
@@ -479,7 +489,6 @@ const libBepro = {
   getAddress,
   getNetwork,
   getCollection,
-  isContractApproved,
   mintCollection,
   switchNetwork,
 

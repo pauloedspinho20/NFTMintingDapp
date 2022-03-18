@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { number, string } from 'prop-types';
 
 import Button from 'components/Button/Button';
@@ -14,46 +15,52 @@ const ButtonMint = ({ amount, contractAddress }) => {
   const {
     approved,
     enabled,
-    name,
     paused,
-    symbol,
-    balanceOf,
     cost,
-    maxSupply,
-    maxMintAmountPerTx,
-    uriPrefix,
+    symbol,
     whitelistMintEnabled,
-    whitelistClaimed,
     isAddressWhitelisted,
+    whitelistClaimed,
     operation,
   } = useContracts(contractAddress);
 
   const onClick = async () => {
     open({
       amount,
-      enabled,
       contractAddress,
-      name,
-      symbol,
-      balanceOf,
       cost,
-      maxSupply,
-      maxMintAmountPerTx,
-      uriPrefix,
+      symbol,
+      paused,
+      isAddressWhitelisted,
       whitelistMintEnabled,
       whitelistClaimed,
-      isAddressWhitelisted,
       operation,
     });
   };
+
+  const [ label, setLabel ] = useState('');
+
+  useEffect(() => {
+    let lb = 'Mint';
+    if (paused && whitelistMintEnabled) {
+      lb = 'Whitelist Mint';
+    }
+    else if (operation === 'minting') {
+      lb = 'Minting...';
+    }
+
+    setLabel(lb);
+  }, [ whitelistMintEnabled, paused, operation ]);
 
   return (
     <Button
       className="btn--size-min-150 btn-mint"
       disabled={
-        paused
+        (paused && !whitelistMintEnabled)
         || !approved
         || !enabled
+        || (!isAddressWhitelisted && whitelistMintEnabled)
+        || (paused && whitelistClaimed)
         || operation
         || ethBalance < (cost * amount)
       }
@@ -61,7 +68,7 @@ const ButtonMint = ({ amount, contractAddress }) => {
       size="m"
       theme="orange"
     >
-      { operation === 'minting' ? 'Minting...' : 'Mint' }
+      { label }
     </Button>
   );
 };

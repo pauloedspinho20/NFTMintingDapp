@@ -16,7 +16,8 @@ const Price = ({
     return (
       <>
         { formatNumber(vEth || (vDollar) / bnbInDollar, {
-          maximumFractionDigits: 2,
+          maximumFractionDigits: 3,
+          useGrouping: false,
           ...options,
         }) }
         { showLabel && ' BNB' }
@@ -28,7 +29,7 @@ const Price = ({
     return (
       <>
         { formatNumber(vEth || (vDollar) / bnbInDollar, {
-          maximumFractionDigits: 2,
+          maximumFractionDigits: 3,
           ...options,
         }) }
         { showLabel && ' ETH' }
@@ -37,8 +38,8 @@ const Price = ({
   }
 
   const value = formatNumber(vDollar || vEth * bnbInDollar, {
-    maximumFractionDigits: 2,
-    minimumFractionDigits: 2,
+    maximumFractionDigits: 3,
+    minimumFractionDigits: 3,
     ...options,
   });
 

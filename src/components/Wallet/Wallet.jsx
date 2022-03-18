@@ -34,7 +34,7 @@ const Wallet = () => {
 
         </div>
         <div className="wallet-connected-status">
-          <ButtonAddress>{ address }</ButtonAddress>
+          <ButtonAddress format>{ address }</ButtonAddress>
         </div>
       </>
     );

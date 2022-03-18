@@ -1,4 +1,5 @@
 import Modal from 'components/Modal/Modal';
+import InTransaction from 'components/InTransaction/InTransaction';
 
 import useModal from 'hooks/useModal';
 
@@ -14,8 +15,11 @@ const ModalConfirmTransaction = () => {
     >
       <div className="popup--title">{ title }</div>
       <div className="popup--desc">
-        Pending on your wallet
+        Transation pending on your wallet.
+        <br />
+        Can take some time confirm.
       </div>
+      <InTransaction />
     </Modal>
   );
 };

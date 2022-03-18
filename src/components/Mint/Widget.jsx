@@ -37,12 +37,28 @@ const MintWidget = ({
 }) => {
   const { address, ethBalance } = useBepro();
   const [ amount, setAmount ] = useState(1);
+  const [ status, setStatus ] = useState(null);
   const [ total, setTotal ] = useState(cost);
   const ready = !paused !== null;
 
   useEffect(() => {
     setTotal(cost * amount);
   }, [ amount, cost ]);
+
+  useEffect(() => {
+    let st;
+    if (paused && !whitelistMintEnabled) {
+      st = 'Closed';
+    }
+    else if (paused && whitelistMintEnabled) {
+      st = 'Whitelist';
+    }
+    else if (!paused) {
+      st = 'Open';
+    }
+
+    setStatus(st);
+  }, [ whitelistMintEnabled, paused ]);
 
   console.log('MintWidget', approved,
     enabled,
@@ -78,7 +94,7 @@ const MintWidget = ({
             { name }
           </h2>
           <div className="minting-item-subtitle minting-item-subtitle--smaller">
-            <ButtonAddress>{ contractAddress }</ButtonAddress>
+            <small><ButtonAddress>{ contractAddress }</ButtonAddress></small>
           </div>
         </div>
 
@@ -92,18 +108,18 @@ const MintWidget = ({
       <div>
         <div className="container minting-items">
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-12 col-md-6">
               <div className="minting-item">
                 <div className="minting-item-subtitle minting-item-lbl">Sale Status</div>
                 <div className="minting-item-amount">
-                  <Placeholder ready={ ready }>
-                    { paused ? 'Closed' : 'Open' }
+                  <Placeholder ready={ status }>
+                    { status }
                   </Placeholder>
                 </div>
               </div>
             </div>
 
-            <div className="col-md-6">
+            <div className="col-12 col-md-6">
               <div className="minting-item">
                 <div className="minting-item-subtitle minting-item-lbl">Revealed</div>
                 <div className="minting-item-amount">
@@ -116,7 +132,7 @@ const MintWidget = ({
           </div>
 
           <div className="row">
-            <div className="col">
+            <div className="col-12 col-md-6">
               <div className="minting-item">
                 <div className="minting-item-subtitle minting-item-lbl">Supply</div>
                 <div className="minting-item-amount">
@@ -127,7 +143,7 @@ const MintWidget = ({
               </div>
             </div>
 
-            <div className="col">
+            <div className="col-12 col-md-6">
               <div className="minting-item">
                 <div className="minting-item-subtitle minting-item-lbl">Max NFTs per mint</div>
                 <div className="minting-item-amount">
@@ -141,7 +157,7 @@ const MintWidget = ({
           </div>
 
           <div className="row">
-            <div className="col">
+            <div className="col-12 col-md-6">
               <div className="minting-item">
                 <div className="minting-item-subtitle minting-item-lbl">Balance</div>
                 <div className="minting-item-amount">
@@ -157,7 +173,7 @@ const MintWidget = ({
               </div>
             </div>
 
-            <div className="col">
+            <div className="col-12 col-md-6">
               <div className="minting-item">
                 <div className="minting-item-subtitle minting-item-lbl">NFT Price</div>
                 <div className="minting-item-amount">
@@ -250,30 +266,13 @@ const MintWidget = ({
 
                   <div className="minting-button-wrapper">
                     <ButtonMint amount={ amount } contractAddress={ contractAddress } />
+
                   </div>
+                  { !isAddressWhitelisted && whitelistMintEnabled && (
+                  <small>Yout address is not whitelisted</small>
+                  ) }
                 </div>
               ) }
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col">
-              <h3 className="">
-                My collection
-              </h3>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col">
-              <div className="minting-item">
-                <div className="minting-item-subtitle minting-item-lbl">Balance</div>
-                <div className="minting-item-amount">
-                  <Placeholder ready={ ready }>
-                    { balanceOf }
-                  </Placeholder>
-                </div>
-              </div>
             </div>
           </div>
         </div>

@@ -21,9 +21,14 @@ const ModalMint = () => {
     amount,
     contractAddress,
     cost,
-
+    paused,
+    symbol,
+    isAddressWhitelisted,
+    whitelistMintEnabled,
   } = confirm.show || {};
 
+  const whitelistMint = (paused && isAddressWhitelisted && whitelistMintEnabled);
+  const title = whitelistMint ? 'Confirm Whitelist Mint' : 'Confirm Mint';
   const insufficientBalance = ethBalance < cost;
 
   useEffect(() => {
@@ -110,13 +115,13 @@ const ModalMint = () => {
 
   return (
     <Modal name="mint">
-      <div className="popup--title">Confirm Mint</div>
+      <div className="popup--title">{ title }</div>
       <div className="popup--desc">
         Do you want to mint
         { ' ' }
         { amount }
         { ' ' }
-        NFT
+        { symbol }
         { amount > 1 && 's' }
         ?
         <ul className="eth-price-exchange-display">
@@ -140,14 +145,15 @@ const ModalMint = () => {
               setValue();
               setOperation('minting');
 
-              follow.open({ title: 'Confirm Mint' });
+              follow.open({ title });
+
               if (!await mintCollection(
                 value,
                 amount,
                 contractAddress,
+                whitelistMint,
               )) {
                 // If operation succeeds, this variable will be set when fetching new pool data
-
                 setOperation('');
               }
 
@@ -164,7 +170,6 @@ const ModalMint = () => {
           <Button
             onClick={ confirm.close }
             size="m"
-
           >
             No
           </Button>

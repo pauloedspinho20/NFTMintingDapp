@@ -1,17 +1,19 @@
 import { string } from 'prop-types';
-import { useState } from 'react';
 
 import Button from 'components/Button/Button';
 
 import useBepro from 'hooks/useBepro';
-import { updateContracts } from 'hooks/useContracts';
+import useContracts, { updateContracts } from 'hooks/useContracts';
+import useModal from 'hooks/useModal';
 
 const ButtonApprove = ({ contractAddress }) => {
-  const [ enabling, setEnabling ] = useState(false);
   const { approveContract } = useBepro();
+  const { operation, setOperation } = useContracts();
+  const follow = useModal('confirm-transaction');
 
   const onClick = async () => {
-    setEnabling(true);
+    setOperation('approve');
+    follow.open({ title: 'Confirm approval' });
     try {
       const approve = await approveContract(contractAddress);
       if (approve) {
@@ -22,7 +24,8 @@ const ButtonApprove = ({ contractAddress }) => {
       // eslint-disable-next-line no-console
       console.error(ex);
     }
-    setEnabling(false);
+    setOperation('');
+    follow.close();
   };
 
   return (
@@ -30,12 +33,12 @@ const ButtonApprove = ({ contractAddress }) => {
       className="btn-primary"
       external
       size="m"
-      disabled={ enabling }
+      disabled={ operation === 'approve' }
       onClick={ onClick }
-      theme="white-gradient"
+      theme="blue"
       title="Approve contract"
     >
-      { enabling ? 'Approving...' : 'Approve contract' }
+      { operation ? 'Approving...' : 'Approve contract' }
     </Button>
   );
 };
