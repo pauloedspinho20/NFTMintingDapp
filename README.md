@@ -5,6 +5,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## TODO
 
 - Notice component for trasaction hash and errors
+- WalletConnect and Trust Wallet
 - Smart contract owner auto mint on deploy
 - Max tokens per address?
 - Collection Gallery with OpenSea link and IPFS provider image url with external link

@@ -297,11 +297,41 @@ const getCollection = async () => {
     const totalSupply = Number(await nftContract?.methods.totalSupply().call());
     const maxMintAmountPerTx = Number(await nftContract?.methods.maxMintAmountPerTx().call());
     const uriPrefix = await nftContract?.methods.uriPrefix().call();
+    const uriSuffix = await nftContract?.methods.uriSuffix().call();
     const hiddenMetadataUri = await nftContract?.methods.hiddenMetadataUri().call();
     const whitelistMintEnabled = await nftContract?.methods.whitelistMintEnabled().call();
     const whitelistClaimed = address ? await nftContract?.methods.whitelistClaimed(address).call() : false;
     const isAddressWhitelisted = address && await whitelistContains(address);
+    const userTokensIds = address ? await nftContract?.methods.walletOfOwner(address).call() : false;
+    const userTokens = [];
 
+    if (userTokensIds.length > 0 && address) {
+      await Promise.all(userTokensIds.map(async tokenId => {
+        const getTokenURI = await nftContract?.methods.tokenURI(tokenId).call();
+        const tokenURI = (getTokenURI.includes('ipfs://')
+          ? getTokenURI.replace('ipfs://', 'https://ipfs.io/ipfs/')
+          : getTokenURI
+        );
+        console.log('tokenURI', tokenURI);
+        if (tokenURI) {
+          const url = !revealed ? hiddenMetadataUri : (tokenURI);
+          const response = await fetch(url);
+          const metadata = await response.json();
+          const tokenName = metadata.name;
+          const { description } = metadata;
+          const image = (metadata?.image.includes('ipfs://')
+            ? metadata?.image.replace('ipfs://', 'https://ipfs.io/ipfs/')
+            : metadata?.image
+          );
+
+          userTokens.push({
+            tokenId, tokenURI, tokenName, description, image,
+          });
+        }
+      }));
+    }
+
+    console.log('userTokens', userTokens);
     const collection = {
       approved,
       enabled,
@@ -316,10 +346,12 @@ const getCollection = async () => {
       totalSupply,
       maxMintAmountPerTx,
       uriPrefix,
+      uriSuffix,
       hiddenMetadataUri,
       whitelistMintEnabled,
       whitelistClaimed,
       isAddressWhitelisted,
+      userTokens,
     };
 
     if (collection) {

@@ -1,152 +1,106 @@
 import {
+  arrayOf,
   bool, number, string,
 } from 'prop-types';
-import { useEffect, useState } from 'react';
 import classnames from 'classnames';
 
-import Button from 'components/Button/Button';
 import ButtonAddress from 'components/Button/Address';
-import ButtonApprove from 'components/Button/Approve';
-import ButtonMint from 'components/Button/Mint';
+import Image from 'components/Image';
 import Placeholder from 'components/Placeholder';
-import Price from 'components/Price';
-import Wallet from 'components/Wallet/Wallet';
 
-import useBepro from 'hooks/useBepro';
-
-import './Widget.scss';
+import './Collection.scss';
 
 const MintCollection = ({
-  approved,
-  enabled,
+  balanceOf,
   contractAddress,
   name,
+  isAddressWhitelisted,
   paused,
   revealed,
   symbol,
-  balanceOf,
-  cost,
-  maxSupply,
-  totalSupply,
-  maxMintAmountPerTx,
-  uriPrefix,
-  hiddenMetadataUri,
+  userTokens,
   whitelistMintEnabled,
-  whitelistClaimed,
-  isAddressWhitelisted,
-}) => {
-  const { address, ethBalance } = useBepro();
-  const [ amount, setAmount ] = useState(1);
-  const [ total, setTotal ] = useState(cost);
-  const ready = !paused !== null;
-
-  useEffect(() => {
-    setTotal(cost * amount);
-  }, [ amount, cost ]);
-
-  return (
-    <div
-      className={ classnames('minting--container', 'minting--main-container', 'minting--main-container' {
+}) => (
+  <div
+    className={ classnames('minting--container', 'minting--main-container', 'minting--main-container', {
       /*   'collection-status--active': revealed,
         'collection-status--paused': paused,
         'collection-status--whitelist': whitelistMintEnabled && !paused, */
-      }) }
-    >
+    }) }
+  >
 
-      <div className="minting-container--title">
-        <div className="minting-container--title-txt">
-          <h4 className="">
-            My Collection
-          </h4>
-          <div className="minting-item-subtitle minting-item-subtitle--smaller">
-            <ButtonAddress>{ contractAddress }</ButtonAddress>
-          </div>
+    <div className="minting-container--title">
+      <div className="minting-container--title-txt">
+        <h4 className="">
+          My Collection of
+          { ' ' }
+          { name }
+        </h4>
+
+        { paused && whitelistMintEnabled && isAddressWhitelisted && (
+          <p className="yellow mb-2">Whitelist collection</p>
+        ) }
+
+        { !revealed && (
+          <p className="yellow mb-2">This collection has not been revealed yet.</p>
+        ) }
+
+        <div className="minting-item-subtitle minting-item-subtitle--smaller mb-3">
+          <small>
+            <ButtonAddress format>
+              { contractAddress }
+            </ButtonAddress>
+          </small>
         </div>
+        <h6>{ `Balance: ${balanceOf} ${symbol}` }</h6>
       </div>
-
-      { enabled && (
-      <div>
-        <div className="container minting-items">
-
-        <div className="row">
-            <div className="col">
-              <div className="minting-item">
-                <div className="minting-item-subtitle minting-item-lbl">Balance</div>
-                <div className="minting-item-amount">
-                  <Placeholder ready={ ready }>
-                    { balanceOf }
-                  </Placeholder>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-md-6">
-              <div className="collection-item">
-              <Placeholder ready={ ready }>
-                    { revealed ? 'Yes' : 'No' }
-                  </Placeholder>
-              </div>
-            </div>
-
-
-          </div>
-
-        </div>
-      </div>
-      ) }
-
-      { !enabled && (
-      <div className="minting-items minting-items--coming-soon">
-        <div>
-          <span className="white-grad-title white-grad-title-35">COLLECTION COMING SOON</span>
-          <p>Please check later</p>
-        </div>
-      </div>
-      ) }
     </div>
-  );
-};
 
+    <div className="container collection-items">
+      <div className="row">
+        { userTokens.map(token => (
+          <div key={ `collection-item-${token?.tokenId}` } className="col-12 col-md-6 mb-4">
+            <div className="collection-item text-center">
+              <div className="collection-item-image mb-2">
+                <Placeholder ready={ token?.image }>
+                  <a href={ token?.image } target="_blank" rel="noreferrer">
+                    <Image src={ token?.image } alt={ token?.tokenName } />
+                  </a>
+                </Placeholder>
+              </div>
+              <div className="collection-item-name">{ token?.tokenName }</div>
+              <a href={ token?.image } target="_blank" rel="noreferrer">OpenSea</a>
+            </div>
+          </div>
+        )) }
+
+      </div>
+    </div>
+
+  </div>
+);
 MintCollection.propTypes = {
-  approved: bool,
-  enabled: bool,
-  contractAddress: string,
+  balanceOf: number,
   name: string,
+  contractAddress: string,
+  isAddressWhitelisted: bool,
   paused: bool,
   revealed: bool,
   symbol: string,
-  balanceOf: number,
-  cost: number,
-  maxSupply: number,
-  totalSupply: number,
-  maxMintAmountPerTx: number,
-  uriPrefix: string,
-  hiddenMetadataUri: string,
+  userTokens: arrayOf({}),
   whitelistMintEnabled: bool,
-  whitelistClaimed: bool,
-  isAddressWhitelisted: bool,
 };
 
 MintCollection.defaultProps = {
-  approved: null,
-  enabled: null,
+  balanceOf: null,
+  name: string,
   contractAddress: null,
-  name: null,
+  isAddressWhitelisted: null,
   paused: null,
   revealed: null,
   symbol: null,
-  balanceOf: null,
-  cost: null,
-  maxSupply: null,
-  totalSupply: null,
-  maxMintAmountPerTx: null,
-  uriPrefix: null,
-  hiddenMetadataUri: null,
+  userTokens: null,
   whitelistMintEnabled: null,
-  whitelistClaimed: null,
-  isAddressWhitelisted: null,
 };
 
 export default MintCollection;

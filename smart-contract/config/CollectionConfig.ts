@@ -13,7 +13,7 @@ const CollectionConfig: CollectionConfigInterface = {
   tokenName: "TheSpades",
   tokenSymbol: "SPADE",
   hiddenMetadataUri:
-    "ipfs://Qmb5Pb2z6CEh89trbBns9wArULxTFQBNeic7vDiqiiD6YA/hidden.json",
+    "https://ipfs.io/ipfs/Qmb5Pb2z6CEh89trbBns9wArULxTFQBNeic7vDiqiiD6YA/hidden.json",
   maxSupply: 25,
   whitelistSale: {
     price: 0.01,

@@ -1,7 +1,7 @@
 import InTransaction from 'components/InTransaction/InTransaction';
 import PageContainer from 'components/Page/Container';
 import MintWidget from 'components/Mint/Widget';
-
+import MintCollection from 'components/Mint/Collection';
 import useContracts from 'hooks/useContracts';
 import './style.scss';
 
@@ -24,18 +24,26 @@ const MintPage = () => {
         <section className="minting--section">
 
           <PageContainer>
-            <div className="row">
-              { !collection ? (
+            { !collection ? (
+              <div className="row">
                 <div className="minting--section-loading">
-                  <InTransaction label="Loading…" />
+                  <small><InTransaction label="Loading collection…" /></small>
                 </div>
-              ) : (
-                <div className="col-12 col-lg-6 mb-30">
-                  <MintWidget { ...collection } />
+              </div>
+            ) : (
+              <>
+                <div className="row">
+                  <div className="col-12 col-lg-6 mb-30">
+                    <MintWidget { ...collection } />
+                  </div>
+                  { collection?.balanceOf > 0 && (
+                    <div className="col-12 col-lg-6 mb-30">
+                      <MintCollection { ...collection } />
+                    </div>
+                  ) }
                 </div>
-              ) }
-
-            </div>
+              </>
+            ) }
           </PageContainer>
         </section>
 

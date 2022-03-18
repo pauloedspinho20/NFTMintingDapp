@@ -24,15 +24,11 @@ const MintWidget = ({
   paused,
   revealed,
   symbol,
-  balanceOf,
   cost,
   maxSupply,
   totalSupply,
   maxMintAmountPerTx,
-  uriPrefix,
-  hiddenMetadataUri,
   whitelistMintEnabled,
-  whitelistClaimed,
   isAddressWhitelisted,
 }) => {
   const { address, ethBalance } = useBepro();
@@ -60,24 +56,6 @@ const MintWidget = ({
     setStatus(st);
   }, [ whitelistMintEnabled, paused ]);
 
-  console.log('MintWidget', approved,
-    enabled,
-    contractAddress,
-    name,
-    paused,
-    revealed,
-    symbol,
-    balanceOf,
-    cost,
-    maxSupply,
-    totalSupply,
-    maxMintAmountPerTx,
-    uriPrefix,
-    hiddenMetadataUri,
-    whitelistMintEnabled,
-    whitelistClaimed,
-    isAddressWhitelisted);
-
   return (
     <div
       className={ classnames('minting--container', 'minting--main-container', {
@@ -94,7 +72,7 @@ const MintWidget = ({
             { name }
           </h2>
           <div className="minting-item-subtitle minting-item-subtitle--smaller">
-            <small><ButtonAddress>{ contractAddress }</ButtonAddress></small>
+            <small><ButtonAddress format>{ contractAddress }</ButtonAddress></small>
           </div>
         </div>
 
@@ -299,15 +277,11 @@ MintWidget.propTypes = {
   paused: bool,
   revealed: bool,
   symbol: string,
-  balanceOf: number,
   cost: number,
   maxSupply: number,
   totalSupply: number,
   maxMintAmountPerTx: number,
-  uriPrefix: string,
-  hiddenMetadataUri: string,
   whitelistMintEnabled: bool,
-  whitelistClaimed: bool,
   isAddressWhitelisted: bool,
 };
 
@@ -319,15 +293,11 @@ MintWidget.defaultProps = {
   paused: null,
   revealed: null,
   symbol: null,
-  balanceOf: null,
   cost: null,
   maxSupply: null,
   totalSupply: null,
   maxMintAmountPerTx: null,
-  uriPrefix: null,
-  hiddenMetadataUri: null,
   whitelistMintEnabled: null,
-  whitelistClaimed: null,
   isAddressWhitelisted: null,
 };
 
