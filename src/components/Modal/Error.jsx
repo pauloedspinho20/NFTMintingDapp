@@ -53,7 +53,6 @@ const ModalError = () => {
 
   const getAction = message => {
     switch (message) {
-      case 'no fevr':
       case 'no eth':
       case 'insufficient eth':
         return () => window.open('https://www.binance.com/en/buy-sell-crypto?channel=hzBankcard&fiat=USD&crypto=ETH');

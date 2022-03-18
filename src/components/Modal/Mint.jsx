@@ -4,7 +4,6 @@ import Button from 'components/Button/Button';
 import FormNumber from 'components/Form/Number';
 import Modal from 'components/Modal/Modal';
 import Price from 'components/Price';
-import 'components/Form/Range.scss';
 
 import useBepro from 'hooks/useBepro';
 import useContracts, { updateContracts } from 'hooks/useContracts';

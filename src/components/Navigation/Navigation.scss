@@ -1,40 +1,5 @@
 @import 'scss/init';
 
-.buyfevr--buy-options {
-  display: flex;
-
-  a {
-    color: $white;
-  }
-
-  img {
-    padding-right: 10px;
-    padding-top: 4px;
-
-    @include breakpoint(until-desktop) {
-      padding-right: 5px;
-    }
-  }
-
-  .separator {
-    padding-top: 8px;
-    padding-right: 10px;
-
-    @include breakpoint(until-desktop) {
-      display: none;
-    }
-  }
-}
-
-.buyfevr--buy-options-container {
-  display: flex;
-  align-items: center;
-
-  img {
-    cursor: pointer;
-  }
-}
-
 header#main-header {
   width: 100%;
   position: absolute;
