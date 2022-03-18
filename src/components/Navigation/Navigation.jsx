@@ -44,11 +44,8 @@ const Navigation = () => {
             <nav id="main-nav">
               <ul>
                 <NavigationItems />
-                <li className="nav-item-li" />
-                <li className="nav-item-li">
-                  <Wallet size="s" />
-                </li>
               </ul>
+              <Wallet size="s" />
             </nav>
             <button
               className={ classnames('mobile-menu-btn', {

@@ -94,10 +94,7 @@ header#main-header {
   #main-nav {
     @include clearfix();
 
-    display: block;
-    float: right;
-    position: relative;
-    top: 5px;
+    width: 100%;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 
     @include breakpoint(until-desktop) {
@@ -110,6 +107,19 @@ header#main-header {
 
     ul {
       @include clearfix();
+
+      margin-left: 3rem;
+      float: left;
+    }
+
+    .wallet-wrapper {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .wallet-wrapper,
+    .btn-connect-wallet {
+      float: right;
     }
 
     a.nav-item,
@@ -119,12 +129,26 @@ header#main-header {
       font-weight: 300;
       letter-spacing: 0.02em;
       text-transform: uppercase;
-      color: $white;
+      color: $orange;
       position: relative;
       transition: all 0.2s;
       cursor: pointer;
 
-      &:hover { color: $yellow; }
+      &:hover {
+        color: $orange;
+        text-decoration: none;
+
+        &::before {
+          content: '';
+          width: 100%;
+          height: 3px;
+          background: $orange;
+          display: block;
+          position: absolute;
+          bottom: -7px;
+          left: 0;
+        }
+      }
     }
 
     .nav-item-li {
@@ -156,10 +180,10 @@ header#main-header {
             font-weight: 400;
             letter-spacing: 0.02em;
             text-transform: uppercase;
-            color: $white;
+            color: $orange;
             padding-left: 20px;
             transition: all 0.15s;
-            &:hover { color: $yellow; }
+            &:hover { color: $orange; }
           }
 
           &:first-child {
@@ -186,20 +210,19 @@ header#main-header {
     }
 
     a.nav-item--current_page {
-      color: $yellow;
+      color: $orange;
+      // font-weight: 500;
       position: relative;
-      cursor: default;
 
       &::before {
         content: '';
         width: 100%;
         height: 2px;
-        background: $gradient_blue;
+        background: $orange;
         display: block;
         position: absolute;
         bottom: -7px;
         left: 0;
-        box-shadow: 3px 7px 15px rgba(13, 21, 62, 0.4), 3px 7px 15px rgba(13, 21, 62, 0.4);
       }
     }
 
@@ -217,7 +240,6 @@ header#main-header {
 
     .btn-connect-wallet {
       position: relative;
-      top: -5px;
       transition: all 0.25s;
     }
   }

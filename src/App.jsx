@@ -7,7 +7,9 @@ import Header from 'containers/Header/Header';
 import { getStorage } from 'hooks/useStorage';
 
 // PAGES
+import HomePage from 'pages/home';
 import MintPage from 'pages/mint';
+import CollectionPage from 'pages/collection';
 import FourOhFour from 'pages/404';
 import Maintenance from 'pages/maintenance';
 import Privacy from 'pages/privacy-policy';
@@ -41,7 +43,9 @@ function App() {
           <Header />
           <main id="main-content">
             <Switch>
-              <Route exact path="/" component={ MintPage } />
+              <Route exact path="/" component={ HomePage } />
+              <Route path="/mint" component={ MintPage } />
+              <Route path="/collection" component={ CollectionPage } />
               <Route path="/privacy-policy" component={ Privacy } />
               <Route path="/terms-conditions" component={ Terms } />
               <Route component={ FourOhFour } status={ 404 } />

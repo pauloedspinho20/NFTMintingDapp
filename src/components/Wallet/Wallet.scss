@@ -8,7 +8,6 @@
   letter-spacing: 0.02em;
   display: inline-block;
   color: $orange;
-  padding: 4px 10px 2px;
   position: relative;
   top: 3px;
   overflow: hidden;
@@ -18,20 +17,15 @@
   }
 }
 
-.wallet-connected-status {
-  border: 1px solid rgba($yellow, 0.8);
-  border-radius: 5px;
-  margin-left: 10px;
+.wallet-balance {
+  padding: 4px 10px 2px;
+}
 
-  img {
-    display: inline-block;
-    width: 13px;
-    height: auto;
-    position: relative;
-    top: -2px;
-    margin-left: 3px;
-    opacity: 0.9;
-  }
+.wallet-connected-status {
+  /*   border: 1px solid rgba($yellow, 0.8);
+  border-radius: 5px; */
+  width: 180px;
+  margin-left: 10px;
 }
 
 .wallet-balance {

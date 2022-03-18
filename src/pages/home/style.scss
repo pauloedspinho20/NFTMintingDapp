@@ -1,0 +1,56 @@
+@import 'scss/init';
+
+.App {
+  #main-content {
+    overflow: hidden;
+    background-size: 100% 100%;
+  }
+
+  .minting--section {
+    position: relative;
+
+    > .container > .row {
+      justify-content: center;
+
+      .minting--section-loading {
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+
+  .minting-main-value {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .minting-flexible-info--section {
+    margin-top: 40px;
+
+    .minting-flexible--info-container {
+      padding: 30px 0;
+    }
+  }
+
+  .minting-info--section {
+    margin-top: 40px;
+  }
+
+  .landing-banner {
+    margin-bottom: 55px;
+
+    img {
+      max-width: 628px;
+      width: 100%;
+    }
+  }
+
+  .landing-banner-item {
+    margin-bottom: 100px;
+
+    img {
+      max-width: 380px;
+      width: 100%;
+    }
+  }
+}

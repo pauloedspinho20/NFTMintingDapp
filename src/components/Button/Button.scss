@@ -127,17 +127,8 @@
 
   &.btn--bg-white {
     background: $white;
-    color: $black;
-
-    &::after {
-      mix-blend-mode: normal;
-    }
-
-    &:hover {
-      &::after {
-        opacity: 0.15;
-      }
-    }
+    border: 1px solid $purple;
+    color: $purple;
   }
 
   &.btn--bg-none {

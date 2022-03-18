@@ -9,7 +9,16 @@ export const maintenanceMessage = '';
 export const metamaskLink = 'https://metamask.io/download.html';
 export const trustWalletLink = 'https://trustwallet.com/';
 
-export const menuLinks = [];
+export const menuLinks = [
+  {
+    label: 'Mint',
+    link: '/mint',
+  },
+  {
+    label: 'Collection',
+    link: '/collection',
+  },
+];
 
 export const cookiesBanner = {
   body: 'Cookie Disclaimer. By navigating this site data will be stored in your browser, in order to enhance your browsing experience.',
