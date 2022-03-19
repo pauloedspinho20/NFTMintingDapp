@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { bool, string, node } from 'prop-types';
 import { useRouter } from 'next/router';
 import classnames from 'classnames';
@@ -17,7 +17,7 @@ import useAppSuffix from 'hooks/useAppSuffix';
 import useMobileNav from 'hooks/useMobileNav';
 import useQueryParams, { getQueryParams } from 'hooks/useQueryParams';
 import useIpfs from 'hooks/useIpfs';
-import { maintenanceMessage, pageMeta } from 'config';
+import { pageMeta } from 'config';
 
 const getPageSuffix = (appSuffix, isError, pathname) => {
   if (isError) {
@@ -61,7 +61,6 @@ const AppWrapper = ({
 
   const [ , setMobileNav ] = useMobileNav();
 
-  console.log('suffix', suffix);
   useEffect(() => {
     // Always close the mobile menu on route switch
     setMobileNav(null);

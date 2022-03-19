@@ -34,7 +34,7 @@ const CollectionPage = () => {
               <>
                 <div className="row">
                   { collection?.balanceOf > 0 && (
-                    <div className="col-12 col-lg-6 mb-30">
+                    <div className="col-12 mb-30">
                       <MintCollection { ...collection } />
                     </div>
                   ) }

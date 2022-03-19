@@ -1,7 +1,8 @@
 import { forwardRef } from 'react';
 import { string } from 'prop-types';
-import Image from 'next/image';
-import loading from './assets/loading.svg';
+import Image from 'components/Image';
+// import absoluteUrl from 'utils/absoluteUrl';
+// import loading from './assets/loading.svg';
 
 const InTransaction = forwardRef(({ label }, ref) => (
   <div
@@ -11,7 +12,7 @@ const InTransaction = forwardRef(({ label }, ref) => (
     <Image
       alt={ label }
       className="in-transaction--image"
-      src={ loading }
+      src="/media/loading.svg"
     />
 
     { label }

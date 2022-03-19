@@ -1,5 +1,5 @@
 import { node, string } from 'prop-types';
-import Image from 'next/image';
+import Image from 'components/Image';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 

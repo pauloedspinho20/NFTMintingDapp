@@ -43,7 +43,7 @@ const Navigation = () => {
               <ul>
                 <NavigationItems />
               </ul>
-              <Wallet size="s" />
+              <Wallet withBalance size="s" />
             </nav>
             <button
               className={ classnames('mobile-menu-btn', {

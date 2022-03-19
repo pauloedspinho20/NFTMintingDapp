@@ -1,5 +1,4 @@
 import Link from 'components/Link';
-import Logo from 'components/Logo/Logo';
 import NavigationSocialMedia from 'components/Navigation/SocialMedia';
 import PageContainer from 'components/Page/Container';
 

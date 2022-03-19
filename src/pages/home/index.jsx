@@ -33,14 +33,16 @@ const HomePage = () => {
               </div>
             ) : (
               <>
-                <div className="row">
-                  <div className="col-12 col-lg-6 mb-30">
+                <div className="row mb-5">
+                  <div className="col-12 col-md-6 mb-5">
                     <MintWidget { ...collection } />
                   </div>
+                </div>
+                <div className="row">
                   { collection?.balanceOf > 0 && (
-                  <div className="col-12 col-lg-6 mb-30">
-                    <MintCollection { ...collection } />
-                  </div>
+                    <div className="col-12 mb-30">
+                      <MintCollection { ...collection } />
+                    </div>
                   ) }
                 </div>
               </>

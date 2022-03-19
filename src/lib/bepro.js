@@ -317,20 +317,19 @@ const getCollection = async () => {
           const response = await fetch(url);
           const metadata = await response.json();
           const tokenName = metadata.name;
-          const { description } = metadata;
+          const { description, attributes } = metadata;
           const image = (metadata?.image.includes('ipfs://')
             ? metadata?.image.replace('ipfs://', 'https://ipfs.io/ipfs/')
             : metadata?.image
           );
 
           userTokens.push({
-            tokenId, tokenURI, tokenName, description, image,
+            tokenId, tokenURI, tokenName, description, image, attributes,
           });
         }
       }));
     }
 
-    console.log('userTokens', userTokens);
     const collection = {
       approved,
       enabled,

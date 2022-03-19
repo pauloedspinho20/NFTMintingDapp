@@ -2,7 +2,7 @@ import React from 'react';
 import { string } from 'prop-types';
 import classnames from 'classnames';
 
-import Image from 'next/image';
+import Image from 'components/Image';
 
 import logo from './assets/logo.png';
 
