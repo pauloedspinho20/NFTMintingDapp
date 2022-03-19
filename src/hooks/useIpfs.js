@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 
 const useIpfs = () => {
-  const ipfsUrl = process.env.REACT_APP_IPFS_URL;
+  const ipfsUrl = process.env.NEXT_PUBLIC_IPFS_URL;
 
   return useCallback(url => url?.replace(/^ipfs:\/\/ipfs\//, ipfsUrl), [ ipfsUrl ]);
 };

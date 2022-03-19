@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'components/Link';
 import classnames from 'classnames';
 import { createGlobalState } from 'react-hooks-global-state';
 import parser from 'html-react-parser';
@@ -9,8 +9,6 @@ import Button from 'components/Button/Button';
 import useConsent from 'hooks/useConsent';
 
 import { cookiesBanner } from 'config';
-
-import './CookiesBanner.scss';
 
 export const { useGlobalState } = createGlobalState({
   cookiesScreen: '',

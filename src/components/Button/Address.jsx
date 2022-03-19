@@ -15,8 +15,8 @@ const ButtonAddress = ({
   } = useBepro();
 
   const formatAddress = address => {
-    const first = address.substr(0, 5);
-    const last = address.substr(-4);
+    const first = address?.substr(0, 5);
+    const last = address?.substr(-4);
     return `${first}...${last}`;
   };
 

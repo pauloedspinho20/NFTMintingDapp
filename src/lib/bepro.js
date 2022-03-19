@@ -21,7 +21,7 @@ import Numbers from './utils/Numbers';
 // ABIs
 const erc721ContractV1Abi = require('lib/abis/ERC721ContractV1.json');
 
-const env = process.env.REACT_APP_ENVIRONMENT;
+const env = process.env.NEXT_PUBLIC_ENVIRONMENT;
 
 const resolve = {};
 
@@ -252,8 +252,8 @@ const approveContract = async contractAddress => {
 */
 const getContractAddress = () => (
   env === 'production'
-    ? process.env.REACT_APP_CONTRACT_ADDRESS_ETHEREUM
-    : process.env.REACT_APP_CONTRACT_ADDRESS_RINKEBY
+    ? process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_ETHEREUM
+    : process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_RINKEBY
 );
 
 const getMerkleTree = merkleTree => {
@@ -285,7 +285,7 @@ const getCollection = async () => {
     const contractAddress = getContractAddress();
     const nftContract = await getERC721Contract(contractAddress);
     // const merkleRoot = await nftContract?.methods.merkleRoot().call();
-    const enabled = process.env.REACT_APP_COLLECTION_ENABLED === 'true';
+    const enabled = process.env.NEXT_PUBLIC_COLLECTION_ENABLED === 'true';
     const approved = address ? await nftContract?.methods.isApprovedForAll(address, contractAddress).call() : false;
     const name = await nftContract?.methods.name().call();
     const paused = await nftContract?.methods.paused().call();
@@ -317,20 +317,19 @@ const getCollection = async () => {
           const response = await fetch(url);
           const metadata = await response.json();
           const tokenName = metadata.name;
-          const { description } = metadata;
+          const { description, attributes } = metadata;
           const image = (metadata?.image.includes('ipfs://')
             ? metadata?.image.replace('ipfs://', 'https://ipfs.io/ipfs/')
             : metadata?.image
           );
 
           userTokens.push({
-            tokenId, tokenURI, tokenName, description, image,
+            tokenId, tokenURI, tokenName, description, image, attributes,
           });
         }
       }));
     }
 
-    console.log('userTokens', userTokens);
     const collection = {
       approved,
       enabled,

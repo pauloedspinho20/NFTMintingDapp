@@ -1,12 +1,11 @@
 /* eslint-disable max-len, react/no-unescaped-entities */
 
+import AppWrapper from 'containers/AppWrapper';
 import PageContainer from 'components/Page/Container';
 import PageTitle from 'components/Page/Title';
 
-import './style.scss';
-
 const Terms = () => (
-  <>
+  <AppWrapper>
     <PageTitle>Privacy Policy</PageTitle>
     <PageContainer className="container--legal-body">
       <div className="row">
@@ -29,7 +28,7 @@ const Terms = () => (
         </div>
       </div>
     </PageContainer>
-  </>
+  </AppWrapper>
 );
 
 export default Terms;

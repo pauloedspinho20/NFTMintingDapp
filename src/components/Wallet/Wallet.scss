@@ -1,5 +1,3 @@
-@import 'scss/init';
-
 .wallet-connected-status,
 .wallet-balance {
   font-size: 0.8rem;
@@ -19,15 +17,10 @@
 
 .wallet-balance {
   padding: 4px 10px 2px;
+  color: $purple;
 }
 
 .wallet-connected-status {
-  /*   border: 1px solid rgba($yellow, 0.8);
-  border-radius: 5px; */
   width: 180px;
   margin-left: 10px;
-}
-
-.wallet-balance {
-  color: $purple;
 }

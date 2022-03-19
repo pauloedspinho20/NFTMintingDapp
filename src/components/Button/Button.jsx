@@ -2,9 +2,7 @@ import {
   bool, func, node, oneOf, string,
 } from 'prop-types';
 import classnames from 'classnames';
-import { Link } from 'react-router-dom';
-
-import './Button.scss';
+import Link from 'components/Link';
 
 const Button = ({
   children,

@@ -8,8 +8,6 @@ import useMobileNav from 'hooks/useMobileNav';
 
 import NavigationItems from './Items';
 
-import './Navigation.scss';
-
 const NavigationMobile = () => {
   const [ mobileNav, setMobileNav ] = useMobileNav();
 

@@ -1,5 +1,3 @@
-@import 'scss/init';
-
 header#main-header {
   width: 100%;
   position: absolute;
@@ -94,7 +92,6 @@ header#main-header {
   #main-nav {
     @include clearfix();
 
-    width: 100%;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 
     @include breakpoint(until-desktop) {
@@ -108,7 +105,8 @@ header#main-header {
     ul {
       @include clearfix();
 
-      margin-left: 3rem;
+      margin-right: 2rem;
+      margin-top: 3px;
       float: left;
     }
 
@@ -126,7 +124,7 @@ header#main-header {
     span.nav-item {
       font-size: 0.875rem;
       line-height: 1em;
-      font-weight: 300;
+      font-weight: 500;
       letter-spacing: 0.02em;
       text-transform: uppercase;
       color: $orange;

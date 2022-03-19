@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-indent */
 import {
   bool, number, string,
 } from 'prop-types';
@@ -13,8 +14,6 @@ import Price from 'components/Price';
 import Wallet from 'components/Wallet/Wallet';
 
 import useBepro from 'hooks/useBepro';
-
-import './Widget.scss';
 
 const MintWidget = ({
   approved,
@@ -57,213 +56,207 @@ const MintWidget = ({
   }, [ whitelistMintEnabled, paused ]);
 
   return (
-    <div
-      className={ classnames('minting--container', 'minting--main-container', {
-        'collection-status--active': revealed,
-        'collection-status--paused': paused,
-        'collection-status--whitelist': whitelistMintEnabled && !paused,
-      }) }
-    >
+    <div className={ classnames('minting--container', 'minting--main-container', {}) }>
+      { typeof window !== 'undefined' && (
+        <>
+          <div className="minting-container--title">
 
-      <div className="minting-container--title">
-
-        <div className="minting-container--title-txt">
-          <h2 className="">
-            { name }
-          </h2>
-          <div className="minting-item-subtitle minting-item-subtitle--smaller">
-            <small><ButtonAddress format>{ contractAddress }</ButtonAddress></small>
-          </div>
-        </div>
-
-        { /*  <div className="minting-container--title-badge">
-          { name }
-        </div> */ }
-
-      </div>
-
-      { enabled && (
-      <div>
-        <div className="container minting-items">
-          <div className="row">
-            <div className="col-12 col-md-6">
-              <div className="minting-item">
-                <div className="minting-item-subtitle minting-item-lbl">Sale Status</div>
-                <div className="minting-item-amount">
-                  <Placeholder ready={ status }>
-                    { status }
-                  </Placeholder>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-12 col-md-6">
-              <div className="minting-item">
-                <div className="minting-item-subtitle minting-item-lbl">Revealed</div>
-                <div className="minting-item-amount">
-                  <Placeholder ready={ ready }>
-                    { revealed ? 'Yes' : 'No' }
-                  </Placeholder>
-                </div>
+            <div className="minting-container--title-txt">
+              <h4 className="mb-0">
+                Mint
+              { ' ' }
+              { name }
+              </h4>
+              <div className="minting-item-subtitle minting-item-subtitle--smaller">
+                <small><ButtonAddress format>{ contractAddress }</ButtonAddress></small>
               </div>
             </div>
           </div>
 
-          <div className="row">
-            <div className="col-12 col-md-6">
-              <div className="minting-item">
-                <div className="minting-item-subtitle minting-item-lbl">Supply</div>
-                <div className="minting-item-amount">
-                  <Placeholder ready={ ready }>
-                    { `${totalSupply}/${maxSupply} ${symbol}` }
-                  </Placeholder>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-12 col-md-6">
-              <div className="minting-item">
-                <div className="minting-item-subtitle minting-item-lbl">Max NFTs per mint</div>
-                <div className="minting-item-amount">
-                  <Placeholder ready={ ready }>
-                    { maxMintAmountPerTx }
-                  </Placeholder>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-          <div className="row">
-            <div className="col-12 col-md-6">
-              <div className="minting-item">
-                <div className="minting-item-subtitle minting-item-lbl">Balance</div>
-                <div className="minting-item-amount">
-                  <Placeholder ready={ ready }>
-                    <Price
-                      eth={ ethBalance }
-                      options={ { exact: true } }
-                      output="eth"
-                      showLabel
-                    />
-                  </Placeholder>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-12 col-md-6">
-              <div className="minting-item">
-                <div className="minting-item-subtitle minting-item-lbl">NFT Price</div>
-                <div className="minting-item-amount">
-                  <Placeholder ready={ ready }>
-                    <Price
-                      eth={ cost }
-                      options={ { exact: true } }
-                      output="eth"
-                      showLabel
-                    />
-                  </Placeholder>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            className={ classnames('row', 'minting-actions', {
-            /*   'minting-actions--status-disabled': (address && ready) || (whitelistMintEnabled && address),
-              'minting-actions--blurred': (address && ready) || (whitelistMintEnabled && address), */
-            }) }
-          >
-
-            { /*     { !!address && whitelistMintEnabled && !isAddressWhitelisted && (
-            <span className="minting-actions--notice">
-              This address is not whitelisted
-            </span>
-            ) } */ }
-
-            <div className="col">
-              { !address && ready && <Wallet size="m" /> }
-
-              { !!address && ready && !approved && contractAddress && (
-                <ButtonApprove
-                  contractAddress={ contractAddress }
-                />
-              ) }
-
-              { !!address && ready && approved && (
-                <div className="minting-item minting-action-wrapper">
-                  <div className="minting-amount-title">Amount</div>
-                  <div className="minting-amount-wrapper">
-                    <Button
-                      disabled={ amount <= 1 }
-                      onClick={ () => {
-                        if (amount >= 1) {
-                          setAmount(amount - 1);
-                        }
-                      } }
-                      theme="blue"
-                      size="s"
-                    >
-                      -
-                    </Button>
-
-                    <div className="minting-amount">{ amount }</div>
-
-                    <Button
-                      disabled={ amount >= maxMintAmountPerTx }
-                      onClick={ () => {
-                        if (amount <= maxMintAmountPerTx) {
-                          setAmount(amount + 1);
-                        }
-                      } }
-                      theme="blue"
-                      size="s"
-                    >
-                      +
-                    </Button>
+          { enabled && (
+            <div>
+              <div className="container minting-items">
+                <div className="row">
+                  <div className="col-12 col-md-6">
+                    <div className="minting-item">
+                      <div className="minting-item-subtitle minting-item-lbl">Sale Status</div>
+                      <div className="minting-item-amount">
+                        <Placeholder ready={ status }>
+                        { status }
+                        </Placeholder>
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="minting-info">
-                    <div>
-                      <strong>Total: </strong>
-                      { ' ' }
-                      <Price
-                        eth={ total }
-                        options={ { exact: true } }
-                        output="eth"
-                        showLabel
-                      />
+                  <div className="col-12 col-md-6">
+                    <div className="minting-item">
+                      <div className="minting-item-subtitle minting-item-lbl">Revealed</div>
+                      <div className="minting-item-amount">
+                        <Placeholder ready={ ready }>
+                        { revealed ? 'Yes' : 'No' }
+                        </Placeholder>
+                      </div>
                     </div>
+                  </div>
+                </div>
 
-                    <div className="minting-notices">
-                      { total > ethBalance && (
-                        <span className="red">Insufficient ETH balance</span>
+                <div className="row">
+                  <div className="col-12 col-md-6">
+                    <div className="minting-item">
+                      <div className="minting-item-subtitle minting-item-lbl">Supply</div>
+                      <div className="minting-item-amount">
+                        <Placeholder ready={ ready }>
+                        { `${totalSupply}/${maxSupply} ${symbol}` }
+                        </Placeholder>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-12 col-md-6">
+                    <div className="minting-item">
+                      <div className="minting-item-subtitle minting-item-lbl">Max NFTs per mint</div>
+                      <div className="minting-item-amount">
+                        <Placeholder ready={ ready }>
+                        { maxMintAmountPerTx }
+                        </Placeholder>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div className="row">
+                  <div className="col-12 col-md-6">
+                    <div className="minting-item">
+                      <div className="minting-item-subtitle minting-item-lbl">Balance</div>
+                      <div className="minting-item-amount">
+                        <Placeholder ready={ ready }>
+                        <Price
+                          eth={ ethBalance }
+                          options={ { exact: true } }
+                          output="eth"
+                          showLabel
+                        />
+                        </Placeholder>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-12 col-md-6">
+                    <div className="minting-item">
+                      <div className="minting-item-subtitle minting-item-lbl">NFT Price</div>
+                      <div className="minting-item-amount">
+                        <Placeholder ready={ ready }>
+                        <Price
+                          eth={ cost }
+                          options={ { exact: true } }
+                          output="eth"
+                          showLabel
+                        />
+                        </Placeholder>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  className={ classnames('row', 'minting-actions', {
+                    /*   'minting-actions--status-disabled': (address && ready) || (whitelistMintEnabled && address),
+                  'minting-actions--blurred': (address && ready) || (whitelistMintEnabled && address), */
+                  }) }
+                >
+
+                  { /*     { !!address && whitelistMintEnabled && !isAddressWhitelisted && (
+                <span className="minting-actions--notice">
+                  This address is not whitelisted
+                </span>
+                ) } */ }
+
+                  <div className="col">
+                    { !address && ready && <Wallet size="m" /> }
+
+                    { !!address && ready && !approved && contractAddress && (
+                    <ButtonApprove
+                      contractAddress={ contractAddress }
+                    />
+                    ) }
+
+                    { !!address && ready && approved && (
+                    <div className="minting-item minting-action-wrapper">
+                      <div className="minting-amount-title">Amount</div>
+                      <div className="minting-amount-wrapper">
+                        <Button
+                          disabled={ amount <= 1 }
+                          onClick={ () => {
+                            if (amount >= 1) {
+                              setAmount(amount - 1);
+                            }
+                          } }
+                          theme="blue"
+                          size="s"
+                        >
+                          -
+                        </Button>
+
+                        <div className="minting-amount">{ amount }</div>
+
+                        <Button
+                          disabled={ amount >= maxMintAmountPerTx }
+                          onClick={ () => {
+                            if (amount <= maxMintAmountPerTx) {
+                              setAmount(amount + 1);
+                            }
+                          } }
+                          theme="blue"
+                          size="s"
+                        >
+                          +
+                        </Button>
+                      </div>
+
+                      <div className="minting-info">
+                        <div>
+                          <strong>Total: </strong>
+                          { ' ' }
+                          <Price
+                            eth={ total }
+                            options={ { exact: true } }
+                            output="eth"
+                            showLabel
+                          />
+                        </div>
+
+                        <div className="minting-notices">
+                          { total > ethBalance && (
+                            <span className="red">Insufficient ETH balance</span>
+                          ) }
+                        </div>
+                      </div>
+
+                      <div className="minting-button-wrapper">
+                        <ButtonMint amount={ amount } contractAddress={ contractAddress } />
+
+                      </div>
+                      { !isAddressWhitelisted && whitelistMintEnabled && (
+                      <small>Yout address is not whitelisted</small>
                       ) }
                     </div>
+                    ) }
                   </div>
-
-                  <div className="minting-button-wrapper">
-                    <ButtonMint amount={ amount } contractAddress={ contractAddress } />
-
-                  </div>
-                  { !isAddressWhitelisted && whitelistMintEnabled && (
-                  <small>Yout address is not whitelisted</small>
-                  ) }
                 </div>
-              ) }
+              </div>
+            </div>
+          ) }
+
+          { !enabled && (
+          <div className="minting-items minting-items--coming-soon">
+            <div>
+              <span className="white-grad-title white-grad-title-35">COLLECTION COMING SOON</span>
+              <p>Please check later</p>
             </div>
           </div>
-        </div>
-      </div>
-      ) }
-
-      { !enabled && (
-      <div className="minting-items minting-items--coming-soon">
-        <div>
-          <span className="white-grad-title white-grad-title-35">COLLECTION COMING SOON</span>
-          <p>Please check later</p>
-        </div>
-      </div>
+          ) }
+        </>
       ) }
     </div>
   );

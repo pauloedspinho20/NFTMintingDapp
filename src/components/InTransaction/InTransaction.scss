@@ -10,7 +10,7 @@
 
 .in-transaction--image {
   width: 48px !important;
-  height: 48px;
+  height: 48px !important;
   margin: 18px !important;
   animation-name: in-transaction;
   animation-duration: 3500ms;

@@ -1,12 +1,11 @@
-import { Link } from 'react-router-dom';
+import Link from 'components/Link';
 
+import AppWrapper from 'containers/AppWrapper';
 import Logo from 'components/Logo/Logo';
 
-import './style.scss';
-
 const Maintenance = () => (
-  <div className="App pg-maintenance">
-    <div id="main-content">
+  <AppWrapper>
+    <div className="App pg-maintenance">
       <Link
         className="logo"
         to="/"
@@ -22,7 +21,7 @@ const Maintenance = () => (
       </div>
       <div className="maintenance--bg" />
     </div>
-  </div>
+  </AppWrapper>
 );
 
 export default Maintenance;

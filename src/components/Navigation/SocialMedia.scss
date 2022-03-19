@@ -1,0 +1,63 @@
+.social-media-nav {
+  overflow: hidden;
+  display: inline-block;
+  position: relative;
+  top: 5px;
+  margin-right: 45px;
+
+  @include breakpoint(until-desktop) {
+    margin-right: 35px;
+  }
+
+  @include breakpoint(until-landscape) {
+    .mobile-nav & {
+      margin-top: 20px;
+    }
+  }
+
+  .footer-footnote & {
+    margin-right: 0;
+  }
+
+  ul {
+    overflow: hidden;
+    display: block;
+    text-align: left;
+  }
+
+  li {
+    float: left;
+    display: block;
+
+    &:not(:last-child) {
+      margin-right: 20px;
+
+      @include breakpoint(until-desktop) {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  a.social-item {
+    @include hide-text();
+
+    width: 18px;
+    height: 18px;
+    display: block;
+    background: 50% 50% no-repeat;
+    opacity: 0.8;
+
+    &.social-discord { background-image: url('assets/ico-social-discord.svg'); }
+    &.social-facebook { background-image: url('assets/ico-social-facebook.svg'); }
+    &.social-instagram { background-image: url('assets/ico-social-instagram.svg'); }
+    &.social-linkedin { background-image: url('assets/ico-social-linkedin.svg'); }
+    &.social-telegram { background-image: url('assets/ico-social-telegram.svg'); }
+    &.social-twitter { background-image: url('assets/ico-social-twitter.svg'); }
+    &.social-youtube { background-image: url('assets/ico-social-youtube.svg'); }
+    &.social-medium { background-image: url('assets/ico-social-medium.svg'); }
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}

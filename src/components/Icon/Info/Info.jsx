@@ -3,8 +3,6 @@ import Image from 'components/Image';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
-import './Info.scss';
-
 const IconInfo = ({
   alt, children, id, src,
 }) => (

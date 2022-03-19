@@ -16,7 +16,7 @@ const Logo = ({ className }) => {
         src={ logo }
       />
     ) : (
-      <h4 className={ classnames('logo', className) }>NFTMintingDapp</h4>
+      <h4 className={ classnames('logo', className) }>{ process.env.NEXT_PUBLIC_DAPP_NAME || 'NFTMintingDapp' }</h4>
     )
   );
 };

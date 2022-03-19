@@ -1,17 +1,39 @@
 .collection-items {
   .collection-item {
+    border: 1px solid $yellow;
+    border-radius: 10px;
+
     .collection-item-image {
+      margin-bottom: 0;
+
       img {
         width: 100%;
         height: 250px;
         object-fit: cover;
         user-select: all;
         cursor: pointer;
+        border-radius: 10px;
       }
     }
 
-    .collection-item-name {
-      font-weight: 700;
+    .collection-item-content {
+      padding: 30px;
+
+      .collection-item-name {
+        font-weight: 700;
+        margin-bottom: 5px;
+      }
+
+      .collection-item-attributes {
+        font-size: 12px;
+        margin-bottom: 30px;
+      }
+
+      .collection-item-actions {
+        display: inline-flex;
+        justify-content: space-between;
+        width: 100%;
+      }
     }
   }
 }

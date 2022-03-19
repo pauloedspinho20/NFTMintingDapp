@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'components/Link';
 
 import ButtonConnectWallet from 'components/Button/ConnectWallet';
 import IconMetamask from 'components/Icon/Metamask/Metamask';
@@ -65,14 +65,7 @@ const ModalConnectWallet = () => {
 
       { !show?.wrongNetwork && (
         <>
-          <div className="popup--title">Connect your wallet</div>
-          <div className="popup--desc">
-            { 'By connecting your wallet, you agree to our ' }
-            <Link to="/terms-conditions">Terms of Service</Link>
-            { ' and our ' }
-            <Link to="/privacy-policy">Privacy Policy</Link>
-            .
-          </div>
+          <div className="popup--title mb-5">Connect your wallet</div>
 
           <div className="wallet-actions">
             <ul className="popup--actions">

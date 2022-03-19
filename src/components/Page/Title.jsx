@@ -1,7 +1,5 @@
 import { node } from 'prop-types';
 
-import './Title.scss';
-
 const PageTitle = ({ children }) => (
   <h2 className="page-main-title">{ children }</h2>
 );
