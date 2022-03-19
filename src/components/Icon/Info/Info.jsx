@@ -1,9 +1,7 @@
 import { node, string } from 'prop-types';
-import Image from 'components/Image';
+import Image from 'next/image';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
-
-import './Info.scss';
 
 const IconInfo = ({
   alt, children, id, src,

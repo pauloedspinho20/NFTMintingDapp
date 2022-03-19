@@ -4,8 +4,6 @@ import ButtonAddress from 'components/Button/Address';
 import useBepro from 'hooks/useBepro';
 import useModal from 'hooks/useModal';
 
-import './Wallet.scss';
-
 const Wallet = () => {
   const { open } = useModal('connect-wallet');
   const { address, ethBalance } = useBepro();

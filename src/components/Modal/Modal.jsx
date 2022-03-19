@@ -3,8 +3,6 @@ import BootstrapModal from 'react-bootstrap/Modal';
 
 import useModal from 'hooks/useModal';
 
-import './Modal.scss';
-
 const Modal = ({
   children, className, name, onClose,
 }) => {

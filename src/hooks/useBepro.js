@@ -98,12 +98,12 @@ const useBepro = () => {
   const { web3Connection } = useMemo(() => {
     if (network === 'rinkeby') {
       return {
-        web3Connection: process.env.REACT_APP_RPC_RINKEBY,
+        web3Connection: process.env.NEXT_PUBLIC_RPC_RINKEBY,
       };
     }
 
     return {
-      web3Connection: process.env.REACT_APP_RPC_ETHEREUM,
+      web3Connection: process.env.NEXT_PUBLIC_RPC_ETHEREUM,
     };
   }, [ network ]);
 

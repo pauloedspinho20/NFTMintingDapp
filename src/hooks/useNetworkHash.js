@@ -1,7 +1,7 @@
-import { useCallback } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+// import { useCallback } from 'react';
+// import { useRouter } from 'next/router';
 
-const env = process.env.REACT_APP_ENVIRONMENT;
+const env = process.env.NEXT_PUBLIC_ENVIRONMENT;
 
 const getNetwork = hash => {
   const network = (hash || '').replace(/^#/, '') || 'eth';
@@ -36,17 +36,9 @@ export const getHashFromNetwork = network => {
 };
 
 const useNetworkHash = () => {
-  const { hash, pathname, search } = useLocation();
-  const { push } = useHistory();
+  const network = getNetwork('');
 
-  const network = getNetwork(hash);
-
-  const setHash = useCallback(
-    next => push(`${pathname}${search}#${next}`),
-    [ pathname, push, search ],
-  );
-
-  return { network, setHash };
+  return { network };
 };
 
 export default useNetworkHash;

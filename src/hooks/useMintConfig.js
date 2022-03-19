@@ -9,7 +9,7 @@ export const updateMintConfig = async () => {
     return;
   }
 
-  const mintConfig = (process.env.REACT_APP_ENVIRONMENT === 'production')
+  const mintConfig = (process.env.NEXT_PUBLIC_ENVIRONMENT === 'production')
     ? await import('lib/api/localConfigProduction.json')
     : await import('lib/api/localConfigStagingMint.json');
 

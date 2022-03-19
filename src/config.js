@@ -9,6 +9,35 @@ export const maintenanceMessage = '';
 export const metamaskLink = 'https://metamask.io/download.html';
 export const trustWalletLink = 'https://trustwallet.com/';
 
+export const pageMeta = {
+  description: 'TEMPLATE FOR ERC721 NFT MINTING DAPPS',
+  image: '/media/share-img.jpg',
+  title: process.env.NEXT_PUBLIC_DAPP_NAME || 'NFTMintingDapp',
+};
+
+export const socialLinks = [
+  {
+    label: 'Telegram',
+    link: 'https://telegram.com',
+    logo: 'telegram',
+  },
+  {
+    label: 'Discord',
+    link: 'https://discord.com',
+    logo: 'discord',
+  },
+  {
+    label: 'Twitter',
+    link: 'https://twitter.com',
+    logo: 'twitter',
+  },
+  {
+    label: 'Instagram',
+    link: 'https://www.instagram.com',
+    logo: 'instagram',
+  },
+];
+
 export const menuLinks = [
   {
     label: 'Mint',
@@ -40,7 +69,7 @@ export const chains = [
       symbol: 'BNB',
       decimals: 18,
     },
-    rpcUrls: [ process.env.REACT_APP_RPC_BSC ],
+    rpcUrls: [ process.env.NEXT_PUBLIC_RPC_BSC ],
     slug: 'bsc',
   },
   { // ETHEREUM MAINNET
@@ -53,7 +82,7 @@ export const chains = [
       symbol: 'ETH',
       decimals: 18,
     },
-    rpcUrls: [ process.env.REACT_APP_RPC_ETHEREUM ],
+    rpcUrls: [ process.env.NEXT_PUBLIC_RPC_ETHEREUM ],
     slug: 'eth',
   },
   { // KOVAN TESTNET
@@ -66,7 +95,7 @@ export const chains = [
       symbol: 'ETH',
       decimals: 18,
     },
-    rpcUrls: [ process.env.REACT_APP_RPC_KOVAN ],
+    rpcUrls: [ process.env.NEXT_PUBLIC_RPC_KOVAN ],
     slug: 'kovan',
   },
   { // RINKEBY TESTNET
@@ -79,7 +108,7 @@ export const chains = [
       symbol: 'ETH',
       decimals: 18,
     },
-    rpcUrls: [ process.env.REACT_APP_RPC_RINKEBY ],
+    rpcUrls: [ process.env.NEXT_PUBLIC_RPC_RINKEBY ],
     slug: 'rinkeby',
   },
 ];

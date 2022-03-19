@@ -4,10 +4,8 @@ import {
 import classnames from 'classnames';
 
 import ButtonAddress from 'components/Button/Address';
-import Image from 'components/Image';
+import Image from 'next/image';
 import Placeholder from 'components/Placeholder';
-
-import './Collection.scss';
 
 const MintCollection = ({
   balanceOf,
@@ -27,56 +25,58 @@ const MintCollection = ({
         'collection-status--whitelist': whitelistMintEnabled && !paused, */
     }) }
   >
+    { typeof window !== 'undefined' && (
+      <>
+        <div className="minting-container--title">
+          <div className="minting-container--title-txt">
+            <h4 className="">
+              My Collection of
+              { ' ' }
+              { name }
+            </h4>
 
-    <div className="minting-container--title">
-      <div className="minting-container--title-txt">
-        <h4 className="">
-          My Collection of
-          { ' ' }
-          { name }
-        </h4>
+            { paused && whitelistMintEnabled && isAddressWhitelisted && (
+            <p className="yellow mb-2">Whitelist collection</p>
+            ) }
 
-        { paused && whitelistMintEnabled && isAddressWhitelisted && (
-          <p className="yellow mb-2">Whitelist collection</p>
-        ) }
+            { !revealed && (
+            <p className="yellow mb-2">This collection has not been revealed yet.</p>
+            ) }
 
-        { !revealed && (
-          <p className="yellow mb-2">This collection has not been revealed yet.</p>
-        ) }
-
-        <div className="minting-item-subtitle minting-item-subtitle--smaller mb-3">
-          <small>
-            <ButtonAddress format>
-              { contractAddress }
-            </ButtonAddress>
-          </small>
-        </div>
-        <h6>{ `Balance: ${balanceOf} ${symbol}` }</h6>
-      </div>
-    </div>
-
-    <div className="container collection-items">
-      <div className="row">
-        { userTokens.map(token => (
-          <div key={ `collection-item-${token?.tokenId}` } className="col-12 col-md-6 mb-4">
-            <div className="collection-item text-center">
-              <div className="collection-item-image mb-2">
-                <Placeholder ready={ token?.image }>
-                  <a href={ token?.image } target="_blank" rel="noreferrer">
-                    <Image src={ token?.image } alt={ token?.tokenName } />
-                  </a>
-                </Placeholder>
-              </div>
-              <div className="collection-item-name">{ token?.tokenName }</div>
-              <a href={ token?.image } target="_blank" rel="noreferrer">OpenSea</a>
+            <div className="minting-item-subtitle minting-item-subtitle--smaller mb-3">
+              <small>
+                <ButtonAddress format>
+                  { contractAddress }
+                </ButtonAddress>
+              </small>
             </div>
+            <h6>{ `Balance: ${balanceOf} ${symbol}` }</h6>
           </div>
-        )) }
+        </div>
 
-      </div>
-    </div>
-
+        <div className="container collection-items">
+          <div className="row">
+            { userTokens.map(token => (
+              <div key={ `collection-item-${token?.tokenId}` } className="col-12 col-md-6 mb-4">
+                <div className="collection-item text-center">
+                  <div className="collection-item-image mb-2">
+                    <Placeholder ready={ token?.image }>
+                      <a href={ token?.image } target="_blank" rel="noreferrer">
+                        <Image src={ token?.image } alt={ token?.tokenName } height="250" width="250" />
+                      </a>
+                    </Placeholder>
+                  </div>
+                  <div className="collection-item-name">{ token?.tokenName }</div>
+                  <a href={ token?.image } target="_blank" rel="noreferrer">OpenSea</a>
+                </div>
+              </div>
+            )) }
+          </div>
+        </div>
+      </>
+    ) }
   </div>
+
 );
 MintCollection.propTypes = {
   balanceOf: number,

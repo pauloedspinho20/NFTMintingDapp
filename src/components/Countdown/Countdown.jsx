@@ -4,8 +4,6 @@ import classnames from 'classnames';
 
 import { updateContracts } from 'hooks/useContracts';
 
-import './Countdown.scss';
-
 const Countdown = ({
   className, enabled, target, title,
 }) => {

@@ -1,3 +1,4 @@
+import AppWrapper from 'containers/AppWrapper';
 import InTransaction from 'components/InTransaction/InTransaction';
 import PageContainer from 'components/Page/Container';
 import MintWidget from 'components/Mint/Widget';
@@ -5,13 +6,11 @@ import NoticeNetwork from 'components/Notice/Network';
 
 import useContracts from 'hooks/useContracts';
 
-import './style.scss';
-
 const MintPage = () => {
   const { collection } = useContracts();
 
   return (
-    <>
+    <AppWrapper>
       <PageContainer>
         <div className="row">
           <h2 className="page-main-title">Mint</h2>
@@ -49,7 +48,7 @@ const MintPage = () => {
           </PageContainer>
         </section>
       </div>
-    </>
+    </AppWrapper>
   );
 };
 

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import classnames from 'classnames';
-import { Link } from 'react-router-dom';
+import Link from 'components/Link';
 
 import Logo from 'components/Logo/Logo';
 import PageContainer from 'components/Page/Container';
@@ -9,8 +9,6 @@ import Wallet from 'components/Wallet/Wallet';
 import useMobileNav from 'hooks/useMobileNav';
 
 import NavigationItems from './Items';
-
-import './Navigation.scss';
 
 const Navigation = () => {
   const [ mobileNav, setMobileNav ] = useMobileNav();
