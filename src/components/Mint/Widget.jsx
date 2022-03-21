@@ -62,7 +62,7 @@ const MintWidget = ({
           <div className="minting-container--title">
 
             <div className="minting-container--title-txt">
-              <h4 className="mb-2">
+              <h4 className="mb-3">
                 Mint
               { ' ' }
               { name }

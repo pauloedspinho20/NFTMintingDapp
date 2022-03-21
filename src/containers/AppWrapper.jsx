@@ -12,6 +12,7 @@ import ModalError from 'components/Modal/Error';
 import ModalConfirmTransaction from 'components/Modal/ConfirmTransaction';
 import ModalMint from 'components/Modal/Mint';
 import ModalTransactionSuccessful from 'components/Modal/TransactionSuccessful';
+import ModalTransferNFT from 'components/Modal/TransferNFT';
 
 import useAppSuffix from 'hooks/useAppSuffix';
 import useMobileNav from 'hooks/useMobileNav';
@@ -106,6 +107,7 @@ const AppWrapper = ({
       <ModalConfirmTransaction />
       <ModalMint />
       <ModalTransactionSuccessful />
+      <ModalTransferNFT />
 
       <div
         className={ classnames('App', `pg-${suffix}`, {

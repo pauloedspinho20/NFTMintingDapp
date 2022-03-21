@@ -8,6 +8,7 @@ import CollectionButtons from 'components/Button/CollectionButtons';
 import Image from 'components/Image';
 import Placeholder from 'components/Placeholder';
 
+import useModal from 'hooks/useModal';
 import useBepro from 'hooks/useBepro';
 
 const MintCollection = ({
@@ -24,6 +25,7 @@ const MintCollection = ({
   const {
     networkActive,
   } = useBepro();
+  const { open } = useModal('transfer-nft');
 
   const envOpenSea = process.env.NEXT_PUBLIC_OPENSEA_URL;
   const baseOpenseaItemUrl = (
@@ -32,13 +34,21 @@ const MintCollection = ({
       : `https://opensea.io/assets/${contractAddress}/`
   );
 
+  const onClick = async tokenId => {
+    open({
+      tokenId,
+      name,
+      contractAddress,
+    });
+  };
+
   return (
     <div className={ classnames('minting--container', 'minting--main-container', 'minting--main-container', {}) }>
       { typeof window !== 'undefined' && (
       <>
         <div className="minting-container--title">
           <div className="minting-container--title-txt">
-            <h4 className="mb-2">
+            <h4 className="mb-3">
               My Collection of
               { ' ' }
               { name }
@@ -98,8 +108,7 @@ const MintCollection = ({
                       ) }
 
                       <Button
-                        to={ token?.image }
-                        target="_blank"
+                        onClick={ () => onClick(token?.tokenId) }
                         theme="yellow"
                         size="xs"
                         external

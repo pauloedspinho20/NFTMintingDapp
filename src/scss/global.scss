@@ -405,3 +405,15 @@ img {
   -webkit-text-fill-color: transparent;
   text-transform: uppercase;
 }
+
+.form-control {
+  max-width: 400px;
+  width: 400px;
+  border: 1px solid $yellow;
+  padding: 15px;
+  border-radius: 5px;
+
+  &#transfer-to-address {
+    font-size: 13px;
+  }
+}

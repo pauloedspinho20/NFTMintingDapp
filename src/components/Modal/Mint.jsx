@@ -154,7 +154,7 @@ const ModalMint = () => {
                 whitelistMint,
               ).then(request => {
                 follow.close();
-                show.open({ transactionHash: request.transactionHash });
+                show.open({ title: 'NFT Minted', transactionHash: request.transactionHash });
               })) {
                 // If operation succeeds, this variable will be set when fetching new pool data
                 setOperation('');
