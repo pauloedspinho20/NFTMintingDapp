@@ -9,8 +9,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Max tokens per address?
 - Collection Gallery with OpenSea link and IPFS provider image url with external link
 - Bepro main branch or Moralis provider
-- Next.js
-- Pagination and menus
 - Roadmap
 - KPI section with values from smart contract and OpenSea
 - Landing page

@@ -4,9 +4,11 @@ import {
 import classnames from 'classnames';
 
 import Button from 'components/Button/Button';
-import ButtonAddress from 'components/Button/Address';
+import CollectionButtons from 'components/Button/CollectionButtons';
 import Image from 'components/Image';
 import Placeholder from 'components/Placeholder';
+
+import useBepro from 'hooks/useBepro';
 
 const MintCollection = ({
   balanceOf,
@@ -18,13 +20,25 @@ const MintCollection = ({
   symbol,
   userTokens,
   whitelistMintEnabled,
-}) => (
-  <div className={ classnames('minting--container', 'minting--main-container', 'minting--main-container', {}) }>
-    { typeof window !== 'undefined' && (
+}) => {
+  const {
+    networkActive,
+  } = useBepro();
+
+  const envOpenSea = process.env.NEXT_PUBLIC_OPENSEA_URL;
+  const baseOpenseaItemUrl = (
+    (networkActive === 'rinkeby' && envOpenSea !== '')
+      ? `https://testnets.opensea.io/assets/${contractAddress}/`
+      : `https://opensea.io/assets/${contractAddress}/`
+  );
+
+  return (
+    <div className={ classnames('minting--container', 'minting--main-container', 'minting--main-container', {}) }>
+      { typeof window !== 'undefined' && (
       <>
         <div className="minting-container--title">
           <div className="minting-container--title-txt">
-            <h4 className="">
+            <h4 className="mb-2">
               My Collection of
               { ' ' }
               { name }
@@ -38,13 +52,8 @@ const MintCollection = ({
             <p className="yellow mb-2">This collection has not been revealed yet.</p>
             ) }
 
-            <div className="minting-item-subtitle minting-item-subtitle--smaller mb-3">
-              <small>
-                <ButtonAddress format>
-                  { contractAddress }
-                </ButtonAddress>
-              </small>
-            </div>
+            <CollectionButtons />
+
             <h6>{ `Balance: ${balanceOf} ${symbol}` }</h6>
           </div>
         </div>
@@ -65,31 +74,35 @@ const MintCollection = ({
                     <div className="collection-item-name">{ token?.tokenName }</div>
                     <div className="collection-item-attributes">
                       { token?.attributes.map(attr => (
-                        <div className="collection-item-attr">
+                        <div key={ `collection-item-attr-${token?.tokenId}-${attr?.trait_type.toLowerCase()}` } className="collection-item-attr">
                           <strong>
-                            { attr.trait_type }
+                            { attr?.trait_type }
                             :
                             { ' ' }
                           </strong>
-                          { attr.value }
+                          { attr?.value }
                         </div>
                       )) }
                     </div>
                     <div className="collection-item-actions">
-                      <Button
-                        href={ token?.image }
-                        target="_blank"
-                        theme="white"
-                        size="xs"
-                      >
-                        OpenSea
-                      </Button>
+                      { baseOpenseaItemUrl !== '' && (
+                        <Button
+                          to={ baseOpenseaItemUrl + token?.tokenId }
+                          target="_blank"
+                          theme="white"
+                          size="xs"
+                          external
+                        >
+                          OpenSea
+                        </Button>
+                      ) }
 
                       <Button
-                        href={ token?.image }
+                        to={ token?.image }
                         target="_blank"
                         theme="yellow"
                         size="xs"
+                        external
                       >
                         Tranfer
                       </Button>
@@ -102,10 +115,11 @@ const MintCollection = ({
           </div>
         </div>
       </>
-    ) }
-  </div>
+      ) }
+    </div>
+  );
+};
 
-);
 MintCollection.propTypes = {
   balanceOf: number,
   name: string,
