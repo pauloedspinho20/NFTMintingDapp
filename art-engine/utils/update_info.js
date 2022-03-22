@@ -3,7 +3,10 @@ const { NETWORK } = require(`${basePath}/constants/network.js`);
 const fs = require("fs");
 
 const {
+  animationBaseUri,
   baseUri,
+  hiddenBaseUri,
+  isInteractive,
   description,
   namePrefix,
   network,
@@ -23,6 +26,9 @@ data.forEach((item) => {
     item.name = `${namePrefix} #${item.edition}`;
     item.description = description;
     item.image = `${baseUri}/${item.edition}.png`;
+    if (isInteractive) {
+      item.animation_url = `${animationBaseUri}/${item.edition}.gif`;
+    }
   }
   fs.writeFileSync(
     `${basePath}/build/json/${item.edition}.json`,
@@ -35,6 +41,19 @@ fs.writeFileSync(
   JSON.stringify(data, null, 2)
 );
 
+
+var hiddenMetadataList = {
+  name: `${namePrefix}`,
+  description: description,
+  image: `${hiddenBaseUri}/hidden.png`,
+};
+
+fs.writeFileSync(
+  `${basePath}/build/hidden_json/hidden.json`,
+  JSON.stringify(hiddenMetadataList, null, 2)
+);
+console.log(`Updated hidden metadata for images to ===> ${hiddenBaseUri}`);
+
 if (network == NETWORK.sol) {
   console.log(`Updated description for images to ===> ${description}`);
   console.log(`Updated name prefix for images to ===> ${namePrefix}`);
@@ -44,7 +63,11 @@ if (network == NETWORK.sol) {
     )}`
   );
 } else {
+  if (isInteractive) {
+    console.log(`Updated animationUrl for images to ===> ${animationBaseUri}`);
+  }
   console.log(`Updated baseUri for images to ===> ${baseUri}`);
   console.log(`Updated description for images to ===> ${description}`);
   console.log(`Updated name prefix for images to ===> ${namePrefix}`);
+
 }

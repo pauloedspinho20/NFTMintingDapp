@@ -9,6 +9,8 @@ const {
   namePrefix,
   description,
   baseUri,
+  gif,
+  isInteractive,
 } = require(`${basePath}/src/config.js`);
 const console = require("console");
 const canvas = createCanvas(format.width, format.height);
@@ -137,14 +139,30 @@ const saveMetadata = (_loadedImageObject) => {
   let tempAttributes = [];
   tempAttributes.push(addRarity());
 
-  let tempMetadata = {
-    name: `${namePrefix} #${shortName}`,
-    description: description,
-    image: `${baseUri}/${shortName}.png`,
-    edition: Number(shortName),
-    attributes: tempAttributes,
-    compiler: "HashLips Art Engine",
-  };
+  let tempMetadata
+
+  if (isInteractive) {
+    tempMetadata = {
+      name: `${namePrefix} #${shortName}`,
+      description: description,
+      image: `${baseUri}/${shortName}.png`,
+      animation_url: `${baseUri}/${shortName}.gif`,
+      edition: Number(shortName),
+      attributes: tempAttributes,
+      compiler: "NFTMintingDapp",
+    };
+  }
+  else {
+    tempMetadata = {
+      name: `${namePrefix} #${shortName}`,
+      description: description,
+      image: `${baseUri}/${shortName}.png`,
+      edition: Number(shortName),
+      attributes: tempAttributes,
+      compiler: "NFTMintingDapp",
+    };
+  }
+
   fs.writeFileSync(
     `${buildDir}/${shortName}.json`,
     JSON.stringify(tempMetadata, null, 2)

@@ -318,13 +318,17 @@ const getCollection = async () => {
           const metadata = await response.json();
           const tokenName = metadata.name;
           const { description, attributes } = metadata;
-          const image = (metadata?.image.includes('ipfs://')
+          const image = (metadata?.image?.includes('ipfs://')
             ? metadata?.image.replace('ipfs://', 'https://ipfs.io/ipfs/')
             : metadata?.image
           );
+          const animationUrl = (metadata?.animation_url.includes('ipfs://')
+            ? metadata?.animation_url.replace('ipfs://', 'https://ipfs.io/ipfs/')
+            : metadata?.animation_url
+          );
 
           userTokens.push({
-            tokenId, tokenURI, tokenName, description, image, attributes,
+            tokenId, tokenURI, tokenName, description, image, animationUrl, attributes,
           });
         }
       }));

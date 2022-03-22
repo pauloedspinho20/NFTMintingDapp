@@ -8,6 +8,9 @@ const layersDir = `${basePath}/layers`;
 const {
   format,
   baseUri,
+  animationBaseUri,
+  hiddenBaseUri,
+  isInteractive,
   description,
   background,
   uniqueDnaTorrance,
@@ -26,6 +29,13 @@ const canvas = createCanvas(format.width, format.height);
 const ctx = canvas.getContext("2d");
 ctx.imageSmoothingEnabled = format.smoothing;
 var metadataList = [];
+
+var hiddenMetadataList = {
+  name: `${namePrefix}`,
+  description: description,
+  image: `${hiddenBaseUri}/hidden.png`,
+};
+
 var attributesList = [];
 var dnaList = new Set();
 const DNA_DELIMITER = "-";
@@ -39,7 +49,9 @@ const buildSetup = () => {
   }
   fs.mkdirSync(buildDir);
   fs.mkdirSync(`${buildDir}/json`);
+  fs.mkdirSync(`${buildDir}/hidden_json`);
   fs.mkdirSync(`${buildDir}/images`);
+  fs.mkdirSync(`${buildDir}/hidden_image`);
   if (gif.export) {
     fs.mkdirSync(`${buildDir}/gifs`);
   }
@@ -117,6 +129,13 @@ const saveImage = (_editionCount) => {
   );
 };
 
+const saveHiddenImage = () => {
+  fs.writeFileSync(
+    `${buildDir}/hidden_image/hidden.png`,
+    canvas.toBuffer("image/png")
+  );
+};
+
 const genColor = () => {
   let hue = Math.floor(Math.random() * 360);
   let pastel = `hsl(${hue}, 100%, ${background.brightness})`;
@@ -130,17 +149,36 @@ const drawBackground = () => {
 
 const addMetadata = (_dna, _edition) => {
   let dateTime = Date.now();
-  let tempMetadata = {
-    name: `${namePrefix} #${_edition}`,
-    description: description,
-    image: `${baseUri}/${_edition}.png`,
-    dna: sha1(_dna),
-    edition: _edition,
-    date: dateTime,
-    ...extraMetadata,
-    attributes: attributesList,
-    compiler: "HashLips Art Engine",
-  };
+
+  let tempMetadata;
+
+  if (isInteractive) {
+    tempMetadata = {
+      name: `${namePrefix} #${_edition}`,
+      description: description,
+      image: `${baseUri}/${_edition}.png`,
+      animation_url: `${animationBaseUri}/${_edition}.gif`,
+      dna: sha1(_dna),
+      edition: _edition,
+      date: dateTime,
+      ...extraMetadata,
+      attributes: attributesList,
+      compiler: "NFTMintingDapp",
+    };
+  } else {
+    tempMetadata = {
+      name: `${namePrefix} #${_edition}`,
+      description: description,
+      image: `${baseUri}/${_edition}.png`,
+      dna: sha1(_dna),
+      edition: _edition,
+      date: dateTime,
+      ...extraMetadata,
+      attributes: attributesList,
+      compiler: "NFTMintingDapp",
+    };
+  }
+
   if (network == NETWORK.sol) {
     tempMetadata = {
       //Added metadata for solana
@@ -307,6 +345,10 @@ const writeMetaData = (_data) => {
   fs.writeFileSync(`${buildDir}/json/_metadata.json`, _data);
 };
 
+const writeHiddenMetaData= (_data) => {
+  fs.writeFileSync(`${buildDir}/hidden_json/hidden.json`, _data);
+};
+
 const saveMetaDataSingleFile = (_editionCount) => {
   let metadata = metadataList.find((meta) => meta.edition == _editionCount);
   debugLogs
@@ -427,6 +469,8 @@ const startCreating = async () => {
     layerConfigIndex++;
   }
   writeMetaData(JSON.stringify(metadataList, null, 2));
+  saveHiddenImage();
+  writeHiddenMetaData(JSON.stringify(hiddenMetadataList, null, 2));
 };
 
 module.exports = { startCreating, buildSetup, getElements };

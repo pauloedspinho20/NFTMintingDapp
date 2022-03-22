@@ -6,7 +6,6 @@ import classnames from 'classnames';
 import Button from 'components/Button/Button';
 import CollectionButtons from 'components/Button/CollectionButtons';
 import Image from 'components/Image';
-import Placeholder from 'components/Placeholder';
 
 import useModal from 'hooks/useModal';
 import useBepro from 'hooks/useBepro';
@@ -54,15 +53,17 @@ const MintCollection = ({
               { name }
             </h4>
 
+            { contractAddress && (
+              <CollectionButtons className="mb-4" contractAddress={ contractAddress } />
+            ) }
+
             { paused && whitelistMintEnabled && isAddressWhitelisted && (
             <p className="yellow mb-2">Whitelist collection</p>
             ) }
 
             { !revealed && (
-            <p className="yellow mb-2">This collection has not been revealed yet.</p>
+            <p className="yellow mb-3">This collection has not been revealed yet.</p>
             ) }
-
-            <CollectionButtons />
 
             <h6>{ `Balance: ${balanceOf} ${symbol}` }</h6>
           </div>
@@ -74,16 +75,28 @@ const MintCollection = ({
               <div key={ `collection-item-${token?.tokenId}` } className="col-12 col-sm-6 col-md-4 col-xl-3 mb-4">
                 <div className="collection-item">
                   <div className="collection-item-image">
-                    <Placeholder ready={ token?.image }>
-                      <a href={ token?.image } target="_blank" rel="noreferrer">
-                        <Image src={ token?.image } alt={ token?.tokenName } layout="responsive" />
+                    { (token?.animationUrl && token?.animationUrl !== '') ? (
+                      <a href={ token?.animationUrl } target="_blank" rel="noreferrer">
+                        <Image
+                          src={ token?.animationUrl }
+                          alt={ token?.tokenName }
+                          layout="responsive"
+                        />
                       </a>
-                    </Placeholder>
+                    ) : (
+                      <a href={ token?.image } target="_blank" rel="noreferrer">
+                        <Image
+                          src={ token?.image }
+                          alt={ token?.tokenName }
+                          layout="responsive"
+                        />
+                      </a>
+                    ) }
                   </div>
                   <div className="collection-item-content">
                     <div className="collection-item-name">{ token?.tokenName }</div>
                     <div className="collection-item-attributes">
-                      { token?.attributes.map(attr => (
+                      { token?.attributes?.map(attr => (
                         <div key={ `collection-item-attr-${token?.tokenId}-${attr?.trait_type.toLowerCase()}` } className="collection-item-attr">
                           <strong>
                             { attr?.trait_type }

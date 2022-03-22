@@ -11,7 +11,7 @@ import getBaseUrl from 'utils/getBaseUrl';
 const Document = () => (
   <Html lang="en">
     <Head>
-      <meta charset="utf-8" />
+      <meta charSet="utf-8" />
       <meta name="theme-color" content="#000000" />
       <link rel="icon" href={ `${getBaseUrl()}/favicon.ico` } />
       <link rel="apple-touch-icon" sizes="180x180" href={ `${getBaseUrl()}/apple-touch-icon.png` } />

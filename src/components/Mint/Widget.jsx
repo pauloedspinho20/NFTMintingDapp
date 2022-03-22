@@ -68,7 +68,7 @@ const MintWidget = ({
               { name }
               </h4>
 
-              <CollectionButtons />
+              <CollectionButtons contractAddress={ contractAddress } />
             </div>
           </div>
 

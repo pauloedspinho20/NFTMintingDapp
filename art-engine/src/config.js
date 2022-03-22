@@ -5,14 +5,18 @@ const { NETWORK } = require(`${basePath}/constants/network.js`);
 const network = NETWORK.eth;
 
 // General metadata for Ethereum
-const namePrefix = "Your Collection";
-const description = "Remember to replace this description";
-const baseUri = "ipfs://NewUriToReplace";
+const namePrefix = "Random Eyes NFTs";
+const description = "This is a test NFT collection for NFTMintingDapp. Thanks to HashLips for the layers <3";
+const hiddenBaseUri = "ipfs://QmZzYHCcVaJJ2eUVentP9kEoYiM9CEfuvrAXhFcFX5Y4BG";
+const animationBaseUri = "ipfs://QmNZeLfG57J61eHRkDZDub9EmSgymB5YoutAJTT44Yrix3";
+const baseUri = "ipfs://QmZ2N4wAPaUo7VPnXhPxm3k46UfVtMaGEBP9QXFBj1a3E4";
+
+const isInteractive = true;
 
 const solanaMetadata = {
   symbol: "YC",
   seller_fee_basis_points: 1000, // Define how much % you want from secondary market sales 1000 = 10%
-  external_url: "https://www.youtube.com/c/hashlipsnft",
+  external_url: "",
   creators: [
     {
       address: "7fXNuer5sbZtaTEPhtJ5g5gNtuyRoKkvxdjEjEnPN4mC",
@@ -24,7 +28,7 @@ const solanaMetadata = {
 // If you have selected Solana then the collection starts from 0 automatically
 const layerConfigurations = [
   {
-    growEditionSizeTo: 5,
+    growEditionSizeTo: 32,
     layersOrder: [
       { name: "Background" },
       { name: "Eyeball" },
@@ -32,7 +36,7 @@ const layerConfigurations = [
       { name: "Iris" },
       { name: "Shine" },
       { name: "Bottom lid" },
-      { name: "Top lid" },
+      { name: "Top lid" }
     ],
   },
 ];
@@ -48,7 +52,7 @@ const format = {
 };
 
 const gif = {
-  export: false,
+  export: true,
   repeat: 0,
   quality: 100,
   delay: 500,
@@ -68,7 +72,7 @@ const text = {
 };
 
 const pixelFormat = {
-  ratio: 2 / 128,
+  ratio: 5 / 128,
 };
 
 const background = {
@@ -101,8 +105,11 @@ const preview_gif = {
 };
 
 module.exports = {
+  isInteractive,
   format,
   baseUri,
+  animationBaseUri,
+  hiddenBaseUri,
   description,
   background,
   uniqueDnaTorrance,
