@@ -8,6 +8,7 @@ const ModalTransactionSuccessful = () => {
 
   const {
     transactionHash,
+    title,
   } = show || {};
 
   const onClose = () => {
@@ -24,7 +25,7 @@ const ModalTransactionSuccessful = () => {
       name="transaction-successful"
       onClose={ onClose }
     >
-      <div className="popup--title">NFT Minted</div>
+      <div className="popup--title">{ title }</div>
 
       <ul className="popup--actions">
         <li>

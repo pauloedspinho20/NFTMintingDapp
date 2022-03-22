@@ -7,16 +7,44 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - WalletConnect and Trust Wallet
 - Smart contract owner auto mint on deploy
 - Max tokens per address?
-- Collection Gallery with OpenSea link and IPFS provider image url with external link
 - Bepro main branch or Moralis provider
-- Next.js
-- Pagination and menus
 - Roadmap
 - KPI section with values from smart contract and OpenSea
 - Landing page
 - About page with gitdocs
-- Add Art Engine to project
 - Add IPFS deployer to project?
+
+## Infrastructure config
+
+- Create a Gmail email for project accounts on all services
+- Buy crypto domain https://unstoppabledomains.com/auth
+- Create Moralis Test and Production Apps https://admin.moralis.io/
+- Create Web3.Storage account and API Token https://web3.storage/account/
+- Clone NFT Frontend Dapp
+
+## Project config:
+
+- Run `yarn` on project root, art_engine, ipfs_deployer and hardhat directories
+- Create .env
+- Change HTML metadata
+- Deactivate or remove all unused pages and components
+- Style the template layout
+- Choose only the wanted networks on `src/helpers/networks.js`
+  - If .env environment is 'development' or 'staging' use Network switcher with wanted mainet and testnet;
+  - If .env environment is 'production' don't use network switcher and set to mainnet;
+
+## Art Engine (Layers) config:
+
+- Need homebrew to run the following script: `brew install pkg-config cairo pango libpng jpeg giflib librsvg`
+
+## Smart Contract deployment
+
+## Test and App deployment:
+
+- Test all blockchain interactions
+- Deploy app to IPFS via provider (Moralis or Fleek)
+  - Create staging environment
+  - Create production environment
 
 ## Available Scripts
 

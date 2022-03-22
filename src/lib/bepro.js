@@ -318,13 +318,17 @@ const getCollection = async () => {
           const metadata = await response.json();
           const tokenName = metadata.name;
           const { description, attributes } = metadata;
-          const image = (metadata?.image.includes('ipfs://')
+          const image = (metadata?.image?.includes('ipfs://')
             ? metadata?.image.replace('ipfs://', 'https://ipfs.io/ipfs/')
             : metadata?.image
           );
+          const animationUrl = (metadata?.animation_url.includes('ipfs://')
+            ? metadata?.animation_url.replace('ipfs://', 'https://ipfs.io/ipfs/')
+            : metadata?.animation_url
+          );
 
           userTokens.push({
-            tokenId, tokenURI, tokenName, description, image, attributes,
+            tokenId, tokenURI, tokenName, description, image, animationUrl, attributes,
           });
         }
       }));
@@ -458,6 +462,71 @@ const mintCollection = async (value, _mintAmount, contractAddress, whitelistMint
   return null;
 };
 
+/*
+* TANSFER NFT TO ADDRESS
+*/
+const safeTransferFrom = async (toAddress, tokenId, contractAddress) => {
+  const web3 = await getWeb3();
+
+  if (web3) {
+    const address = await getAddress();
+    const nftContract = await getERC721Contract(contractAddress);
+
+    if (address) {
+      try {
+        const gasPrice = await web3.eth.getGasPrice();
+
+        const gas = await nftContract?.methods
+          .safeTransferFrom(
+            address, // address
+            toAddress, // toAddress,
+            tokenId, // tokenId
+          ).estimateGas({
+            from: address,
+            gasPrice,
+          }).catch(error => {
+            // eslint-disable-next-line no-console
+            console.error('safeTransferFrom error', error);
+          });
+
+        const result = await nftContract?.methods.safeTransferFrom(
+          address, // address
+          toAddress, // toAddress,
+          tokenId, // tokenId
+        ).send({
+          from: address,
+          gas,
+          gasPrice,
+        }).on('error', error => { // If the transaction was rejected by the network with a receipt, the second parameter will be the receipt.
+          // eslint-disable-next-line no-console
+          console.error('safeTransferFrom error', error);
+        });
+
+        if (!result) {
+          addError('Failed to transfer.');
+        }
+        return result;
+      }
+      catch (ex) {
+        // eslint-disable-next-line no-console
+        console.error(ex);
+        switch (ex.code) {
+          case 4001:
+            addError('Transfer cancelled.', true);
+            break;
+          default:
+            addError('Failed to transfer.');
+            break;
+        }
+
+        return null;
+      }
+    }
+  }
+
+  return null;
+};
+
 const switchNetwork = async slugOrId => {
   // Default to using metamask, we don't actually need to connect wallet to do the switch
   const wProvider = web3Provider || window.ethereum;
@@ -519,7 +588,9 @@ const libBepro = {
   getAddress,
   getNetwork,
   getCollection,
+  getWeb3,
   mintCollection,
+  safeTransferFrom,
   switchNetwork,
 
   connect: async (wallet, autoConnect) => {

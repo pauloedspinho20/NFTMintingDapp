@@ -6,9 +6,9 @@ import { useEffect, useState } from 'react';
 import classnames from 'classnames';
 
 import Button from 'components/Button/Button';
-import ButtonAddress from 'components/Button/Address';
 import ButtonApprove from 'components/Button/Approve';
 import ButtonMint from 'components/Button/Mint';
+import CollectionButtons from 'components/Button/CollectionButtons';
 import Placeholder from 'components/Placeholder';
 import Price from 'components/Price';
 import Wallet from 'components/Wallet/Wallet';
@@ -62,14 +62,13 @@ const MintWidget = ({
           <div className="minting-container--title">
 
             <div className="minting-container--title-txt">
-              <h4 className="mb-0">
+              <h4 className="mb-3">
                 Mint
               { ' ' }
               { name }
               </h4>
-              <div className="minting-item-subtitle minting-item-subtitle--smaller">
-                <small><ButtonAddress format>{ contractAddress }</ButtonAddress></small>
-              </div>
+
+              <CollectionButtons contractAddress={ contractAddress } />
             </div>
           </div>
 

@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-contract TheSpades is ERC721A, Ownable, ReentrancyGuard {
+contract RandomEyesNFTs is ERC721A, Ownable, ReentrancyGuard {
     using Strings for uint256;
 
     bytes32 public merkleRoot;

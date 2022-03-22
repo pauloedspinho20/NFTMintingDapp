@@ -9,25 +9,25 @@ const CollectionConfig: CollectionConfigInterface = {
   // The contract name can be updated using the following command:
   // yarn rename-contract NEW_CONTRACT_NAME
   // Please DO NOT change it manually!
-  contractName: "TheSpades",
-  tokenName: "TheSpades",
-  tokenSymbol: "SPADE",
+  contractName: "RandomEyesNFTs",
+  tokenName: "Random Eyes NFTs",
+  tokenSymbol: "RE",
   hiddenMetadataUri:
-    "https://ipfs.io/ipfs/Qmb5Pb2z6CEh89trbBns9wArULxTFQBNeic7vDiqiiD6YA/hidden.json",
-  maxSupply: 25,
+    "https://ipfs.io/ipfs/QmQxutXRTg3EK14FJrtFdtchcJBPsK39XjErDZvQwGQDei/hidden.json",
+  maxSupply: 32,
   whitelistSale: {
     price: 0.01,
     maxMintAmountPerTx: 1,
   },
   preSale: {
     price: 0.02,
-    maxMintAmountPerTx: 2,
+    maxMintAmountPerTx: 3,
   },
   publicSale: {
     price: 0.05,
     maxMintAmountPerTx: 5,
   },
-  contractAddress: '0x4Cb37d29FE386E7BB2eC1D55AAb19A8c1B9cd61A',
+  contractAddress: '0x33AD26E6401b9078365184De9e19b52861AB038E',
   marketplaceIdentifier: "my-nft-token",
   marketplaceConfig: openSea,
   whitelistAddresses: whitelistAddresses,
