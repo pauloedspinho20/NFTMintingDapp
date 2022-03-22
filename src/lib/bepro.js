@@ -468,7 +468,6 @@ const safeTransferFrom = async (toAddress, tokenId, contractAddress) => {
     const address = await getAddress();
     const nftContract = await getERC721Contract(contractAddress);
 
-    console.log('safeTransferFrom', toAddress, tokenId, contractAddress);
     if (address) {
       try {
         const gasPrice = await web3.eth.getGasPrice();

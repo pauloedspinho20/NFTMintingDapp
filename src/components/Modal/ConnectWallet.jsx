@@ -1,5 +1,4 @@
 import { useCallback, useEffect } from 'react';
-import Link from 'components/Link';
 
 import ButtonConnectWallet from 'components/Button/ConnectWallet';
 import IconMetamask from 'components/Icon/Metamask/Metamask';
