@@ -311,7 +311,7 @@ const getCollection = async () => {
             ? metadata?.image.replace('ipfs://', 'https://ipfs.io/ipfs/')
             : metadata?.image
           );
-          const animationUrl = (metadata?.animation_url.includes('ipfs://')
+          const animationUrl = (metadata?.animation_url?.includes('ipfs://')
             ? metadata?.animation_url.replace('ipfs://', 'https://ipfs.io/ipfs/')
             : metadata?.animation_url
           );

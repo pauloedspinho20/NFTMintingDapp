@@ -9,7 +9,7 @@ const CollectionConfig: CollectionConfigInterface = {
   // The contract name can be updated using the following command:
   // yarn rename-contract NEW_CONTRACT_NAME
   // Please DO NOT change it manually!
-  contractName: "RandomEyesNFTs",
+  contractName: "RandomEyes",
   tokenName: "Random Eyes NFTs",
   tokenSymbol: "RE",
   hiddenMetadataUri:
@@ -27,7 +27,7 @@ const CollectionConfig: CollectionConfigInterface = {
     price: 0.05,
     maxMintAmountPerTx: 5,
   },
-  contractAddress: '0x33AD26E6401b9078365184De9e19b52861AB038E',
+  contractAddress: '0x3C0faE8B5Ec388Efd95113fD8DcA15580213d4AE',
   marketplaceIdentifier: "my-nft-token",
   marketplaceConfig: openSea,
   whitelistAddresses: whitelistAddresses,
