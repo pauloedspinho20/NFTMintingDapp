@@ -4,10 +4,17 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## TODO
 
-- WalletConnect and Trust Wallet
+- ERC1155 contract with:
+  -- Multiple token burn for new nft mint
+  -- Upload to IPFS on mint
+  -- How to solve contract ipfs base url?
+  -- NFT Staking?
+- WalletConnect and Trust Wallet integration
+- Add Cypress and Github Actions
 - Smart contract owner auto mint on deploy
 - Max tokens per address?
 - Bepro main branch or Moralis provider
+- Google Tag Manager
 - Roadmap
 - KPI section with values from smart contract and OpenSea
 - Landing page
