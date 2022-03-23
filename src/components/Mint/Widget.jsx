@@ -22,7 +22,6 @@ const MintWidget = ({
   name,
   paused,
   revealed,
-  symbol,
   cost,
   maxSupply,
   totalSupply,
@@ -105,7 +104,7 @@ const MintWidget = ({
                       <div className="minting-item-subtitle minting-item-lbl">Supply</div>
                       <div className="minting-item-amount">
                         <Placeholder ready={ ready }>
-                        { `${totalSupply}/${maxSupply} ${symbol}` }
+                        { `${totalSupply}/${maxSupply}` }
                         </Placeholder>
                       </div>
                     </div>
@@ -113,7 +112,7 @@ const MintWidget = ({
 
                   <div className="col-12 col-md-6">
                     <div className="minting-item">
-                      <div className="minting-item-subtitle minting-item-lbl">Max NFTs per mint</div>
+                      <div className="minting-item-subtitle minting-item-lbl">Max tokens per mint</div>
                       <div className="minting-item-amount">
                         <Placeholder ready={ ready }>
                         { maxMintAmountPerTx }
@@ -268,7 +267,6 @@ MintWidget.propTypes = {
   name: string,
   paused: bool,
   revealed: bool,
-  symbol: string,
   cost: number,
   maxSupply: number,
   totalSupply: number,
@@ -284,7 +282,6 @@ MintWidget.defaultProps = {
   name: null,
   paused: null,
   revealed: null,
-  symbol: null,
   cost: null,
   maxSupply: null,
   totalSupply: null,

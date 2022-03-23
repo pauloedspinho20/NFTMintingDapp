@@ -6,7 +6,7 @@ import NoticeNetwork from 'components/Notice/Network';
 
 import useContracts from 'hooks/useContracts';
 
-const MintPage = () => {
+const Mint = () => {
   const { collection } = useContracts();
 
   return (
@@ -19,7 +19,7 @@ const MintPage = () => {
             { ' ' }
             { collection?.maxMintAmountPerTx }
             { ' ' }
-            per mint
+            tokens per mint
           </span>
         </div>
       </PageContainer>
@@ -52,4 +52,4 @@ const MintPage = () => {
   );
 };
 
-export default MintPage;
+export default Mint;
