@@ -1,4 +1,5 @@
 import AppWrapper from 'containers/AppWrapper';
+import Wallet from 'components/Wallet/Wallet';
 import InTransaction from 'components/InTransaction/InTransaction';
 import PageContainer from 'components/Page/Container';
 import MintCollection from 'components/Mint/Collection';
@@ -6,7 +7,7 @@ import NoticeNetwork from 'components/Notice/Network';
 
 import useContracts from 'hooks/useContracts';
 
-const CollectionPage = () => {
+const Collection = () => {
   const { collection } = useContracts();
 
   return (
@@ -33,11 +34,18 @@ const CollectionPage = () => {
             ) : (
               <>
                 <div className="row">
-                  { collection?.balanceOf > 0 && (
+
+                  { collection?.balanceOf > 0 ? (
                     <div className="col-12 mb-30">
                       <MintCollection { ...collection } />
                     </div>
+                  ) : (
+                    <div className="col-12 mb-30 text-center">
+                      <h6 className="mb-4">Connect your wallet to see your collection</h6>
+                      <Wallet />
+                    </div>
                   ) }
+
                 </div>
               </>
             ) }
@@ -48,4 +56,4 @@ const CollectionPage = () => {
   );
 };
 
-export default CollectionPage;
+export default Collection;

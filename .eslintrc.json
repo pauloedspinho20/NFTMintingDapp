@@ -2,6 +2,7 @@
   "extends": [
     "airbnb",
     "airbnb/hooks"
+    // "plugin:@next/next/recommended",
   ],
   "root": true,
   "globals": {

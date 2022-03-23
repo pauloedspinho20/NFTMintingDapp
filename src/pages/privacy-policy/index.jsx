@@ -4,7 +4,7 @@ import AppWrapper from 'containers/AppWrapper';
 import PageContainer from 'components/Page/Container';
 import PageTitle from 'components/Page/Title';
 
-const Terms = () => (
+const PrivacyPolicy = () => (
   <AppWrapper>
     <PageTitle>Privacy Policy</PageTitle>
     <PageContainer className="container--legal-body">
@@ -31,4 +31,4 @@ const Terms = () => (
   </AppWrapper>
 );
 
-export default Terms;
+export default PrivacyPolicy;

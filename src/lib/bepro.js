@@ -16,6 +16,7 @@ import cookieConsent from 'utils/cookieConsent';
 
 import { chains } from 'config';
 import whitelistAddresses from 'whitelist.json';
+// import getOpenSea from 'utils/getOpenSea';
 import Numbers from './utils/Numbers';
 
 // ABIs
@@ -202,24 +203,10 @@ const approveContract = async contractAddress => {
 
     if (address && nftContract) {
       try {
-      /*   const gasPrice = await web3.eth.getGasPrice();
-        const gas = await nftContract?.methods
-          .setApprovalForAll(address, contractAddress)
-          .estimateGas({
-            from: address,
-            gasPrice,
-          })
-          .catch(error => {
-            // eslint-disable-next-line no-console
-            console.error('estimateGas error', error);
-          }); */
-
         const result = await nftContract?.methods.setApprovalForAll(
           contractAddress, address,
         ).send({
           from: address,
-          /*  gas,
-          gasPrice, */
         });
 
         if (!result) {
@@ -281,6 +268,8 @@ const getCollection = async () => {
   const web3 = await getWeb3();
 
   if (web3) {
+    /* const openSea = getOpenSea();
+    console.log(openSea); */
     const address = await getAddress();
     const contractAddress = getContractAddress();
     const nftContract = await getERC721Contract(contractAddress);

@@ -1,0 +1,32 @@
+.upper-header__wrapper {
+  width: 100%;
+  background: $purple;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 101;
+  padding: 5px 0 8px;
+  box-shadow: 0 3px 11px 3px rgba($purple, 0.1);
+  min-height: 36px;
+
+  @include breakpoint(until-landscape) {
+    display: none;
+  }
+
+  .social-media-nav {
+    margin-right: 0;
+    li {
+      a {
+        width: 15px;
+        height: 15px;
+      }
+    }
+  }
+}
+
+.maintenance-message {
+  height: 50px;
+  padding: 15px;
+  background: linear-gradient(186.61deg, #ff9800 0.5%, #ec682c 91.72%);
+  text-align: center;
+}

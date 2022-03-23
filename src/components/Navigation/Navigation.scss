@@ -2,7 +2,7 @@ header#main-header {
   width: 100%;
   position: absolute;
   left: 0;
-  top: 60px;
+  top: 36px;
   z-index: 100;
   transition: background 0.3s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform;
@@ -203,7 +203,7 @@ header#main-header {
       }
 
       > a.nav-item {
-        top: 7px;
+        top: 5px;
       }
     }
 
@@ -416,8 +416,8 @@ header#main-header {
       z-index: 100;
       background: rgba($white, 0.97);
       box-shadow: 0 2px 9px 0 rgba($black, 0.08);
-      padding-top: 15px;
-      padding-bottom: 15px;
+/*       padding-top: 15px;
+      padding-bottom: 15px; */
       border-bottom: 1px solid rgba($white, 0.2);
 
       .main-logo {

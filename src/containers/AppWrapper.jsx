@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { bool, string, node } from 'prop-types';
-import { useRouter } from 'next/router';
+import useRouter from 'hooks/useRouter';
 import classnames from 'classnames';
 
 import CookiesBanner from 'components/CookiesBanner/CookiesBanner';
@@ -16,20 +16,26 @@ import ModalTransferNFT from 'components/Modal/TransferNFT';
 
 import useAppSuffix from 'hooks/useAppSuffix';
 import useMobileNav from 'hooks/useMobileNav';
+import useMaintenance from 'hooks/useMaintenance';
 import useQueryParams, { getQueryParams } from 'hooks/useQueryParams';
 import useIpfs from 'hooks/useIpfs';
 import { pageMeta } from 'config';
 
-const getPageSuffix = (appSuffix, isError, pathname) => {
+import Maintenance from 'pages/maintenance';
+
+const getPageSuffix = ({ appSuffix, isError, pathname }) => {
+  // console.log('getPageSuffix', appSuffix, isError, pathname);
   if (isError) {
     return 'error';
   }
 
   if (appSuffix) {
+    console.log('wefwefwefwefwef', appSuffix);
     return appSuffix;
   }
 
   const path = pathname.match(/^\/([a-zA-Z/_-]+)/)?.[1];
+
   if (!path) {
     return 'home';
   }
@@ -53,6 +59,7 @@ const AppWrapper = ({
   video,
 }) => {
   const { events, pathname } = useRouter();
+  const maintenance = useMaintenance();
   const ipfs = useIpfs();
   const { queryParams: { page } } = useQueryParams();
   const [ appSuffix ] = useAppSuffix();
@@ -65,7 +72,7 @@ const AppWrapper = ({
   useEffect(() => {
     // Always close the mobile menu on route switch
     setMobileNav(null);
-  }, [ pathname, setMobileNav, suffix ]);
+  }, [ pathname, setMobileNav ]);
 
   useEffect(() => {
     const handleRouteChanged = location => {
@@ -92,6 +99,23 @@ const AppWrapper = ({
     };
   }, [ events, page ]);
 
+  if (maintenance.locked) {
+    return (
+      <>
+        <Metadata
+          description={ description || pageMeta.description }
+          image={ ipfs(image || pageMeta.image) }
+          title={ title || pageMeta.title }
+          video={ video || pageMeta.video }
+        />
+
+        <div className="App">
+          <Maintenance />
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
       <Metadata
@@ -111,7 +135,7 @@ const AppWrapper = ({
 
       <div
         className={ classnames('App', `pg-${suffix}`, {
-          // maintenance: maintenance.message,
+          maintenance: maintenance.message,
         }) }
       >
         <Header />
