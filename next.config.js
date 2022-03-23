@@ -1,6 +1,8 @@
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.NEXT_PUBLIC_ANALYZE === 'true',
-  // trailingSlash: true,
+  distDir: 'build',
+  trailingSlash: true,
+  reactStrictMode: true,
   eslint: {
     ignoreDuringBuilds: true,
   },
