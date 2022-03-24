@@ -4,15 +4,15 @@ import Button from './Button';
 
 const CollectionButtons = ({ contractAddress, ...props }) => {
   const {
-    networkActive,
+    networkWanted,
   } = useBepro();
 
-  const ethercanUrl = (networkActive === 'rinkeby') ? `https://rinkeby.etherscan.io/address/${contractAddress}` : `https://etherscan.io/address/${contractAddress}`;
+  const ethercanUrl = (networkWanted === 'rinkeby') ? `https://rinkeby.etherscan.io/address/${contractAddress}` : `https://etherscan.io/address/${contractAddress}`;
   const envOpenSea = process.env.NEXT_PUBLIC_OPENSEA_URL;
   let openSeaUrl;
 
   if (envOpenSea !== '') {
-    openSeaUrl = networkActive === 'rinkeby'
+    openSeaUrl = networkWanted === 'rinkeby'
       ? `https://testnets.opensea.io/collection/${envOpenSea}`
       : `https://opensea.io/collection/${envOpenSea}`;
   }

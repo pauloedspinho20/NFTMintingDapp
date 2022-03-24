@@ -167,6 +167,15 @@ const config: HardhatUserConfig = {
     enabled: process.env.REPORT_GAS !== undefined,
     currency: "USD",
     coinmarketcap: process.env.GAS_REPORTER_COIN_MARKET_CAP_API_KEY,
+    showTimeSpent: true,
+    outputFile: 'gas-reports/gas-report.txt',
+    noColors: true,
+    // token: 'BNB',
+    // gasPriceApi: 'https://api.bscscan.com/api?module=proxy&action=eth_gasPrice',
+    // token: 'MATIC',
+    // gasPriceApi: 'https://api.polygonscan.com/api?module=proxy&action=eth_gasPrice'
+    // token: 'AVAX',
+    // gasPriceApi: 'https://api.snowtrace.io/api?module=proxy&action=eth_gasPrice'
   },
   etherscan: {
     apiKey: {
