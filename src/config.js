@@ -49,6 +49,13 @@ export const menuLinks = [
   },
 ];
 
+if (process.env.NEXT_PUBLIC_ENVIRONMENT === 'development') {
+  menuLinks.push({
+    label: 'Canvas',
+    link: '/canvas',
+  });
+}
+
 export const cookiesBanner = {
   body: 'Cookie Disclaimer. By navigating this site data will be stored in your browser, in order to enhance your browsing experience.',
   options: [

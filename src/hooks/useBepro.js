@@ -9,7 +9,7 @@ const { getGlobalState, setGlobalState, useGlobalState } = createGlobalState({ b
 
 export const getAddress = () => getGlobalState('bepro').address;
 
-export const getETHBalance = () => getGlobalState('bepro').ethBalance;
+export const getBalance = () => getGlobalState('bepro').ethBalance;
 
 let latest;
 
@@ -25,7 +25,7 @@ export const updateConnection = async () => {
     const [ address, networkActive, ethBalance ] = await Promise.all([
       bepro.getAddress(),
       bepro.getCurrentNetwork(),
-      bepro.getETHBalance(),
+      bepro.getBalance(),
     ]);
 
     // It's safe to discard previous calls to this method.
