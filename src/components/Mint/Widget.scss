@@ -70,7 +70,8 @@
     }
 
     .minting-container--title-txt {
-      margin-left: 10px;
+      color: $orange;
+      text-transform: uppercase;
 
       &.flexible {
         margin-bottom: 30px;

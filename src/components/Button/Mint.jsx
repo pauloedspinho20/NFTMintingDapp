@@ -8,7 +8,7 @@ import useContracts from 'hooks/useContracts';
 
 import useBepro from 'hooks/useBepro';
 
-const ButtonMint = ({ amount, contractAddress }) => {
+const ButtonMint = ({ amount, contractAddress, ...props }) => {
   const { open } = useModal('mint');
   const { ethBalance } = useBepro();
 
@@ -67,6 +67,7 @@ const ButtonMint = ({ amount, contractAddress }) => {
       onClick={ onClick }
       size="m"
       theme="orange"
+      { ...props }
     >
       { label }
     </Button>

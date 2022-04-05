@@ -9,6 +9,15 @@
   background-size: 100% 100%;
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 80%);
 
+  ul {
+    margin-left: 20px;
+
+    li {
+      list-style:initial;
+      font-size: 1rem;
+      margin-bottom: 5px;
+    }
+  }
   @include breakpoint(until-landscape) {
     padding-top: 100px;
     padding-bottom: 260px;
@@ -62,6 +71,7 @@
   }
 
   .home-hero--desc {
+    text-transform: uppercase;
     max-width: 520px;
     font-size: 1.25rem;
     line-height: 1.25em;
@@ -69,15 +79,6 @@
 
     @include breakpoint(until-portrait) {
       font-size: 1.15rem;
-    }
-    ul {
-
-    margin-left: 20px;
-
-      li {
-        list-style:initial;
-        font-size: 1rem;
-      }
     }
   }
 

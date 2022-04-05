@@ -26,7 +26,7 @@ const MintCollection = ({
   } = useBepro();
   const { open } = useModal('transfer-nft');
 
-  const envOpenSea = process.env.NEXT_PUBLIC_OPENSEA_URL;
+  const envOpenSea = process.env.NEXT_PUBLIC_ERC721_OPENSEA_URL;
   const baseOpenseaItemUrl = (
     (networkActive === 'rinkeby' && envOpenSea !== '')
       ? `https://testnets.opensea.io/assets/${contractAddress}/`
@@ -48,9 +48,7 @@ const MintCollection = ({
         <div className="minting-container--title">
           <div className="minting-container--title-txt">
             <h4 className="mb-3">
-              My Collection of
-              { ' ' }
-              { name }
+              My Collection
             </h4>
 
             { contractAddress && (

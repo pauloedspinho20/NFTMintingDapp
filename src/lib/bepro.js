@@ -1,3 +1,4 @@
+import { Web3Connection } from '@taikai/dappkit';
 import { MerkleTree } from 'merkletreejs';
 import keccak256 from 'keccak256';
 
@@ -70,8 +71,9 @@ const eeBepro = new EventEmitter();
 // multi-chain...
 eeBepro.on('paramsChanged', async () => {
   const app = await bepro;
-  if (app && app.opt.provider) {
-    app.start(app.opt.provider);
+  if (app && app.options.provider) {
+    await app.start();
+    await app.connect();
   }
 });
 
@@ -80,6 +82,7 @@ eeBepro.on('paramsChanged', async () => {
 */
 const getAddress = async () => {
   const app = await bepro;
+  console.log('getAddress', app);
   return app && app.getAddress();
 };
 
@@ -111,7 +114,7 @@ const getNetworkNameFromId = networkId => {
 
 const getCurrentNetwork = async () => {
   const app = await bepro;
-  const web3 = await app?.getWeb3();
+  const web3 = await app?.Web3;
   if (web3) {
     const networkId = await web3?.eth?.net?.getId(); // TODO: test with walletconnect
     return getNetworkNameFromId(networkId);
@@ -138,9 +141,8 @@ const getWeb3 = async () => {
   // Only return bepro's instance of web3 if it's connected to the network that we want
   if (await isConnected()) {
     const app = await bepro;
-    return app.web3;
+    return app?.Web3;
   }
-
   const { web3Connection } = await params;
   if (web3Connection) {
     if (web3Connection.toLowerCase().includes('http')) {
@@ -239,8 +241,8 @@ const approveContract = async contractAddress => {
 */
 const getContractAddress = () => (
   env === 'production'
-    ? process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_ETHEREUM
-    : process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_RINKEBY
+    ? process.env.NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS_ETHEREUM
+    : process.env.NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS_RINKEBY
 );
 
 const getMerkleTree = merkleTree => {
@@ -274,7 +276,7 @@ const getCollection = async () => {
     const contractAddress = getContractAddress();
     const nftContract = await getERC721Contract(contractAddress);
     // const merkleRoot = await nftContract?.methods.merkleRoot().call();
-    const enabled = process.env.NEXT_PUBLIC_COLLECTION_ENABLED === 'true';
+    const enabled = process.env.NEXT_PUBLIC_ERC721_COLLECTION_ENABLED === 'true';
     const approved = address ? await nftContract?.methods.isApprovedForAll(address, contractAddress).call() : false;
     const name = await nftContract?.methods.name().call();
     const paused = await nftContract?.methods.paused().call();
@@ -346,7 +348,6 @@ const getCollection = async () => {
     };
 
     if (collection) {
-      console.log('collection', collection);
       return collection;
     }
   }
@@ -612,16 +613,12 @@ const libBepro = {
       console.error(ex);
     }
     if (provider) {
-      const { Application } = await import('bepro-js');
+      const appParams = { web3Host: web3Connection };
 
-      const appParams = { opt: { provider, web3Connection } };
-      /*   if (/kovan/.test(web3Connection)) {
-        appParams.opt.privateKey = '0x1234567890123456789012345678901234567890123456789012345678901234';
-        // bogus key just so bepro doesn't freak out
-        appParams.test = true;
-      } */
+      const app = new Web3Connection(appParams);
+      await app?.start();
+      await app?.connect();
 
-      const app = new Application(appParams);
       if (app) {
         // Internal reference to the wallet provider currently active.
         web3Provider = walletProvider;
@@ -691,10 +688,10 @@ const libBepro = {
     eeBepro.emit('disconnect');
   },
 
-  getETHBalance: async () => {
+  getBalance: async () => {
     const app = await bepro;
-    const amount = await app?.getETHBalance();
-    return amount ? parseFloat(amount) : 0;
+    const amount = await app?.getBalance();
+    return amount ? Number(Numbers.fromDecimals(amount, 18)) : 0;
   },
 
   off: (event, handler) => {

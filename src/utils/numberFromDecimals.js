@@ -1,4 +1,4 @@
-import Numbers from 'bepro-js/build/utils/Numbers';
+import Numbers from '@taikai/dappkit/dist/src/utils/numbers';
 
 // @TODO avoid having to connect wallet just to get the decimals
 const decimals = 18;

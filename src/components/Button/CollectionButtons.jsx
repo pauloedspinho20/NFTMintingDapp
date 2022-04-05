@@ -8,7 +8,7 @@ const CollectionButtons = ({ contractAddress, ...props }) => {
   } = useBepro();
 
   const ethercanUrl = (networkWanted === 'rinkeby') ? `https://rinkeby.etherscan.io/address/${contractAddress}` : `https://etherscan.io/address/${contractAddress}`;
-  const envOpenSea = process.env.NEXT_PUBLIC_OPENSEA_URL;
+  const envOpenSea = process.env.NEXT_PUBLIC_ERC721_OPENSEA_URL;
   let openSeaUrl;
 
   if (envOpenSea !== '') {

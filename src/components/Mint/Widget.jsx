@@ -19,7 +19,6 @@ const MintWidget = ({
   approved,
   enabled,
   contractAddress,
-  name,
   paused,
   revealed,
   cost,
@@ -63,8 +62,6 @@ const MintWidget = ({
             <div className="minting-container--title-txt">
               <h4 className="mb-3">
                 Mint
-              { ' ' }
-              { name }
               </h4>
 
               <CollectionButtons contractAddress={ contractAddress } />
@@ -247,12 +244,12 @@ const MintWidget = ({
           ) }
 
           { !enabled && (
-          <div className="minting-items minting-items--coming-soon">
-            <div>
-              <span className="white-grad-title white-grad-title-35">COLLECTION COMING SOON</span>
-              <p>Please check later</p>
+            <div className="minting-items minting-items--coming-soon">
+              <div>
+                <span className="white-grad-title white-grad-title-35">MINTING COMING SOON</span>
+                <p>Please check later</p>
+              </div>
             </div>
-          </div>
           ) }
         </>
       ) }
@@ -264,7 +261,6 @@ MintWidget.propTypes = {
   approved: bool,
   enabled: bool,
   contractAddress: string,
-  name: string,
   paused: bool,
   revealed: bool,
   cost: number,
@@ -279,7 +275,6 @@ MintWidget.defaultProps = {
   approved: null,
   enabled: null,
   contractAddress: null,
-  name: null,
   paused: null,
   revealed: null,
   cost: null,
