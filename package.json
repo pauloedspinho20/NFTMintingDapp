@@ -35,12 +35,13 @@
     "react-signature-canvas": "^1.0.5",
     "react-simple-img": "^2.3.9",
     "sass": "^1.41.0",
-    "web3": "^1.7.0"
+    "web3": "^1.7.0",
+    "web3.storage": "^4.0.0"
   },
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start",
+    "start": "next",
     "export": "next export",
     "lint": "eslint \"src/**/*.{js,jsx,json}\"",
     "lint:fix": "eslint . --fix"

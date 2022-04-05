@@ -9,16 +9,16 @@ import useContracts from 'hooks/useContracts';
 
 const Home = () => {
   const { collection } = useContracts();
-
+  const siteName = process.env.NEXT_PUBLIC_DAPP_NAME !== '' ? process.env.NEXT_PUBLIC_DAPP_NAME : collection?.name;
   return (
 
     <AppWrapper>
-      <Landing name={ collection?.name || 'NFT Dapp' } />
+      <Landing name={ siteName } />
 
       <div className="content">
         <PageContainer>
           <div className="row">
-            <h2 className="page-main-title">{ process.env.NEXT_PUBLIC_DAPP_NAME || 'NFTMintingDapp' }</h2>
+            <h2 className="page-main-title">{ siteName }</h2>
             <span className="page-main-subtitle">Template for ERC721 NFT minting Dapps</span>
           </div>
         </PageContainer>
@@ -37,7 +37,7 @@ const Home = () => {
                 </div>
               ) : (
                 <>
-                  <div className="row mb-5">
+                  <div id="collection-mint-widget" className="row mb-5">
                     <div className="col-12 col-md-6 mb-5">
                       <MintWidget { ...collection } />
                     </div>

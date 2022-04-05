@@ -82,7 +82,6 @@ eeBepro.on('paramsChanged', async () => {
 */
 const getAddress = async () => {
   const app = await bepro;
-  console.log('getAddress', app);
   return app && app.getAddress();
 };
 
@@ -651,8 +650,8 @@ const libBepro = {
         web3Provider.on('message', (...args) => {
           eeBepro.emit('message', ...args);
         });
-        web3Provider.on('networkChanged', (...args) => {
-          eeBepro.emit('networkChanged', ...args);
+        web3Provider.on('chainChanged', (...args) => {
+          eeBepro.emit('chainChanged', ...args);
         });
 
         // bepro is initialized, fulfill any waiting promises.

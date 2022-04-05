@@ -54,8 +54,6 @@ const setOperation = operation => {
 
   collection.operation = operation;
 
-  console.log('setOperation', operation, collection, collectionData);
-
   setGlobalState('collectionData', {
     ...collectionData,
     collection,
