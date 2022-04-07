@@ -1,7 +1,9 @@
 import { ethers } from 'hardhat';
 import CollectionConfig from '../config/CollectionConfig';
 import { NftContractType } from '../lib/NftContractProvider';
-import ContractArguments from './../config/ContractArguments';
+import ERC721ContractArguments from './../config/ERC721ContractArguments';
+import ERC1155ContractArguments from './../config/ERC1155ContractArguments';
+
 
 async function main() {
   // Hardhat always runs the compile task when running scripts with its command
@@ -11,11 +13,19 @@ async function main() {
   // manually to make sure everything is compiled
   // await hre.run('compile');
 
+  const contractType = process.env.CONTRACT_TYPE || 'ERC721'
+
   console.log('Deploying contract...');
 
   // We get the contract to deploy
-  const Contract = await ethers.getContractFactory(CollectionConfig.contractName);
-  const contract = await Contract.deploy(...ContractArguments) as NftContractType;
+  contractType
+  const Contract = contractType === 'ERC721'
+    ?  await ethers.getContractFactory(CollectionConfig.ERC721.contractName)
+    : await ethers.getContractFactory(CollectionConfig.ERC1155.contractName);
+
+  const contract = contractType === 'ERC721'
+  ? await Contract.deploy(...ERC721ContractArguments) as NftContractType
+  : await Contract.deploy(...ERC1155ContractArguments) as NftContractType;
 
   await contract.deployed();
 

@@ -247,7 +247,6 @@ header#main-header {
 
     @include breakpoint(until-landscape) {
       position: absolute;
-      top: 6px;
       right: 15px;
       width: 25px;
       height: 16px;
@@ -322,7 +321,7 @@ header#main-header {
   @include breakpoint(until-landscape) {
     width: 100%;
     position: fixed;
-    top: 50px;
+    top: 85px;
     left: 0;
     padding-top: 20px;
     padding-bottom: 20px;
@@ -414,7 +413,7 @@ header#main-header {
       position: fixed;
       top: 0 !important;
       z-index: 100;
-      background: rgba($white, 0.97);
+      background: $purple;
       box-shadow: 0 2px 9px 0 rgba($black, 0.08);
 /*       padding-top: 15px;
       padding-bottom: 15px; */

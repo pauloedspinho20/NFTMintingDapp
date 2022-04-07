@@ -31,7 +31,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Project config:
 
-- Run `yarn` on project root, art_engine, ipfs_deployer and hardhat directories
+- Run `yarn` on project root, art_engine and hardhat directories
 - Create .env
 - Change HTML metadata
 - Deactivate or remove all unused pages and components

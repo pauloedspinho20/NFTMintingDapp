@@ -7,20 +7,20 @@ async function main() {
   const contract = await NftContractProvider.getContract();
 
   // Update sale price (if needed)
-  const preSalePrice = utils.parseEther(CollectionConfig.preSale.price.toString());
+  const preSalePrice = utils.parseEther(CollectionConfig.ERC721.preSale.price.toString());
   if (!await (await contract.cost()).eq(preSalePrice)) {
-    console.log(`Updating the token price to ${CollectionConfig.preSale.price} ETH...`);
+    console.log(`Updating the token price to ${CollectionConfig.ERC721.preSale.price} ETH...`);
 
     await (await contract.setCost(preSalePrice)).wait();
   }
 
   // Update max amount per TX (if needed)
-  if (!await (await contract.maxMintAmountPerTx()).eq(CollectionConfig.preSale.maxMintAmountPerTx)) {
-    console.log(`Updating the max mint amount per TX to ${CollectionConfig.preSale.maxMintAmountPerTx}...`);
+  if (!await (await contract.maxMintAmountPerTx()).eq(CollectionConfig.ERC721.preSale.maxMintAmountPerTx)) {
+    console.log(`Updating the max mint amount per TX to ${CollectionConfig.ERC721.preSale.maxMintAmountPerTx}...`);
 
-    await (await contract.setMaxMintAmountPerTx(CollectionConfig.preSale.maxMintAmountPerTx)).wait();
+    await (await contract.setMaxMintAmountPerTx(CollectionConfig.ERC721.preSale.maxMintAmountPerTx)).wait();
   }
-  
+
   // Unpause the contract (if needed)
   if (await contract.paused()) {
     console.log('Unpausing the contract...');

@@ -12,6 +12,8 @@ import CollectionConfig from "./config/CollectionConfig";
 
 dotenv.config();
 
+const contractType = process.env.CONTRACT_TYPE || 'ERC721'
+
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
 task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
@@ -27,12 +29,12 @@ task(
   "Generates and prints out the root hash for the current whitelist",
   async () => {
     // Check configuration
-    if (CollectionConfig.whitelistAddresses.length < 1) {
+    if (CollectionConfig.ERC721.whitelistAddresses.length < 1) {
       throw "The whitelist is empty, please add some addresses to the configuration.";
     }
 
     // Build the Merkle Tree
-    const leafNodes = CollectionConfig.whitelistAddresses.map((addr) =>
+    const leafNodes = CollectionConfig.ERC721.whitelistAddresses.map((addr) =>
       keccak256(addr)
     );
     const merkleTree = new MerkleTree(leafNodes, keccak256, {
@@ -51,12 +53,12 @@ task(
   "Generates and prints out the whitelist proof for the given address (compatible with block explorers such as Etherscan)",
   async (taskArgs: { address: string }) => {
     // Check configuration
-    if (CollectionConfig.whitelistAddresses.length < 1) {
+    if (CollectionConfig.ERC721.whitelistAddresses.length < 1) {
       throw "The whitelist is empty, please add some addresses to the configuration.";
     }
 
     // Build the Merkle Tree
-    const leafNodes = CollectionConfig.whitelistAddresses.map((addr) =>
+    const leafNodes = CollectionConfig.ERC721.whitelistAddresses.map((addr) =>
       keccak256(addr)
     );
     const merkleTree = new MerkleTree(leafNodes, keccak256, {
@@ -81,8 +83,10 @@ task(
       throw "The contract name must be in PascalCase: https://en.wikipedia.org/wiki/Camel_case#Variations_and_synonyms";
     }
 
-    const oldContractFile = `${__dirname}/contracts/${CollectionConfig.contractName}.sol`;
-    const newContractFile = `${__dirname}/contracts/${taskArgs.newName}.sol`;
+    const contractName = contractType === 'ERC721' ? CollectionConfig.ERC721.contractName : CollectionConfig.ERC1155.contractName;
+
+    const oldContractFile = `${__dirname}/contracts/${contractType}/${contractName}.sol`;
+    const newContractFile = `${__dirname}/contracts/${contractType}/${taskArgs.newName}.sol`;
 
     if (!fs.existsSync(oldContractFile)) {
       throw `Contract file not found: "${oldContractFile}" (did you change the configuration manually?)`;
@@ -100,17 +104,17 @@ task(
     ); */
     replaceInFile(
       __dirname + "/config/CollectionConfig.ts",
-      CollectionConfig.contractName,
+      contractName,
       taskArgs.newName
     );
     replaceInFile(
       __dirname + "/lib/NftContractProvider.ts",
-      CollectionConfig.contractName,
+      contractName,
       taskArgs.newName
     );
     replaceInFile(
       oldContractFile,
-      CollectionConfig.contractName,
+      contractName,
       taskArgs.newName
     );
 
@@ -118,7 +122,7 @@ task(
     fs.renameSync(oldContractFile, newContractFile);
 
     console.log(
-      `Contract renamed successfully from "${CollectionConfig.contractName}" to "${taskArgs.newName}"!`
+      `Contract renamed successfully from "${contractName}" to "${taskArgs.newName}"!`
     );
 
     // Rebuilding types
