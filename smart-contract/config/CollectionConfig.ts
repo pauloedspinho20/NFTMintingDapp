@@ -11,7 +11,7 @@ const CollectionConfig: CollectionConfigInterface = {
   // yarn rename-contract NEW_CONTRACT_NAME
   // Please DO NOT change it manually!
   ERC721: {
-    contractName: "ERC721",
+    contractName: "RandomEyes",
     tokenName: "Random Eyes NFTs",
     tokenSymbol: "RE",
     hiddenMetadataUri:
@@ -35,14 +35,14 @@ const CollectionConfig: CollectionConfigInterface = {
     whitelistAddresses: whitelistAddresses,
   },
   ERC1155: {
-    contractName: "ERC721",
-    tokenName: "Random Eyes NFTs",
-    tokenSymbol: "RE",
+    contractName: "MetaParticles",
+    tokenName: "MetaParticles NFTs",
+    tokenSymbol: "MetaParticle",
     hiddenMetadataUri:
       "https://ipfs.io/ipfs/QmQxutXRTg3EK14FJrtFdtchcJBPsK39XjErDZvQwGQDei/hidden.json",
-    maxSupply: 32,
-    contractAddress: '0x3C0faE8B5Ec388Efd95113fD8DcA15580213d4AE',
-    marketplaceIdentifier: "my-nft-token",
+    maxSupply: 100,
+    contractAddress: '',
+    marketplaceIdentifier: "",
   }
 };
 

@@ -14,8 +14,8 @@ const contractAddress = contractType === 'ERC721'
   : CollectionConfig.ERC1155.contractAddress;
 
 const contractName = contractType === 'ERC721'
-? CollectionConfig.ERC721.contractName
-: CollectionConfig.ERC1155.contractName;
+  ? CollectionConfig.ERC721.contractName
+  : CollectionConfig.ERC1155.contractName;
 export default class NftContractProvider {
   public static async getContract(): Promise<ContractType> {
     // Check configuration
