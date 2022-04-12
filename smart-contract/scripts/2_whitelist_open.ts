@@ -6,15 +6,26 @@ import NftContractProvider from '../lib/NftContractProvider';
 
 async function main() {
 
-  // const contractType = process.env.CONTRACT_TYPE || 'ERC721'
+  const contractType = process.env.CONTRACT_TYPE || 'ERC721'
+  let collectionConfig
+
+  if (contractType === 'ERC721') {
+    collectionConfig = CollectionConfig.ERC721
+  }
+  else if ( contractType === 'ERC721withERC20') {
+    collectionConfig = CollectionConfig.ERC721withERC20
+  }
+   else {
+    collectionConfig = CollectionConfig.ERC1155
+  }
 
   // Check configuration
-  if (CollectionConfig.ERC721.whitelistAddresses.length < 1) {
+  if (collectionConfig.whitelistAddresses.length < 1) {
     throw '\x1b[31merror\x1b[0m ' + 'The whitelist is empty, please add some addresses to the configuration.';
   }
 
   // Build the Merkle Tree
-  const leafNodes = CollectionConfig.ERC721.whitelistAddresses.map(addr => keccak256(addr));
+  const leafNodes = collectionConfig.whitelistAddresses.map(addr => keccak256(addr));
   const merkleTree = new MerkleTree(leafNodes, keccak256, { sortPairs: true });
   const rootHash = '0x' + merkleTree.getRoot().toString('hex');
 
@@ -22,18 +33,18 @@ async function main() {
   const contract = await NftContractProvider.getContract();
 
   // Update sale price (if needed)
-  const whitelistPrice = utils.parseEther(CollectionConfig.ERC721.whitelistSale.price.toString());
+  const whitelistPrice = utils.parseEther(collectionConfig.whitelistSale.price.toString());
   if (!await (await contract.cost()).eq(whitelistPrice)) {
-    console.log(`Updating the token price to ${CollectionConfig.ERC721.whitelistSale.price} ETH...`);
+    console.log(`Updating the token price to ${collectionConfig.whitelistSale.price} ETH...`);
 
     await (await contract.setCost(whitelistPrice)).wait();
   }
 
   // Update max amount per TX (if needed)
-  if (!await (await contract.maxMintAmountPerTx()).eq(CollectionConfig.ERC721.whitelistSale.maxMintAmountPerTx)) {
-    console.log(`Updating the max mint amount per TX to ${CollectionConfig.ERC721.whitelistSale.maxMintAmountPerTx}...`);
+  if (!await (await contract.maxMintAmountPerTx()).eq(collectionConfig.whitelistSale.maxMintAmountPerTx)) {
+    console.log(`Updating the max mint amount per TX to ${collectionConfig.whitelistSale.maxMintAmountPerTx}...`);
 
-    await (await contract.setMaxMintAmountPerTx(CollectionConfig.ERC721.whitelistSale.maxMintAmountPerTx)).wait();
+    await (await contract.setMaxMintAmountPerTx(collectionConfig.whitelistSale.maxMintAmountPerTx)).wait();
   }
 
   // Update root hash (if changed)

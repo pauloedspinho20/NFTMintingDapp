@@ -23,13 +23,32 @@ export default interface CollectionConfigInterface {
     whitelistAddresses: string[];
     marketplaceIdentifier: string;
   };
+  ERC721withERC20: {
+    contractName: string;
+    tokenName: string;
+    tokenSymbol: string;
+    hiddenMetadataUri: string;
+    maxSupply: number;
+    whitelistSale: SaleConfig;
+    preSale: SaleConfig;
+    publicSale: SaleConfig;
+    contractAddress: string | null;
+    whitelistAddresses: string[];
+    marketplaceIdentifier: string;
+    erc20: string;
+    erc20MinimumValue: number;
+  };
   ERC1155: {
     contractName: string;
     tokenName: string;
-    tokenSymbol:  string;
-    hiddenMetadataUri:  string;
-    maxSupply: number,
+    tokenSymbol: string;
+    hiddenMetadataUri: string;
+    maxSupply: number;
+    whitelistSale: SaleConfig;
+    preSale: SaleConfig;
+    publicSale: SaleConfig;
     contractAddress: string | null;
+    whitelistAddresses: string[];
     marketplaceIdentifier: string;
   }
 }

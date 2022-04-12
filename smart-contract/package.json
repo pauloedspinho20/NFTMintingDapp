@@ -52,6 +52,7 @@
     "proof": "hardhat generate-proof",
     "deploy": "hardhat run scripts/1_deploy.ts",
     "verify-erc721": "hardhat verify --constructor-args config/ERC721ContractArguments.ts",
+    "verify-erc721-erc20": "hardhat verify --constructor-args config/ERC721withERC20ContractArguments.ts",
     "verify-erc1155": "hardhat verify --constructor-args config/ERC1155ContractArguments.ts",
     "whitelist-open": "hardhat run scripts/2_whitelist_open.ts",
     "whitelist-close": "hardhat run scripts/3_whitelist_close.ts",

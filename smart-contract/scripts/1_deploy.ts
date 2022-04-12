@@ -2,6 +2,7 @@ import { ethers } from 'hardhat';
 import CollectionConfig from '../config/CollectionConfig';
 import { NftContractType } from '../lib/NftContractProvider';
 import ERC721ContractArguments from './../config/ERC721ContractArguments';
+import ERC721withERC20ContractArguments from './../config/ERC721withERC20ContractArguments';
 import ERC1155ContractArguments from './../config/ERC1155ContractArguments';
 
 
@@ -18,14 +19,21 @@ async function main() {
   console.log('Deploying contract...');
 
   // We get the contract to deploy
-  contractType
-  const Contract = contractType === 'ERC721'
-    ?  await ethers.getContractFactory(CollectionConfig.ERC721.contractName)
-    : await ethers.getContractFactory(CollectionConfig.ERC1155.contractName);
+  let Contract;
+  let contract
 
-  const contract = contractType === 'ERC721'
-  ? await Contract.deploy(...ERC721ContractArguments) as NftContractType
-  : await Contract.deploy(...ERC1155ContractArguments) as NftContractType;
+  if (contractType === 'ERC721') {
+    Contract = await ethers.getContractFactory(CollectionConfig.ERC721.contractName)
+    contract = await Contract.deploy(...ERC721ContractArguments) as NftContractType
+  }
+  else if ( contractType === 'ERC721withERC20') {
+    Contract = await ethers.getContractFactory(CollectionConfig.ERC721withERC20.contractName)
+    contract = await Contract.deploy(...ERC721withERC20ContractArguments) as NftContractType
+  }
+   else {
+    Contract = await ethers.getContractFactory(CollectionConfig.ERC1155.contractName);
+    contract = await Contract.deploy(...ERC1155ContractArguments) as NftContractType
+  }
 
   await contract.deployed();
 

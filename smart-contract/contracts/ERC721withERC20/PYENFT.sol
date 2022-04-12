@@ -18,12 +18,15 @@
 pragma solidity >=0.8.9 <0.9.0;
 
 import "erc721a/contracts/ERC721A.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-contract RandomEyes is ERC721A, Ownable, ReentrancyGuard {
+contract PYENFT is ERC721A, Ownable, ReentrancyGuard {
     using Strings for uint256;
+    ERC20 public erc20Token;
 
     bytes32 public merkleRoot;
     mapping(address => bool) public whitelistClaimed;
@@ -35,9 +38,11 @@ contract RandomEyes is ERC721A, Ownable, ReentrancyGuard {
     uint256 public cost;
     uint256 public maxSupply;
     uint256 public maxMintAmountPerTx;
+    uint256 public erc20Minimum;
 
     bool public paused = true;
     bool public whitelistMintEnabled = false;
+    bool public erc20Enabled = false;
     bool public revealed = false;
 
     constructor(
@@ -46,12 +51,16 @@ contract RandomEyes is ERC721A, Ownable, ReentrancyGuard {
         uint256 _cost,
         uint256 _maxSupply,
         uint256 _maxMintAmountPerTx,
-        string memory _hiddenMetadataUri
+        string memory _hiddenMetadataUri,
+        ERC20 _erc20Token,
+        uint256 _erc20MinimumValue
     ) ERC721A(_tokenName, _tokenSymbol) {
         cost = _cost;
         maxSupply = _maxSupply;
         maxMintAmountPerTx = _maxMintAmountPerTx;
         setHiddenMetadataUri(_hiddenMetadataUri);
+        setERC20Address(_erc20Token);
+        setERC20MinimumValue(_erc20MinimumValue);
     }
 
     modifier mintCompliance(uint256 _mintAmount) {
@@ -85,6 +94,7 @@ contract RandomEyes is ERC721A, Ownable, ReentrancyGuard {
             MerkleProof.verify(_merkleProof, merkleRoot, leaf),
             "Invalid proof!"
         );
+        require(erc20Token.balanceOf(_msgSender()) >= erc20Minimum);
 
         whitelistClaimed[_msgSender()] = true;
         _safeMint(_msgSender(), _mintAmount);
@@ -97,6 +107,7 @@ contract RandomEyes is ERC721A, Ownable, ReentrancyGuard {
         mintPriceCompliance(_mintAmount)
     {
         require(!paused, "The contract is paused!");
+        require(erc20Token.balanceOf(_msgSender()) >= erc20Minimum);
 
         _safeMint(_msgSender(), _mintAmount);
     }
@@ -214,6 +225,34 @@ contract RandomEyes is ERC721A, Ownable, ReentrancyGuard {
 
     function setWhitelistMintEnabled(bool _state) public onlyOwner {
         whitelistMintEnabled = _state;
+    }
+
+    function setEnabledERC20(bool _state) public onlyOwner {
+        erc20Enabled = _state;
+    }
+
+    function setERC20Address(ERC20 _erc20) public onlyOwner {
+        erc20Token = _erc20;
+    }
+
+    function setERC20MinimumValue(uint256 _value) public onlyOwner {
+        erc20Minimum = _value;
+    }
+
+    function getERC20Balance(address _address)
+        public
+        view
+        returns (uint256 balance)
+    {
+        return erc20Token.balanceOf(_address);
+    }
+
+    function getERC20Allowance(address _address)
+        public
+        view
+        returns (uint256 allowance)
+    {
+        return erc20Token.allowance(_address, address(this));
     }
 
     function withdraw() public onlyOwner nonReentrant {

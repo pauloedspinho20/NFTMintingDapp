@@ -83,7 +83,16 @@ task(
       throw "The contract name must be in PascalCase: https://en.wikipedia.org/wiki/Camel_case#Variations_and_synonyms";
     }
 
-    const contractName = contractType === 'ERC721' ? CollectionConfig.ERC721.contractName : CollectionConfig.ERC1155.contractName;
+    let contractName
+    if (contractType === 'ERC721') {
+      contractName = CollectionConfig.ERC721.contractName
+    }
+    else if ( contractType === 'ERC721withERC20') {
+      contractName = CollectionConfig.ERC721withERC20.contractName
+    }
+    else {
+      contractName = CollectionConfig.ERC1155.contractName;
+    }
 
     const oldContractFile = `${__dirname}/contracts/${contractType}/${contractName}.sol`;
     const newContractFile = `${__dirname}/contracts/${contractType}/${taskArgs.newName}.sol`;

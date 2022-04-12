@@ -4,7 +4,7 @@ import { BigNumber, utils } from "ethers";
 import { ethers } from "hardhat";
 import { MerkleTree } from "merkletreejs";
 import keccak256 from "keccak256";
-import CollectionConfig from "./../config/CollectionConfig";
+import CollectionConfig from "../config/CollectionConfig";
 import ERC721ContractArguments from "../config/ERC721ContractArguments";
 import { NftContractType } from "../lib/NftContractProvider";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";

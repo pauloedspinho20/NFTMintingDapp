@@ -9,13 +9,22 @@ import CollectionConfig from "./../config/CollectionConfig";
 
 const contractType = process.env.CONTRACT_TYPE || 'ERC721'
 
-const contractAddress = contractType === 'ERC721'
-  ? CollectionConfig.ERC721.contractAddress
-  : CollectionConfig.ERC1155.contractAddress;
+let contractAddress: string | null;
+let contractName: string;
 
-const contractName = contractType === 'ERC721'
-  ? CollectionConfig.ERC721.contractName
-  : CollectionConfig.ERC1155.contractName;
+if (contractType === 'ERC721') {
+  contractAddress = CollectionConfig.ERC721.contractAddress
+  contractName = CollectionConfig.ERC721.contractName
+}
+else if ( contractType === 'ERC721withERC20') {
+  contractAddress = CollectionConfig.ERC721withERC20.contractAddress
+  contractName = CollectionConfig.ERC721withERC20.contractName
+}
+ else {
+  contractAddress = CollectionConfig.ERC1155.contractAddress
+  contractName = CollectionConfig.ERC1155.contractName
+}
+
 export default class NftContractProvider {
   public static async getContract(): Promise<ContractType> {
     // Check configuration
