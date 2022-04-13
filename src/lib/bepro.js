@@ -24,7 +24,7 @@ import Numbers from './utils/Numbers';
 const erc721ContractV1Abi = require('lib/abis/ERC721ContractV1.json');
 
 const env = process.env.NEXT_PUBLIC_ENVIRONMENT;
-
+const contractType = process.env.NEXT_PUBLIC_ERC721_CONTRACT_TYPE || 'ERC721';
 const resolve = {};
 
 let bepro = null;
@@ -256,12 +256,10 @@ const getMerkleTree = merkleTree => {
 
 const getProofForAddress = address => getMerkleTree().getHexProof(keccak256(address));
 
-/* const getRawProofForAddress = address =>
- getProofForAddress(address).toString().replaceAll('\'', '').replaceAll(' ', ''); */
-
 const whitelistContains = async address => (
   getMerkleTree().getLeafIndex(Buffer.from(keccak256(address))) >= 0
 );
+
 /*
 * GET COLLECTION
 */
@@ -294,6 +292,13 @@ const getCollection = async () => {
     const isAddressWhitelisted = address && await whitelistContains(address);
     const userTokensIds = address ? await nftContract?.methods.walletOfOwner(address).call() : false;
     const userTokens = [];
+
+    const erc20Name = contractType === 'ERC721withERC20' ? await nftContract?.methods.erc20Name().call() : null;
+    const erc20Symbol = contractType === 'ERC721withERC20' ? await nftContract?.methods.erc20Symbol().call() : null;
+    const erc20Enabled = contractType === 'ERC721withERC20' ? await nftContract?.methods.erc20Enabled().call() : false;
+    const erc20Minimum = contractType === 'ERC721withERC20' ? await nftContract?.methods.erc20Minimum().call() : 0;
+    const erc20Token = contractType === 'ERC721withERC20' ? await nftContract?.methods.erc20Token().call() : null;
+    const erc20Balance = contractType === 'ERC721withERC20' ? await nftContract?.methods.erc20Balance().call() : null;
 
     if (userTokensIds.length > 0 && address) {
       await Promise.all(userTokensIds.map(async tokenId => {
@@ -344,6 +349,12 @@ const getCollection = async () => {
       whitelistClaimed,
       isAddressWhitelisted,
       userTokens,
+      erc20Name,
+      erc20Symbol,
+      erc20Enabled,
+      erc20Minimum,
+      erc20Token,
+      erc20Balance,
     };
 
     if (collection) {

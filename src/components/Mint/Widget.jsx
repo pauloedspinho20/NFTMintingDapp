@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import classnames from 'classnames';
 
 import Button from 'components/Button/Button';
-import ButtonApprove from 'components/Button/Approve';
+// import ButtonApprove from 'components/Button/Approve';
 import ButtonMint from 'components/Button/Mint';
 import CollectionButtons from 'components/Button/CollectionButtons';
 import Placeholder from 'components/Placeholder';
@@ -16,7 +16,12 @@ import Wallet from 'components/Wallet/Wallet';
 import useBepro from 'hooks/useBepro';
 
 const MintWidget = ({
-  approved,
+  /* approved, */
+  erc20Name,
+  erc20Symbol,
+  erc20Enabled,
+  erc20Minimum,
+  erc20Balance,
   enabled,
   contractAddress,
   paused,
@@ -155,28 +160,24 @@ const MintWidget = ({
                 </div>
 
                 <div
-                  className={ classnames('row', 'minting-actions', {
-                    /*   'minting-actions--status-disabled': (address && ready) || (whitelistMintEnabled && address),
-                  'minting-actions--blurred': (address && ready) || (whitelistMintEnabled && address), */
-                  }) }
+                  className="row minting-actions"
                 >
-
-                  { /*     { !!address && whitelistMintEnabled && !isAddressWhitelisted && (
-                <span className="minting-actions--notice">
-                  This address is not whitelisted
-                </span>
-                ) } */ }
-
                   <div className="col">
                     { !address && ready && <Wallet size="m" /> }
 
-                    { !!address && ready && !approved && contractAddress && (
+                   { /*  { !!address && ready && !approved && contractAddress && (
                     <ButtonApprove
                       contractAddress={ contractAddress }
                     />
+                    ) } */ }
+
+                    { erc20Enabled && !!address && ready && (
+                      <div>
+                         { `Your ${erc20Name} balance is ${erc20Balance}. You need a least ${erc20Minimum} ${erc20Symbol} to mint.` }
+                      </div>
                     ) }
 
-                    { !!address && ready && approved && (
+                    { !!address && ready /*  && approved */ && (
                     <div className="minting-item minting-action-wrapper">
                       <div className="minting-amount-title">Amount</div>
                       <div className="minting-amount-wrapper">
@@ -233,7 +234,7 @@ const MintWidget = ({
 
                       </div>
                       { !isAddressWhitelisted && whitelistMintEnabled && (
-                      <small>Yout address is not whitelisted</small>
+                      <small>Your address is not whitelisted</small>
                       ) }
                     </div>
                     ) }
@@ -258,7 +259,12 @@ const MintWidget = ({
 };
 
 MintWidget.propTypes = {
-  approved: bool,
+  /* approved: bool, */
+  erc20Name: string,
+  erc20Symbol: string,
+  erc20Enabled: bool,
+  erc20Minimum: number,
+  erc20Balance: number,
   enabled: bool,
   contractAddress: string,
   paused: bool,
@@ -272,7 +278,12 @@ MintWidget.propTypes = {
 };
 
 MintWidget.defaultProps = {
-  approved: null,
+  /* approved: null, */
+  erc20Name: null,
+  erc20Symbol: null,
+  erc20Enabled: null,
+  erc20Minimum: null,
+  erc20Balance: null,
   enabled: null,
   contractAddress: null,
   paused: null,

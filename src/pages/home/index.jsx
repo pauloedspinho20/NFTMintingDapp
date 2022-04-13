@@ -38,7 +38,7 @@ const Home = () => {
               ) : (
                 <>
                   <div id="collection-mint-widget" className="row mb-5">
-                    <div className="col-12 col-md-6 mb-5">
+                    <div className="col-12 col-lg-6 mb-5">
                       <MintWidget { ...collection } />
                     </div>
                   </div>

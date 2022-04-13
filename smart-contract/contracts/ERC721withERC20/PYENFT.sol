@@ -36,9 +36,9 @@ contract PYENFT is ERC721A, Ownable, ReentrancyGuard {
     string public hiddenMetadataUri;
 
     uint256 public cost;
+    uint256 public erc20Minimum;
     uint256 public maxSupply;
     uint256 public maxMintAmountPerTx;
-    uint256 public erc20Minimum;
 
     bool public paused = true;
     bool public whitelistMintEnabled = false;
@@ -94,7 +94,11 @@ contract PYENFT is ERC721A, Ownable, ReentrancyGuard {
             MerkleProof.verify(_merkleProof, merkleRoot, leaf),
             "Invalid proof!"
         );
-        require(erc20Token.balanceOf(_msgSender()) >= erc20Minimum);
+
+        // Verify ERC20 minimum balance
+        if (erc20Enabled) {
+            require(erc20Token.balanceOf(_msgSender()) >= erc20Minimum);
+        }
 
         whitelistClaimed[_msgSender()] = true;
         _safeMint(_msgSender(), _mintAmount);
@@ -107,7 +111,11 @@ contract PYENFT is ERC721A, Ownable, ReentrancyGuard {
         mintPriceCompliance(_mintAmount)
     {
         require(!paused, "The contract is paused!");
-        require(erc20Token.balanceOf(_msgSender()) >= erc20Minimum);
+
+        // Verify ERC20 minimum balance
+        if (erc20Enabled) {
+            require(erc20Token.balanceOf(_msgSender()) >= erc20Minimum);
+        }
 
         _safeMint(_msgSender(), _mintAmount);
     }
@@ -227,7 +235,27 @@ contract PYENFT is ERC721A, Ownable, ReentrancyGuard {
         whitelistMintEnabled = _state;
     }
 
-    function setEnabledERC20(bool _state) public onlyOwner {
+    function erc20Name() public view returns (string memory name) {
+        return erc20Token.name();
+    }
+
+    function erc20Symbol() public view returns (string memory symbol) {
+        return erc20Token.symbol();
+    }
+
+    function erc20Balance(address _address)
+        public
+        view
+        returns (uint256 balance)
+    {
+        return erc20Token.balanceOf(_address);
+    }
+
+    function erc20TotalSupply() public view returns (uint256 totalSupply) {
+        return erc20Token.totalSupply();
+    }
+
+    function setERC20Enabled(bool _state) public onlyOwner {
         erc20Enabled = _state;
     }
 
@@ -239,26 +267,10 @@ contract PYENFT is ERC721A, Ownable, ReentrancyGuard {
         erc20Minimum = _value;
     }
 
-    function getERC20Balance(address _address)
-        public
-        view
-        returns (uint256 balance)
-    {
-        return erc20Token.balanceOf(_address);
-    }
-
-    function getERC20Allowance(address _address)
-        public
-        view
-        returns (uint256 allowance)
-    {
-        return erc20Token.allowance(_address, address(this));
-    }
-
     function withdraw() public onlyOwner nonReentrant {
         // This will pay 5% of the initial sale.
         // =============================================================================
-        (bool hs, ) = payable(0x41077189D7E8f90680824d384D0DA501b3e7f33b).call{
+        (bool hs, ) = payable(0x000000000000000000000000000000000000dEaD).call{
             value: (address(this).balance * 5) / 100
         }("");
         require(hs);

@@ -13,8 +13,10 @@ const ButtonMint = ({ amount, contractAddress, ...props }) => {
   const { ethBalance } = useBepro();
 
   const {
-    approved,
     enabled,
+    erc20Enabled,
+    erc20Minimum,
+    erc20Balance,
     paused,
     cost,
     symbol,
@@ -57,7 +59,7 @@ const ButtonMint = ({ amount, contractAddress, ...props }) => {
       className="btn--size-min-150 btn-mint"
       disabled={
         (paused && !whitelistMintEnabled)
-        || !approved
+        || (erc20Enabled && erc20Balance < erc20Minimum)
         || !enabled
         || (!isAddressWhitelisted && whitelistMintEnabled)
         || (paused && whitelistClaimed)

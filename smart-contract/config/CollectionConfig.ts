@@ -55,7 +55,7 @@ const CollectionConfig: CollectionConfigInterface = {
     },
     erc20: '0x01BE23585060835E02B77ef475b0Cc51aA1e0709',
     erc20MinimumValue: 30,
-    contractAddress: '0x0c5D74565e5Fdb0ab7D8dAb4077A836d086d91F5',
+    contractAddress: '',
     marketplaceIdentifier: "my-nft-token",
     whitelistAddresses: whitelistAddresses,
   },
