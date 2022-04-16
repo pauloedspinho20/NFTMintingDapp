@@ -92,7 +92,7 @@ const preview = {
   thumbPerRow: 5,
   thumbWidth: 50,
   imageRatio: format.height / format.width,
-  imageName: "preview.png",
+  imageName: "preview.jpg",
 };
 
 const preview_gif = {
