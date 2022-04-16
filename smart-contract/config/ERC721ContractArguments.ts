@@ -8,6 +8,7 @@ const ERC721ContractArguments = [
   utils.parseEther(CollectionConfig.ERC721.whitelistSale.price.toString()),
   CollectionConfig.ERC721.maxSupply,
   CollectionConfig.ERC721.whitelistSale.maxMintAmountPerTx,
+  CollectionConfig.ERC721.maxMintAmountPerWallet,
   CollectionConfig.ERC721.hiddenMetadataUri,
 ] as const;
 

@@ -21,6 +21,7 @@ export default interface CollectionConfigInterface {
     publicSale: SaleConfig;
     contractAddress: string | null;
     whitelistAddresses: string[];
+    maxMintAmountPerWallet: number;
     marketplaceIdentifier: string;
   };
   ERC721withERC20: {
@@ -34,6 +35,7 @@ export default interface CollectionConfigInterface {
     publicSale: SaleConfig;
     contractAddress: string | null;
     whitelistAddresses: string[];
+    maxMintAmountPerWallet: number;
     marketplaceIdentifier: string;
     erc20: string;
     erc20MinimumValue: number;

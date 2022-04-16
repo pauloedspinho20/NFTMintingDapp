@@ -1,49 +1,48 @@
 // SPDX-License-Identifier: MIT
 
 /*
-███████ ██████   █████  ██████  ███████ ██       █████  ██████  ███████
-██      ██   ██ ██   ██ ██   ██ ██      ██      ██   ██ ██   ██ ██
-███████ ██████  ███████ ██   ██ █████   ██      ███████ ██████  ███████
-     ██ ██      ██   ██ ██   ██ ██      ██      ██   ██ ██   ██      ██
-███████ ██      ██   ██ ██████  ███████ ███████ ██   ██ ██████  ███████
-
-
-███████ ██████   ██████ ███████ ██████   ██
-██      ██   ██ ██           ██      ██ ███
-█████   ██████  ██          ██   █████   ██
-██      ██   ██ ██         ██   ██       ██
-███████ ██   ██  ██████    ██   ███████  ██
+ ::::::::  :::::::::     :::     :::::::::  :::::::::: :::            :::     :::::::::   ::::::::
+:+:    :+: :+:    :+:  :+: :+:   :+:    :+: :+:        :+:          :+: :+:   :+:    :+: :+:    :+:
++:+        +:+    +:+ +:+   +:+  +:+    +:+ +:+        +:+         +:+   +:+  +:+    +:+ +:+
++#++:++#++ +#++:++#+ +#++:++#++: +#+    +:+ +#++:++#   +#+        +#++:++#++: +#++:++#+  +#++:++#++
+       +#+ +#+       +#+     +#+ +#+    +#+ +#+        +#+        +#+     +#+ +#+    +#+        +#+
+#+#    #+# #+#       #+#     #+# #+#    #+# #+#        #+#        #+#     #+# #+#    #+# #+#    #+#
+ ########  ###       ###     ### #########  ########## ########## ###     ### #########   ########
+:::::::::: :::::::::   ::::::::  :::::::::::  ::::::::    :::
+:+:        :+:    :+: :+:    :+: :+:     :+: :+:    :+: :+:+:
++:+        +:+    +:+ +:+               +:+        +:+    +:+
++#++:++#   +#++:++#:  +#+              +#+       +#+      +#+
++#+        +#+    +#+ +#+             +#+      +#+        +#+
+#+#        #+#    #+# #+#    #+#     #+#      #+#         #+#
+########## ###    ###  ########      ###     ########## #######
 */
 
 pragma solidity >=0.8.9 <0.9.0;
 
 import "erc721a/contracts/ERC721A.sol";
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-contract PYENFT is ERC721A, Ownable, ReentrancyGuard {
+contract SpadeLabsERC721 is ERC721A, Ownable, ReentrancyGuard {
     using Strings for uint256;
-    ERC20 public erc20Token;
 
     bytes32 public merkleRoot;
     mapping(address => bool) public whitelistClaimed;
 
-    string public uriPrefix = "";
+    string public uriPrefix =
+        "https://ipfs.io/ipfs/Qmd77PEq4byzwpAXgsY4AxoEPuvNJH5sS4ECbtCLT5fMR2/";
     string public uriSuffix = ".json";
     string public hiddenMetadataUri;
 
     uint256 public cost;
-    uint256 public erc20Minimum;
     uint256 public maxSupply;
     uint256 public maxMintAmountPerTx;
+    uint256 public maxMintAmountPerWallet;
 
     bool public paused = true;
     bool public whitelistMintEnabled = false;
-    bool public erc20Enabled = false;
-    bool public revealed = false;
+    bool public revealed = true;
 
     constructor(
         string memory _tokenName,
@@ -51,16 +50,14 @@ contract PYENFT is ERC721A, Ownable, ReentrancyGuard {
         uint256 _cost,
         uint256 _maxSupply,
         uint256 _maxMintAmountPerTx,
-        string memory _hiddenMetadataUri,
-        ERC20 _erc20Token,
-        uint256 _erc20MinimumValue
+        uint256 _maxMintAmountPerWallet,
+        string memory _hiddenMetadataUri
     ) ERC721A(_tokenName, _tokenSymbol) {
         cost = _cost;
         maxSupply = _maxSupply;
         maxMintAmountPerTx = _maxMintAmountPerTx;
+        maxMintAmountPerWallet = _maxMintAmountPerWallet;
         setHiddenMetadataUri(_hiddenMetadataUri);
-        setERC20Address(_erc20Token);
-        setERC20MinimumValue(_erc20MinimumValue);
     }
 
     modifier mintCompliance(uint256 _mintAmount) {
@@ -88,17 +85,17 @@ contract PYENFT is ERC721A, Ownable, ReentrancyGuard {
     {
         // Verify whitelist requirements
         require(whitelistMintEnabled, "The whitelist sale is not enabled!");
-        require(!whitelistClaimed[_msgSender()], "Address already claimed!");
+        // require(!whitelistClaimed[_msgSender()], "Address already claimed!");
         bytes32 leaf = keccak256(abi.encodePacked(_msgSender()));
         require(
             MerkleProof.verify(_merkleProof, merkleRoot, leaf),
             "Invalid proof!"
         );
 
-        // Verify ERC20 minimum balance
-        if (erc20Enabled) {
-            require(erc20Token.balanceOf(_msgSender()) >= erc20Minimum);
-        }
+        require(
+            balanceOf(_msgSender()) <= maxMintAmountPerWallet,
+            "Max NFTs per wallet"
+        );
 
         whitelistClaimed[_msgSender()] = true;
         _safeMint(_msgSender(), _mintAmount);
@@ -112,10 +109,10 @@ contract PYENFT is ERC721A, Ownable, ReentrancyGuard {
     {
         require(!paused, "The contract is paused!");
 
-        // Verify ERC20 minimum balance
-        if (erc20Enabled) {
-            require(erc20Token.balanceOf(_msgSender()) >= erc20Minimum);
-        }
+        require(
+            balanceOf(_msgSender()) <= maxMintAmountPerWallet,
+            "Max NFTs per wallet"
+        );
 
         _safeMint(_msgSender(), _mintAmount);
     }
@@ -208,6 +205,13 @@ contract PYENFT is ERC721A, Ownable, ReentrancyGuard {
         maxMintAmountPerTx = _maxMintAmountPerTx;
     }
 
+    function setMaxMintAmountPerWallet(uint256 _maxMintAmountPerWallet)
+        public
+        onlyOwner
+    {
+        maxMintAmountPerWallet = _maxMintAmountPerWallet;
+    }
+
     function setHiddenMetadataUri(string memory _hiddenMetadataUri)
         public
         onlyOwner
@@ -235,45 +239,7 @@ contract PYENFT is ERC721A, Ownable, ReentrancyGuard {
         whitelistMintEnabled = _state;
     }
 
-    function erc20Name() public view returns (string memory name) {
-        return erc20Token.name();
-    }
-
-    function erc20Symbol() public view returns (string memory symbol) {
-        return erc20Token.symbol();
-    }
-
-    function erc20Balance(address _address)
-        public
-        view
-        returns (uint256 balance)
-    {
-        return erc20Token.balanceOf(_address);
-    }
-
-    function erc20TotalSupply() public view returns (uint256 totalSupply) {
-        return erc20Token.totalSupply();
-    }
-
-    function setERC20Enabled(bool _state) public onlyOwner {
-        erc20Enabled = _state;
-    }
-
-    function setERC20Address(ERC20 _erc20) public onlyOwner {
-        erc20Token = _erc20;
-    }
-
-    function setERC20MinimumValue(uint256 _value) public onlyOwner {
-        erc20Minimum = _value;
-    }
-
     function withdraw() public onlyOwner nonReentrant {
-        // This will pay 5% of the initial sale.
-        // =============================================================================
-        (bool hs, ) = payable(0x000000000000000000000000000000000000dEaD).call{
-            value: (address(this).balance * 5) / 100
-        }("");
-        require(hs);
         // =============================================================================
 
         // This will transfer the remaining contract balance to the owner.
