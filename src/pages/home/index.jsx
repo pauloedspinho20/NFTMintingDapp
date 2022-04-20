@@ -5,25 +5,30 @@ import MintWidget from 'components/Mint/Widget';
 import MintCollection from 'components/Mint/Collection';
 import NoticeNetwork from 'components/Notice/Network';
 import Landing from 'components/Landing/Landing';
+
 import useContracts from 'hooks/useContracts';
+import { pageMeta } from 'config';
 
 const Home = () => {
   const { collection } = useContracts();
-  const siteName = process.env.NEXT_PUBLIC_DAPP_NAME !== '' ? process.env.NEXT_PUBLIC_DAPP_NAME : collection?.name;
-  return (
 
+  return (
     <AppWrapper>
-      <Landing name={ siteName } />
+      <Landing name={ pageMeta.title } />
 
       <div className="content">
         <PageContainer>
-          <div className="row">
-            <h2 className="page-main-title">{ siteName }</h2>
-            <span className="page-main-subtitle">Template for ERC721 NFT minting Dapps</span>
+          <div className="row justify-content-center">
+            <div className="col col-md-8">
+              <h2 className="page-main-title">{ pageMeta.title }</h2>
+              <p className="page-main-subtitle">
+                { pageMeta.description }
+              </p>
+            </div>
           </div>
         </PageContainer>
 
-        <div className="minting-wrapper">
+        <div id="home-minting-wrapper" className="minting-wrapper">
           <section className="minting--section">
             <PageContainer>
 

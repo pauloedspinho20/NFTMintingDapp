@@ -11,14 +11,19 @@
         "type": "uint256"
       },
       {
-        "internalType": "uint256",
-        "name": "_maxMintAmountPerWallet",
-        "type": "uint256"
-      },
-      {
         "internalType": "string",
         "name": "_hiddenMetadataUri",
         "type": "string"
+      },
+      {
+        "internalType": "contract ERC20",
+        "name": "_erc20Token",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_erc20MinimumValue",
+        "type": "uint256"
       }
     ],
     "stateMutability": "nonpayable",
@@ -170,6 +175,65 @@
   },
   {
     "inputs": [
+      { "internalType": "address", "name": "_address", "type": "address" }
+    ],
+    "name": "erc20Balance",
+    "outputs": [
+      { "internalType": "uint256", "name": "balance", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "erc20Enabled",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "erc20Minimum",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "erc20Name",
+    "outputs": [{ "internalType": "string", "name": "name", "type": "string" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "erc20Symbol",
+    "outputs": [
+      { "internalType": "string", "name": "symbol", "type": "string" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "erc20Token",
+    "outputs": [
+      { "internalType": "contract ERC20", "name": "", "type": "address" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "erc20TotalSupply",
+    "outputs": [
+      { "internalType": "uint256", "name": "totalSupply", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
       { "internalType": "uint256", "name": "tokenId", "type": "uint256" }
     ],
     "name": "getApproved",
@@ -197,13 +261,6 @@
   {
     "inputs": [],
     "name": "maxMintAmountPerTx",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "maxMintAmountPerWallet",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
@@ -329,6 +386,31 @@
   },
   {
     "inputs": [
+      { "internalType": "contract ERC20", "name": "_erc20", "type": "address" }
+    ],
+    "name": "setERC20Address",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "bool", "name": "_state", "type": "bool" }],
+    "name": "setERC20Enabled",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_value", "type": "uint256" }
+    ],
+    "name": "setERC20MinimumValue",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
       {
         "internalType": "string",
         "name": "_hiddenMetadataUri",
@@ -349,19 +431,6 @@
       }
     ],
     "name": "setMaxMintAmountPerTx",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_maxMintAmountPerWallet",
-        "type": "uint256"
-      }
-    ],
-    "name": "setMaxMintAmountPerWallet",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

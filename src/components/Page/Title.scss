@@ -9,12 +9,12 @@
 .page-main-title {
   @include no-select();
 
-  font-size: 1.88rem;
-  line-height: 1em;
+  font-size: 32px;
+  line-height: 1.5;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  color: $yellow;
 
   @include breakpoint(until-portrait) {
     font-size: 1.5rem;
@@ -30,17 +30,7 @@
     bottom: -30px;
     font-size: 0.65rem;
     color: rgba($white, 0.75);
-    letter-spacing: 0.2em;
     -webkit-text-fill-color: rgba($white, 0.75);
     background-clip: unset;
   }
-}
-
-.page-main-subtitle {
-  font-size: 1rem;
-  line-height: 1em;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  margin-bottom: 70px;
 }

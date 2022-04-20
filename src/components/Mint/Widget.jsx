@@ -16,7 +16,7 @@ import Wallet from 'components/Wallet/Wallet';
 import useBepro from 'hooks/useBepro';
 
 const MintWidget = ({
-  /* approved, */
+  balanceOf,
   erc20Name,
   erc20Symbol,
   erc20Enabled,
@@ -30,6 +30,7 @@ const MintWidget = ({
   maxSupply,
   totalSupply,
   maxMintAmountPerTx,
+  maxMintAmountPerWallet,
   whitelistMintEnabled,
   isAddressWhitelisted,
 }) => {
@@ -38,6 +39,10 @@ const MintWidget = ({
   const [ status, setStatus ] = useState(null);
   const [ total, setTotal ] = useState(cost);
   const ready = !paused !== null;
+
+  const maxMintAllowed = maxMintAmountPerWallet === -1
+    ? '&#8734;'
+    : maxMintAmountPerWallet - balanceOf;
 
   useEffect(() => {
     setTotal(cost * amount);
@@ -65,9 +70,9 @@ const MintWidget = ({
           <div className="minting-container--title">
 
             <div className="minting-container--title-txt">
-              <h4 className="mb-3">
+              <h3 className="mb-3">
                 Mint
-              </h4>
+              </h3>
 
               <CollectionButtons contractAddress={ contractAddress } />
             </div>
@@ -114,10 +119,12 @@ const MintWidget = ({
 
                   <div className="col-12 col-md-6">
                     <div className="minting-item">
-                      <div className="minting-item-subtitle minting-item-lbl">Max tokens per mint</div>
+                      <div className="minting-item-subtitle minting-item-lbl">Max per Wallet</div>
                       <div className="minting-item-amount">
                         <Placeholder ready={ ready }>
-                        { maxMintAmountPerTx }
+                          { maxMintAmountPerWallet === -1
+                            ? <div>&#8734;</div>
+                            : maxMintAmountPerWallet }
                         </Placeholder>
                       </div>
                     </div>
@@ -165,30 +172,19 @@ const MintWidget = ({
                   <div className="col">
                     { !address && ready && <Wallet size="m" /> }
 
-                   { /*  { !!address && ready && !approved && contractAddress && (
-                    <ButtonApprove
-                      contractAddress={ contractAddress }
-                    />
-                    ) } */ }
-
-                    { erc20Enabled && !!address && ready && (
-                      <div>
-                         { `Your ${erc20Name} balance is ${erc20Balance}. You need a least ${erc20Minimum} ${erc20Symbol} to mint.` }
-                      </div>
-                    ) }
-
                     { !!address && ready /*  && approved */ && (
                     <div className="minting-item minting-action-wrapper">
                       <div className="minting-amount-title">Amount</div>
                       <div className="minting-amount-wrapper">
                         <Button
+                          className="btn-amount"
                           disabled={ amount <= 1 }
                           onClick={ () => {
                             if (amount >= 1) {
                               setAmount(amount - 1);
                             }
                           } }
-                          theme="blue"
+                          theme="yellow"
                           size="s"
                         >
                           -
@@ -197,13 +193,14 @@ const MintWidget = ({
                         <div className="minting-amount">{ amount }</div>
 
                         <Button
-                          disabled={ amount >= maxMintAmountPerTx }
+                          className="btn-amount"
+                          disabled={ amount >= maxMintAmountPerTx || amount >= maxMintAllowed }
                           onClick={ () => {
-                            if (amount <= maxMintAmountPerTx) {
+                            if (amount <= maxMintAmountPerTx || amount >= maxMintAllowed) {
                               setAmount(amount + 1);
                             }
                           } }
-                          theme="blue"
+                          theme="yellow"
                           size="s"
                         >
                           +
@@ -226,16 +223,29 @@ const MintWidget = ({
                           { total > ethBalance && (
                             <span className="red">Insufficient ETH balance</span>
                           ) }
+                          { erc20Enabled && erc20Balance < erc20Minimum && ready && (
+                            <span className="red">
+                              { `Your ${erc20Name} balance is ${erc20Balance} ${erc20Symbol}.` }
+                              <br />
+                              { ` You need a least ${erc20Minimum} ${erc20Symbol} to be able to mint.` }
+                            </span>
+                          ) }
+
+                          { (balanceOf >= maxMintAmountPerWallet && maxMintAmountPerWallet !== -1) && (
+                            <span className="red">
+                              { `You can't mint more than ${maxMintAmountPerWallet} NFTs.` }
+                            </span>
+                          ) }
+
+                          { !isAddressWhitelisted && whitelistMintEnabled && (
+                            <small className="red">Your address is not whitelisted</small>
+                          ) }
                         </div>
                       </div>
 
                       <div className="minting-button-wrapper">
                         <ButtonMint amount={ amount } contractAddress={ contractAddress } />
-
                       </div>
-                      { !isAddressWhitelisted && whitelistMintEnabled && (
-                      <small>Your address is not whitelisted</small>
-                      ) }
                     </div>
                     ) }
                   </div>
@@ -260,6 +270,7 @@ const MintWidget = ({
 
 MintWidget.propTypes = {
   /* approved: bool, */
+  balanceOf: number,
   erc20Name: string,
   erc20Symbol: string,
   erc20Enabled: bool,
@@ -273,12 +284,14 @@ MintWidget.propTypes = {
   maxSupply: number,
   totalSupply: number,
   maxMintAmountPerTx: number,
+  maxMintAmountPerWallet: number,
   whitelistMintEnabled: bool,
   isAddressWhitelisted: bool,
 };
 
 MintWidget.defaultProps = {
   /* approved: null, */
+  balanceOf: number,
   erc20Name: null,
   erc20Symbol: null,
   erc20Enabled: null,
@@ -292,6 +305,7 @@ MintWidget.defaultProps = {
   maxSupply: null,
   totalSupply: null,
   maxMintAmountPerTx: null,
+  maxMintAmountPerWallet: null,
   whitelistMintEnabled: null,
   isAddressWhitelisted: null,
 };

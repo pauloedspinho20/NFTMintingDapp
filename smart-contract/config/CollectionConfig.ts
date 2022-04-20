@@ -11,27 +11,27 @@ const CollectionConfig: CollectionConfigInterface = {
   // yarn rename-contract NEW_CONTRACT_NAME
   // Please DO NOT change it manually!
   ERC721: {
-    contractName: "SpadeLabsERC721withERC20",
+    contractName: "SpadeLabsERC721",
     tokenName: "SpadeLabs",
     tokenSymbol: "SpadeLabs",
     hiddenMetadataUri:
     "https://ipfs.io/ipfs/QmQxutXRTg3EK14FJrtFdtchcJBPsK39XjErDZvQwGQDei/hidden.json",
-    maxSupply: 1000,
+    maxSupply: 32,
     whitelistSale: {
       price: 0.01,
       maxMintAmountPerTx: 1,
     },
     preSale: {
-      price: 0.03,
+      price: 0.02,
       maxMintAmountPerTx: 3,
     },
     publicSale: {
       price: 0.03,
       maxMintAmountPerTx: 5,
     },
-    maxMintAmountPerWallet: 3,
-    contractAddress: '',
-    marketplaceIdentifier: "my-nft-token",
+    maxMintAmountPerWallet: 5,
+    contractAddress: '0xD4FdbB625b0219b74eB6544F116D90a6780FFE10',
+    marketplaceIdentifier: "spadelabs-v2",
     whitelistAddresses: whitelistAddresses,
   },
   ERC721withERC20: {

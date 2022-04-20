@@ -159,7 +159,7 @@ const MintCanvas = () => {
             onClick={ onClick }
           />
           <Button
-            theme="blue"
+            theme="yellow"
             size="s"
             disabled={
               operation

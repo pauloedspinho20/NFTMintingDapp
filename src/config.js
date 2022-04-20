@@ -10,7 +10,7 @@ export const metamaskLink = 'https://metamask.io/download.html';
 export const trustWalletLink = 'https://trustwallet.com/';
 
 export const pageMeta = {
-  description: 'TEMPLATE FOR ERC721 NFT MINTING DAPPS',
+  description: 'DEPLOY ANY NFT COLLECTION',
   image: '/media/share-img.jpg',
   title: process.env.NEXT_PUBLIC_DAPP_NAME || 'NFTMintingDapp',
 };

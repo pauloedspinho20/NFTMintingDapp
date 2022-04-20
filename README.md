@@ -1,57 +1,75 @@
-# NFTMintingDapp
+# SPADE LABS MINTING DAPP
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Next.js app.
 
-## TODO
+## Requirements
 
-- ERC1155 contract with:
-  -- Multiple token burn for new nft mint
-  -- Upload to IPFS on mint
-  -- How to solve contract ipfs base url?
-  -- NFT Staking?
-- WalletConnect and Trust Wallet integration
-- Add Cypress and Github Actions
-- Smart contract owner auto mint on deploy
-- Max tokens per address?
-- Bepro main branch or Moralis provider
-- Google Tag Manager
-- Roadmap
-- KPI section with values from smart contract and OpenSea
-- Landing page
-- About page with gitdocs
-- Add IPFS deployer to project?
+- Node.js >= 16.2.0 or use NVM (`nvm use 16.2.0`)
+- yarn
 
-## Infrastructure config
+## Smart Contract Deployment
 
-- Create a Gmail email for project accounts on all services
-- Buy crypto domain https://unstoppabledomains.com/auth
-- Create Moralis Test and Production Apps https://admin.moralis.io/
-- Create Web3.Storage account and API Token https://web3.storage/account/
-- Clone NFT Frontend Dapp
+cd smart-contract
 
-## Project config:
+# On Rinkeby Testnet
 
-- Run `yarn` on project root, art_engine and hardhat directories
-- Create .env
-- Change HTML metadata
-- Deactivate or remove all unused pages and components
-- Style the template layout
-- Choose only the wanted networks on `src/helpers/networks.js`
-  - If .env environment is 'development' or 'staging' use Network switcher with wanted mainet and testnet;
-  - If .env environment is 'production' don't use network switcher and set to mainnet;
+- Create a .env file on 'smart-contract' folder. Copy the contents of .env.example to the new file.
+- Place your private key on NETWORK_TESTNET_URL and NETWORK_MAINNET_PRIVATE_KEY variables on .env (Keep this file safe)
+- Check the values smart-contract/config/CollectionConfig.ts on 'ERC721' key (line 13 to 36)
+- Run `yarn compile`
+- Run `yarn deploy --network rinkeby`
+- Copy the deployed contract address to:
+- - smart-contract/config/CollectionConfig.ts on 'contractAddress' of 'ERC721' key (line 33)
+- - NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS_RINKEBY variable on .env file of the project root (only if you will run the website locally)
+- Run `yarn verify-erc721 CONTRACTADDRESS --network rinkeby`
+- Check the whitelist addresses array on src/whitelist.json)
+- `yarn whitelist-open --network rinkeby`
+- Place the contract address on OpenSea to get the collection page. The URL must be something like this https://opensea.io/collection/pyes-wild-one. Copy the last part (pyes-wild-one) and place on smart-contract/config/CollectionConfig.ts on 'marketplaceIdentifier' of 'ERC721' key (line 34) AND on NEXT_PUBLIC_ERC721_OPENSEA_URL variable of .env file on project root.
 
-## Art Engine (Layers) config:
+If everything is ok, deploy the contract on mainnet
 
-- Need homebrew to run the following script: `brew install pkg-config cairo pango libpng jpeg giflib librsvg`
+# On Ethereum Mainnet
 
-## Smart Contract deployment
+- Run `yarn deploy --network ethereum`
+- Copy the deployed contract address to:
+- - smart-contract/config/CollectionConfig.ts on 'contractAddress' of 'ERC721' key (line 33)
+- - NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS_RINKEBY variable on .env file of the project root (only if you will run the website locally)
+- Run `yarn verify-erc721 CONTRACTADDRESS --network ethereum`
+- Check the whitelist addresses array on src/whitelist.json)
+- `yarn whitelist-open --network ethereum`
+- Place the contract address on OpenSea to get the collection page. The URL must be something like this https://opensea.io/collection/pyes-wild-one. Copy the last part (pyes-wild-one) and place on smart-contract/config/CollectionConfig.ts on 'marketplaceIdentifier' of 'ERC721' key (line 34) AND on NEXT_PUBLIC_ERC721_OPENSEA_URL variable of .env file on project root.
 
-## Test and App deployment:
+APP DEPLOYMENT
 
-- Test all blockchain interactions
-- Deploy app to IPFS via provider (Moralis or Fleek)
-  - Create staging environment
-  - Create production environment
+Build command: yarn && yarn build && yarn export
+Publish Directory: out
+
+You only need to deploy the 'out' folder on the server.
+Check this .env variables and change the smart contract addresses, and OpenSea URL
+
+Staging .env
+NEXT_PUBLIC_DAPP_NAME=Spade Labs Minting Dapp
+NEXT_PUBLIC_ERC721_COLLECTION_ENABLED=true
+NEXT_PUBLIC_ENVIRONMENT=development
+NEXT_PUBLIC_IPFS_URL=https://ipfs.io/ipfs
+NEXT_PUBLIC_RPC_ETHEREUM=https://mainnet.infura.io/v3/bbff2a52aa094c41b1fe7819ccaa7a2c
+NEXT_PUBLIC_RPC_RINKEBY=https://rinkeby.infura.io/v3/bbff2a52aa094c41b1fe7819ccaa7a2c
+NEXT_PUBLIC_CONTRACT_TYPE=ERC721
+NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS_RINKEBY= TESTNET ADDRESS
+NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS_ETHEREUM= MAINNET ADDRESS
+NEXT_PUBLIC_ERC721_OPENSEA_URL=spade-labs-minting-dapp
+
+Production .env
+NEXT_PUBLIC_DAPP_NAME=Spade Labs Minting Dapp
+NEXT_PUBLIC_ERC721_COLLECTION_ENABLED=true
+NEXT_PUBLIC_ENVIRONMENT=production
+NEXT_PUBLIC_IPFS_URL=https://ipfs.io/ipfs
+NEXT_PUBLIC_RPC_ETHEREUM=https://mainnet.infura.io/v3/bbff2a52aa094c41b1fe7819ccaa7a2c
+NEXT_PUBLIC_RPC_RINKEBY=https://rinkeby.infura.io/v3/bbff2a52aa094c41b1fe7819ccaa7a2c
+NEXT_PUBLIC_CONTRACT_TYPE=ERC721
+NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS_RINKEBY= TESTNET ADDRESS
+NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS_ETHEREUM= MAINNET ADDRESS
+NEXT_PUBLIC_ERC721_OPENSEA_URL=spade-labs-minting-dapp
 
 ## Available Scripts
 

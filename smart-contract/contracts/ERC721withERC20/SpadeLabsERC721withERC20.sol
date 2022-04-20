@@ -26,15 +26,18 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-contract SpadeLabsERC721withERC20 is ERC721A, Ownable, ReentrancyGuard {
+contract SpadeLabsERC721withERC20withERC20 is
+    ERC721A,
+    Ownable,
+    ReentrancyGuard
+{
     using Strings for uint256;
     ERC20 public erc20Token;
 
     bytes32 public merkleRoot;
     mapping(address => bool) public whitelistClaimed;
 
-    string public uriPrefix =
-        "https://ipfs.io/ipfs/Qmd77PEq4byzwpAXgsY4AxoEPuvNJH5sS4ECbtCLT5fMR2/";
+    string public uriPrefix = "";
     string public uriSuffix = ".json";
     string public hiddenMetadataUri;
 
@@ -47,7 +50,7 @@ contract SpadeLabsERC721withERC20 is ERC721A, Ownable, ReentrancyGuard {
     bool public paused = true;
     bool public whitelistMintEnabled = false;
     bool public erc20Enabled = false;
-    bool public revealed = true;
+    bool public revealed = false;
 
     constructor(
         string memory _tokenName,
@@ -105,11 +108,6 @@ contract SpadeLabsERC721withERC20 is ERC721A, Ownable, ReentrancyGuard {
         if (erc20Enabled) {
             require(erc20Token.balanceOf(_msgSender()) >= erc20Minimum);
         }
-
-        require(
-            walletOfOwner(_msgSender()).length <= maxMintAmountPerWallet,
-            "Max NFTs per wallet"
-        );
 
         whitelistClaimed[_msgSender()] = true;
         _safeMint(_msgSender(), _mintAmount);

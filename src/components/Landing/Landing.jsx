@@ -1,5 +1,5 @@
 import { string } from 'prop-types';
-import Countdown from 'components/Countdown/Countdown';
+import Button from 'components/Button/Button';
 import Image from 'components/Image';
 import PageContainer from 'components/Page/Container';
 import heroImage from './assets/13.gif';
@@ -9,12 +9,21 @@ const Landing = ({ name }) => (
     <PageContainer>
       <div className="hero">
         <div className="row">
-          <div className="col-md-8 home-hero--col-1">
+          <div className="col-md-4 home-hero--col-2 order-md-2">
+            { !!heroImage?.src && (
+            <div className="home-hero--img-wrapper">
+              <Image className="vert-move" src={ heroImage?.src } alt={ name } />
+            </div>
+            ) }
+          </div>
+          <div className="col-md-8 home-hero--col-1 order-md-1">
             <h1 className="home-hero--title">
               <span className="hero-title--line hero-title--line-2">{ name }</span>
             </h1>
             <p className="home-hero--desc">
-              <li><strong>Dapp for NFT collections</strong></li>
+              <strong>
+                Dapp for NFT Collections
+              </strong>
             </p>
             <ul>
               <li>
@@ -32,6 +41,9 @@ const Landing = ({ name }) => (
                 integrations
               </li>
               <li>
+                <b>Max 3 NFTs per transaction</b>
+              </li>
+              <li>
                 <b>ERC721 or ERC1155</b>
                 { ' ' }
                 Non-Fungible Token Smart Contract
@@ -42,22 +54,23 @@ const Landing = ({ name }) => (
                 with custom token prices
               </li>
               <li>
+                <b>Minimum amount of ERC20 token for mint</b>
+              </li>
+              <li>
                 <b>Ethereum, Polygon, Binance Smart Chain</b>
                 { ' ' }
                 or any other EVM chain
               </li>
             </ul>
-
-            <Countdown />
+            <Button
+              to="/mint"
+              theme="orange"
+              size="m"
+            >
+              Mint now!
+            </Button>
           </div>
-          <div className="col-md-4 home-hero--col-2">
-            { heroImage?.src ? (
-              <Image src={ heroImage?.src } alt={ name } />
-            ) : (
-              <a href="#collection-mint-widget">Mint</a>
-            ) }
 
-          </div>
         </div>
       </div>
     </PageContainer>

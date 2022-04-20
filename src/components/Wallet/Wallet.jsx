@@ -38,7 +38,7 @@ const Wallet = ({ withBalance }) => {
       <div className="wallet-connected-status">
         { address ? (
           <ButtonAddress
-            className="btn btn-block btn--size-xs btn--bg-white btn--fill"
+            className="btn btn-block btn--size-xs btn--bg-yellow btn--fill"
             alt="Connect Wallet"
             format
           >
@@ -48,8 +48,8 @@ const Wallet = ({ withBalance }) => {
           <Button
             className="btn-connect-wallet btn-block"
             onClick={ onClick }
-            size="xs"
-            theme="blue"
+            size="m"
+            theme="orange"
             alt="Connect Wallet"
           >
             Connect Wallet

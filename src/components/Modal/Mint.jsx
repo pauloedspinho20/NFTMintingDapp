@@ -168,15 +168,16 @@ const ModalMint = () => {
             size="m"
             theme="orange"
           >
-            Yes
+            Confirm
           </Button>
         </li>
         <li>
           <Button
             onClick={ confirm.close }
             size="m"
+            theme="yellow"
           >
-            No
+            Cancel
           </Button>
         </li>
       </ul>

@@ -13,6 +13,7 @@ const ButtonMint = ({ amount, contractAddress, ...props }) => {
   const { ethBalance } = useBepro();
 
   const {
+    balanceOf,
     enabled,
     erc20Enabled,
     erc20Minimum,
@@ -23,11 +24,14 @@ const ButtonMint = ({ amount, contractAddress, ...props }) => {
     whitelistMintEnabled,
     isAddressWhitelisted,
     whitelistClaimed,
+    maxMintAmountPerTx,
+    maxMintAmountPerWallet,
     operation,
   } = useContracts(contractAddress);
 
   const onClick = async () => {
     open({
+      balanceOf,
       amount,
       contractAddress,
       cost,
@@ -36,6 +40,8 @@ const ButtonMint = ({ amount, contractAddress, ...props }) => {
       isAddressWhitelisted,
       whitelistMintEnabled,
       whitelistClaimed,
+      maxMintAmountPerTx,
+      maxMintAmountPerWallet,
       operation,
     });
   };
@@ -63,6 +69,7 @@ const ButtonMint = ({ amount, contractAddress, ...props }) => {
         || !enabled
         || (!isAddressWhitelisted && whitelistMintEnabled)
         || (paused && whitelistClaimed)
+        || (balanceOf >= maxMintAmountPerWallet && maxMintAmountPerWallet !== -1)
         || operation
         || ethBalance < (cost * amount)
       }

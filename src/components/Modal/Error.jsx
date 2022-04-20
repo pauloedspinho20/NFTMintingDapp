@@ -98,7 +98,7 @@ const ModalError = () => {
             className="btn-primary"
             onClick={ getAction(first) || clear }
             size="m"
-            theme="blue-gradient"
+            theme="orange"
           >
             { getActionLabel(first) }
           </Button>

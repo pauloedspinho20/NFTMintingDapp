@@ -26,7 +26,8 @@ const NoticeNetwork = () => {
               </small>
             ) : (
               <div className="mt-2">
-                { `Your wallet is on ${networkActive}. Please select ${networkWanted} network on your wallet.` }
+                { networkActive !== 'unknown' && `Your wallet is on ${networkActive}.` }
+                { `Please select ${networkWanted} network on your wallet.` }
               </div>
             ) }
           </Notice>

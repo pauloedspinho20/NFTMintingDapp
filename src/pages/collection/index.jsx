@@ -1,11 +1,11 @@
 import AppWrapper from 'containers/AppWrapper';
-import Wallet from 'components/Wallet/Wallet';
 import InTransaction from 'components/InTransaction/InTransaction';
 import PageContainer from 'components/Page/Container';
 import MintCollection from 'components/Mint/Collection';
 import NoticeNetwork from 'components/Notice/Network';
 
 import useContracts from 'hooks/useContracts';
+import { pageMeta } from 'config';
 
 const Collection = () => {
   const { collection } = useContracts();
@@ -13,9 +13,13 @@ const Collection = () => {
   return (
     <AppWrapper>
       <PageContainer>
-        <div className="row">
-          <h2 className="page-main-title">Collection</h2>
-          <span className="page-main-subtitle">{ collection?.name }</span>
+        <div className="row justify-content-center">
+          <div className="col col-md-8">
+            <h2 className="page-main-title">{ pageMeta.title }</h2>
+            <p className="page-main-subtitle">
+              { pageMeta.description }
+            </p>
+          </div>
         </div>
       </PageContainer>
 
@@ -34,18 +38,15 @@ const Collection = () => {
             ) : (
               <>
                 <div className="row">
-
                   { collection?.balanceOf > 0 ? (
                     <div className="col-12 mb-30">
                       <MintCollection { ...collection } />
                     </div>
                   ) : (
                     <div className="col-12 mb-30 text-center">
-                      <h6 className="mb-4">Connect your wallet to see your collection</h6>
-                      <Wallet />
+                      <h6 className="mb-4">No NFTs minted</h6>
                     </div>
                   ) }
-
                 </div>
               </>
             ) }

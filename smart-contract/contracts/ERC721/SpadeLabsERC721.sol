@@ -30,8 +30,7 @@ contract SpadeLabsERC721 is ERC721A, Ownable, ReentrancyGuard {
     bytes32 public merkleRoot;
     mapping(address => bool) public whitelistClaimed;
 
-    string public uriPrefix =
-        "https://ipfs.io/ipfs/Qmd77PEq4byzwpAXgsY4AxoEPuvNJH5sS4ECbtCLT5fMR2/";
+    string public uriPrefix = "";
     string public uriSuffix = ".json";
     string public hiddenMetadataUri;
 
@@ -42,7 +41,7 @@ contract SpadeLabsERC721 is ERC721A, Ownable, ReentrancyGuard {
 
     bool public paused = true;
     bool public whitelistMintEnabled = false;
-    bool public revealed = true;
+    bool public revealed = false;
 
     constructor(
         string memory _tokenName,
@@ -85,16 +84,11 @@ contract SpadeLabsERC721 is ERC721A, Ownable, ReentrancyGuard {
     {
         // Verify whitelist requirements
         require(whitelistMintEnabled, "The whitelist sale is not enabled!");
-        // require(!whitelistClaimed[_msgSender()], "Address already claimed!");
+        require(!whitelistClaimed[_msgSender()], "Address already claimed!");
         bytes32 leaf = keccak256(abi.encodePacked(_msgSender()));
         require(
             MerkleProof.verify(_merkleProof, merkleRoot, leaf),
             "Invalid proof!"
-        );
-
-        require(
-            balanceOf(_msgSender()) <= maxMintAmountPerWallet,
-            "Max NFTs per wallet"
         );
 
         whitelistClaimed[_msgSender()] = true;

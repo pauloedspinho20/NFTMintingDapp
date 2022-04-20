@@ -39,13 +39,16 @@
   }
 
   a.social-item {
-    @include hide-text();
-
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     display: block;
-    background: 50% 50% no-repeat;
-    opacity: 0.8;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 17px 17px;
+    img {
+      color: $yellow;
+      fill: currentColor;
+    }
 
     &.social-discord { background-image: url('assets/ico-social-discord.svg'); }
     &.social-facebook { background-image: url('assets/ico-social-facebook.svg'); }
@@ -55,6 +58,9 @@
     &.social-twitter { background-image: url('assets/ico-social-twitter.svg'); }
     &.social-youtube { background-image: url('assets/ico-social-youtube.svg'); }
     &.social-medium { background-image: url('assets/ico-social-medium.svg'); }
+    &.social-reddit { background-image: url('assets/ico-social-reddit.svg'); }
+    &.social-twitch { background-image: url('assets/ico-social-twitch.svg'); }
+    &.social-shop { background-image: url('assets/ico-social-shop.svg'); }
 
     &:hover {
       opacity: 1;

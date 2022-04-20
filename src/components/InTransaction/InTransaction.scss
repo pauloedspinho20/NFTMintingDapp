@@ -18,6 +18,7 @@
   animation-timing-function: linear;
   display: initial !important;
   mix-blend-mode: initial !important;
+  filter: invert(1);
 }
 
 @keyframes in-transaction {

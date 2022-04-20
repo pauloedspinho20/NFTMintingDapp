@@ -17,14 +17,19 @@ import cookieConsent from 'utils/cookieConsent';
 
 import { chains } from 'config';
 import whitelistAddresses from 'whitelist.json';
-// import getOpenSea from 'utils/getOpenSea';
 import Numbers from './utils/Numbers';
 
-// ABIs
-const erc721ContractV1Abi = require('lib/abis/ERC721ContractV1.json');
+const contractType = process.env.NEXT_PUBLIC_CONTRACT_TYPE || 'ERC721';
+let contractABI;
+
+if (contractType === 'ERC721withERC20') {
+  contractABI = require('lib/abis/ERC721withERC20ContractV1.json');
+}
+else {
+  contractABI = require('lib/abis/ERC721ContractV1.json');
+}
 
 const env = process.env.NEXT_PUBLIC_ENVIRONMENT;
-const contractType = process.env.NEXT_PUBLIC_ERC721_CONTRACT_TYPE || 'ERC721';
 const resolve = {};
 
 let bepro = null;
@@ -162,7 +167,7 @@ const getERC721Contract = async contractAddress => {
     const web3 = await getWeb3();
 
     if (web3) {
-      const jsonInterface = erc721ContractV1Abi;
+      const jsonInterface = contractABI;
 
       const contract = new web3.eth.Contract(
         jsonInterface,
@@ -267,12 +272,9 @@ const getCollection = async () => {
   const web3 = await getWeb3();
 
   if (web3) {
-    /* const openSea = getOpenSea();
-    console.log(openSea); */
     const address = await getAddress();
     const contractAddress = getContractAddress();
     const nftContract = await getERC721Contract(contractAddress);
-    // const merkleRoot = await nftContract?.methods.merkleRoot().call();
     const enabled = process.env.NEXT_PUBLIC_ERC721_COLLECTION_ENABLED === 'true';
     const approved = address ? await nftContract?.methods.isApprovedForAll(address, contractAddress).call() : false;
     const name = await nftContract?.methods.name().call();
@@ -296,9 +298,10 @@ const getCollection = async () => {
     const erc20Name = contractType === 'ERC721withERC20' ? await nftContract?.methods.erc20Name().call() : null;
     const erc20Symbol = contractType === 'ERC721withERC20' ? await nftContract?.methods.erc20Symbol().call() : null;
     const erc20Enabled = contractType === 'ERC721withERC20' ? await nftContract?.methods.erc20Enabled().call() : false;
-    const erc20Minimum = contractType === 'ERC721withERC20' ? await nftContract?.methods.erc20Minimum().call() : 0;
+    const erc20Minimum = contractType === 'ERC721withERC20' ? Number(Numbers.fromDecimals(await nftContract?.methods.erc20Minimum().call(), 18)) : 0;
     const erc20Token = contractType === 'ERC721withERC20' ? await nftContract?.methods.erc20Token().call() : null;
-    const erc20Balance = contractType === 'ERC721withERC20' ? await nftContract?.methods.erc20Balance().call() : null;
+    const erc20Balance = contractType === 'ERC721withERC20' && !!address ? Number(Numbers.fromDecimals(await nftContract?.methods.erc20Balance(address).call(), 18)) : null;
+    const maxMintAmountPerWallet = Number(await nftContract?.methods.maxMintAmountPerWallet().call());
 
     if (userTokensIds.length > 0 && address) {
       await Promise.all(userTokensIds.map(async tokenId => {
@@ -342,6 +345,7 @@ const getCollection = async () => {
       maxSupply,
       totalSupply,
       maxMintAmountPerTx,
+      maxMintAmountPerWallet,
       uriPrefix,
       uriSuffix,
       hiddenMetadataUri,

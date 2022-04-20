@@ -4,14 +4,14 @@ header#main-header {
   left: 0;
   top: 36px;
   z-index: 100;
-  transition: background 0.3s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform;
   transform: translate3d(0, 0, 0) !important;
 
   @include breakpoint(until-landscape) {
     position: fixed;
     top: 0 !important;
-    background: rgba($black, 0.95);
+    background: $purple;
     box-shadow: 0 2px 9px 0 rgba($black, 0.08);
     padding-top: 10px;
     padding-bottom: 10px;
@@ -25,20 +25,38 @@ header#main-header {
 
   .main-logo {
     position: relative;
-    width: 300px;
+    padding: 10px 0;
+    width: 80px;
     height: auto;
     display: block;
     float: left;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     color: $purple;
 
+    &.logo-text {
+      width: 300px;
+      color: $yellow;
+
+      .logo {
+        font-size: 32px;
+      }
+
+      @include breakpoint(until-desktop) {
+        width: 200px;
+        padding: 0;
+
+        .logo {
+          font-size: 26px;
+        }
+      }
+    }
     @include breakpoint(until-desktop) {
-      width: 220px;
+      width: 70px;
     }
 
     @include breakpoint(until-landscape) {
       margin-bottom: -10px;
-      width: 180px;
+      width: 60px;
     }
 
     a {
@@ -52,10 +70,7 @@ header#main-header {
       width: 100%;
       height: auto;
       display: block;
-
-      @include breakpoint(landscape) {
-        margin-bottom: -10px;
-      }
+      cursor: pointer;
     }
 
     .logo-img-dark {
@@ -92,6 +107,8 @@ header#main-header {
   #main-nav {
     @include clearfix();
 
+    display: flex;
+    align-items: center;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 
     @include breakpoint(until-desktop) {
@@ -106,7 +123,7 @@ header#main-header {
       @include clearfix();
 
       margin-right: 2rem;
-      margin-top: 3px;
+     /*  margin-top: 3px; */
       float: left;
     }
 
@@ -122,12 +139,12 @@ header#main-header {
 
     a.nav-item,
     span.nav-item {
-      font-size: 0.875rem;
+      font-size: 16px;
       line-height: 1em;
-      font-weight: 500;
+      font-weight: 600;
       letter-spacing: 0.02em;
       text-transform: uppercase;
-      color: $orange;
+      color: $white;
       position: relative;
       transition: all 0.2s;
       cursor: pointer;
@@ -201,15 +218,10 @@ header#main-header {
           margin-right: 15px;
         }
       }
-
-      > a.nav-item {
-        top: 5px;
-      }
     }
 
     a.nav-item--current_page {
       color: $orange;
-      // font-weight: 500;
       position: relative;
 
       &::before {
@@ -325,7 +337,7 @@ header#main-header {
     left: 0;
     padding-top: 20px;
     padding-bottom: 20px;
-    background: rgba($black, 0.95);
+    background: rgba($purple, 0.99);
     box-shadow: 0 2px 9px 0 rgba($black, 0.08);
     border-bottom: 1px solid rgba($white, 0.2);
     transform: translateY(-120%);
@@ -415,19 +427,7 @@ header#main-header {
       z-index: 100;
       background: $purple;
       box-shadow: 0 2px 9px 0 rgba($black, 0.08);
-/*       padding-top: 15px;
-      padding-bottom: 15px; */
       border-bottom: 1px solid rgba($white, 0.2);
-
-      .main-logo {
-        width: 200px;
-
-        .beta-badge {
-          transform: scale(0.6);
-          margin-left: 10px;
-          top: 6px;
-        }
-      }
 
       #main-nav {
         top: 0;
@@ -438,8 +438,6 @@ header#main-header {
         .btn-connect-wallet {
           position: relative;
           top: 0;
-          padding: 12px 15px 10px;
-          font-size: 0.6875rem;
         }
       }
     }

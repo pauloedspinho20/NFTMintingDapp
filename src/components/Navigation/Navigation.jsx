@@ -34,11 +34,9 @@ const Navigation = () => {
       <PageContainer>
         <div className="row">
           <div className="col d-inline-flex justify-content-between s align-items-center">
-            <h1 className="main-logo">
-              <Link to="/">
-                <Logo />
-              </Link>
-            </h1>
+            <Link to="/">
+              <Logo />
+            </Link>
             <nav id="main-nav">
               <ul>
                 <NavigationItems />
