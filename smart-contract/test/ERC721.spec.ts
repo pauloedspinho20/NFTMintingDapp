@@ -4,17 +4,17 @@ import { BigNumber, utils } from "ethers";
 import { ethers } from "hardhat";
 import { MerkleTree } from "merkletreejs";
 import keccak256 from "keccak256";
-import CollectionConfig from "./../config/CollectionConfig";
-import ContractArguments from "../config/ContractArguments";
+import CollectionConfig from "../config/CollectionConfig";
+import ERC721ContractArguments from "../config/ERC721ContractArguments";
 import { NftContractType } from "../lib/NftContractProvider";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 
 chai.use(ChaiAsPromised);
 
 enum SaleType {
-  WHITELIST = CollectionConfig.whitelistSale.price,
-  PRE_SALE = CollectionConfig.preSale.price,
-  PUBLIC_SALE = CollectionConfig.publicSale.price,
+  WHITELIST = CollectionConfig.ERC721.whitelistSale.price,
+  PRE_SALE = CollectionConfig.ERC721.preSale.price,
+  PUBLIC_SALE = CollectionConfig.ERC721.publicSale.price,
 }
 
 const whitelistAddresses = [
@@ -42,7 +42,7 @@ function getPrice(saleType: SaleType, mintAmount: number) {
   return utils.parseEther(saleType.toString()).mul(mintAmount);
 }
 
-describe(CollectionConfig.contractName, function () {
+describe(CollectionConfig.ERC721.contractName, function () {
   let owner!: SignerWithAddress;
   let whitelistedUser!: SignerWithAddress;
   let holder!: SignerWithAddress;
@@ -55,23 +55,23 @@ describe(CollectionConfig.contractName, function () {
 
   it("Contract deployment", async function () {
     const Contract = await ethers.getContractFactory(
-      CollectionConfig.contractName
+      CollectionConfig.ERC721.contractName
     );
-    contract = (await Contract.deploy(...ContractArguments)) as NftContractType;
+    contract = (await Contract.deploy(...ERC721ContractArguments)) as NftContractType;
 
     await contract.deployed();
   });
 
   it("Check initial data", async function () {
-    expect(await contract.name()).to.equal(CollectionConfig.tokenName);
-    expect(await contract.symbol()).to.equal(CollectionConfig.tokenSymbol);
+    expect(await contract.name()).to.equal(CollectionConfig.ERC721.tokenName);
+    expect(await contract.symbol()).to.equal(CollectionConfig.ERC721.tokenSymbol);
     expect(await contract.cost()).to.equal(getPrice(SaleType.WHITELIST, 1));
-    expect(await contract.maxSupply()).to.equal(CollectionConfig.maxSupply);
+    expect(await contract.maxSupply()).to.equal(CollectionConfig.ERC721.maxSupply);
     expect(await contract.maxMintAmountPerTx()).to.equal(
-      CollectionConfig.whitelistSale.maxMintAmountPerTx
+      CollectionConfig.ERC721.whitelistSale.maxMintAmountPerTx
     );
     expect(await contract.hiddenMetadataUri()).to.equal(
-      CollectionConfig.hiddenMetadataUri
+      CollectionConfig.ERC721.hiddenMetadataUri
     );
 
     expect(await contract.paused()).to.equal(true);
@@ -229,7 +229,7 @@ describe(CollectionConfig.contractName, function () {
     // Pause whitelist sale
     await contract.setWhitelistMintEnabled(false);
     await contract.setCost(
-      utils.parseEther(CollectionConfig.preSale.price.toString())
+      utils.parseEther(CollectionConfig.ERC721.preSale.price.toString())
     );
 
     // Check balances
@@ -245,7 +245,7 @@ describe(CollectionConfig.contractName, function () {
 
   it("Pre-sale (same as public sale)", async function () {
     await contract.setMaxMintAmountPerTx(
-      CollectionConfig.preSale.maxMintAmountPerTx
+      CollectionConfig.ERC721.preSale.maxMintAmountPerTx
     );
     await contract.setPaused(false);
     await contract
@@ -287,7 +287,7 @@ describe(CollectionConfig.contractName, function () {
     // Pause pre-sale
     await contract.setPaused(true);
     await contract.setCost(
-      utils.parseEther(CollectionConfig.publicSale.price.toString())
+      utils.parseEther(CollectionConfig.ERC721.publicSale.price.toString())
     );
   });
 
@@ -357,10 +357,10 @@ describe(CollectionConfig.contractName, function () {
     const alreadyMinted = 6;
     const maxMintAmountPerTx = 1000;
     const iterations = Math.floor(
-      (CollectionConfig.maxSupply - alreadyMinted) / maxMintAmountPerTx
+      (CollectionConfig.ERC721.maxSupply - alreadyMinted) / maxMintAmountPerTx
     );
     const expectedTotalSupply = iterations * maxMintAmountPerTx + alreadyMinted;
-    const lastMintAmount = CollectionConfig.maxSupply - expectedTotalSupply;
+    const lastMintAmount = CollectionConfig.ERC721.maxSupply - expectedTotalSupply;
     expect(await contract.totalSupply()).to.equal(alreadyMinted);
 
     await contract.setPaused(false);
@@ -396,7 +396,7 @@ describe(CollectionConfig.contractName, function () {
     const expectedWalletOfOwner = [BigNumber.from(1)];
     for (const i of [...Array(lastMintAmount).keys()].reverse()) {
       expectedWalletOfOwner.push(
-        BigNumber.from(CollectionConfig.maxSupply - i)
+        BigNumber.from(CollectionConfig.ERC721.maxSupply - i)
       );
     }
     expect(
@@ -413,7 +413,7 @@ describe(CollectionConfig.contractName, function () {
         .mint(1, { value: getPrice(SaleType.PUBLIC_SALE, 1) })
     ).to.be.revertedWith("Max supply exceeded!");
 
-    expect(await contract.totalSupply()).to.equal(CollectionConfig.maxSupply);
+    expect(await contract.totalSupply()).to.equal(CollectionConfig.ERC721.maxSupply);
   });
 
   it("Token URI generation", async function () {
@@ -422,7 +422,7 @@ describe(CollectionConfig.contractName, function () {
     const totalSupply = await contract.totalSupply();
 
     expect(await contract.tokenURI(1)).to.equal(
-      CollectionConfig.hiddenMetadataUri
+      CollectionConfig.ERC721.hiddenMetadataUri
     );
 
     // Reveal collection

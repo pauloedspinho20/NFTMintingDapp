@@ -6,7 +6,7 @@ import useBepro from 'hooks/useBepro';
 import useContracts, { updateContracts } from 'hooks/useContracts';
 import useModal from 'hooks/useModal';
 
-const ButtonApprove = ({ contractAddress }) => {
+const ButtonApprove = ({ contractAddress, ...props }) => {
   const { approveContract } = useBepro();
   const { operation, setOperation } = useContracts();
   const follow = useModal('confirm-transaction');
@@ -35,10 +35,11 @@ const ButtonApprove = ({ contractAddress }) => {
       size="m"
       disabled={ operation === 'approve' }
       onClick={ onClick }
-      theme="blue"
+      theme="yellow"
       title="Approve contract"
+      { ...props }
     >
-      { operation ? 'Approving...' : 'Approve contract' }
+      { operation ? 'Approving...' : 'Approve' }
     </Button>
   );
 };

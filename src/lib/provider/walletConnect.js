@@ -6,11 +6,11 @@ const connect = async web3Connection => {
   // Create WalletConnect Provider
   provider = new WalletConnectProvider({
     rpc: {
-      56: web3Connection,
+      1: web3Connection,
     },
-    chainId: 56,
+    chainId: 1,
   });
-  provider.networkId = 56;
+  provider.networkId = 1;
 
   try {
     //  Enable session (triggers QR Code modal)

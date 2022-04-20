@@ -154,7 +154,9 @@ const ModalMint = () => {
                 whitelistMint,
               ).then(request => {
                 follow.close();
-                show.open({ title: 'NFT Minted', transactionHash: request.transactionHash });
+                if (request) {
+                  show.open({ title: 'NFT Minted', transactionHash: request.transactionHash });
+                }
               })) {
                 // If operation succeeds, this variable will be set when fetching new pool data
                 setOperation('');
@@ -166,15 +168,16 @@ const ModalMint = () => {
             size="m"
             theme="orange"
           >
-            Yes
+            Confirm
           </Button>
         </li>
         <li>
           <Button
             onClick={ confirm.close }
             size="m"
+            theme="yellow"
           >
-            No
+            Cancel
           </Button>
         </li>
       </ul>

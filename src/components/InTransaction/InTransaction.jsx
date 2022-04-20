@@ -1,8 +1,6 @@
 import { forwardRef } from 'react';
 import { string } from 'prop-types';
 import Image from 'components/Image';
-// import absoluteUrl from 'utils/absoluteUrl';
-// import loading from './assets/loading.svg';
 
 const InTransaction = forwardRef(({ label }, ref) => (
   <div

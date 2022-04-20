@@ -9,16 +9,48 @@ interface SaleConfig {
 export default interface CollectionConfigInterface {
   testnet: NetworkConfigInterface;
   mainnet: NetworkConfigInterface;
-  contractName: string;
-  tokenName: string;
-  tokenSymbol: string;
-  hiddenMetadataUri: string;
-  maxSupply: number;
-  whitelistSale: SaleConfig;
-  preSale: SaleConfig;
-  publicSale: SaleConfig;
-  contractAddress: string | null;
-  whitelistAddresses: string[];
-  marketplaceIdentifier: string;
   marketplaceConfig: MarketplaceConfigInterface;
+  ERC721: {
+    contractName: string;
+    tokenName: string;
+    tokenSymbol: string;
+    hiddenMetadataUri: string;
+    maxSupply: number;
+    whitelistSale: SaleConfig;
+    preSale: SaleConfig;
+    publicSale: SaleConfig;
+    contractAddress: string | null;
+    whitelistAddresses: string[];
+    maxMintAmountPerWallet: number;
+    marketplaceIdentifier: string;
+  };
+  ERC721withERC20: {
+    contractName: string;
+    tokenName: string;
+    tokenSymbol: string;
+    hiddenMetadataUri: string;
+    maxSupply: number;
+    whitelistSale: SaleConfig;
+    preSale: SaleConfig;
+    publicSale: SaleConfig;
+    contractAddress: string | null;
+    whitelistAddresses: string[];
+    maxMintAmountPerWallet: number;
+    marketplaceIdentifier: string;
+    erc20: string;
+    erc20MinimumValue: number;
+  };
+  ERC1155: {
+    contractName: string;
+    tokenName: string;
+    tokenSymbol: string;
+    hiddenMetadataUri: string;
+    maxSupply: number;
+    whitelistSale: SaleConfig;
+    preSale: SaleConfig;
+    publicSale: SaleConfig;
+    contractAddress: string | null;
+    whitelistAddresses: string[];
+    marketplaceIdentifier: string;
+  }
 }

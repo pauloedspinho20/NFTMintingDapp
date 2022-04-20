@@ -5,22 +5,22 @@
   text-transform: uppercase;
   letter-spacing: 0.02em;
   display: inline-block;
-  color: $orange;
+  color: $yellow;
   position: relative;
-  // top: 3px;
   overflow: hidden;
+  margin-left: 10px;
 
   @include breakpoint(until-landscape) {
-    margin-top: -10px;
+    margin-left: 0px;
+    margin-top: 15px;
   }
 }
 
 .wallet-balance {
   padding: 4px 10px 2px;
-  color: $purple;
+  margin-right: 15px;
 }
 
 .wallet-connected-status {
-  width: 180px;
-  margin-left: 10px;
+  min-width: 180px;
 }

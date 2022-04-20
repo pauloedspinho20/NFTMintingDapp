@@ -5,25 +5,30 @@ import MintWidget from 'components/Mint/Widget';
 import MintCollection from 'components/Mint/Collection';
 import NoticeNetwork from 'components/Notice/Network';
 import Landing from 'components/Landing/Landing';
+
 import useContracts from 'hooks/useContracts';
+import { pageMeta } from 'config';
 
 const Home = () => {
   const { collection } = useContracts();
 
   return (
-
     <AppWrapper>
-      <Landing name={ collection?.name || 'NFT Dapp' } />
+      <Landing name={ pageMeta.title } />
 
       <div className="content">
         <PageContainer>
-          <div className="row">
-            <h2 className="page-main-title">{ process.env.NEXT_PUBLIC_DAPP_NAME || 'NFTMintingDapp' }</h2>
-            <span className="page-main-subtitle">Template for ERC721 NFT minting Dapps</span>
+          <div className="row justify-content-center">
+            <div className="col col-md-8">
+              <h2 className="page-main-title">{ pageMeta.title }</h2>
+              <p className="page-main-subtitle">
+                { pageMeta.description }
+              </p>
+            </div>
           </div>
         </PageContainer>
 
-        <div className="minting-wrapper">
+        <div id="home-minting-wrapper" className="minting-wrapper">
           <section className="minting--section">
             <PageContainer>
 
@@ -37,8 +42,8 @@ const Home = () => {
                 </div>
               ) : (
                 <>
-                  <div className="row mb-5">
-                    <div className="col-12 col-md-6 mb-5">
+                  <div id="collection-mint-widget" className="row mb-5">
+                    <div className="col-12 col-lg-6 mb-5">
                       <MintWidget { ...collection } />
                     </div>
                   </div>

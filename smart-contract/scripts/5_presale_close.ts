@@ -3,7 +3,7 @@ import NftContractProvider from '../lib/NftContractProvider';
 async function main() {
   // Attach to deployed contract
   const contract = await NftContractProvider.getContract();
-  
+
   // Pause the contract (if needed)
   if (!await contract.paused()) {
     console.log('Pausing the contract...');

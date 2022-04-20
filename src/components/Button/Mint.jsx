@@ -8,24 +8,30 @@ import useContracts from 'hooks/useContracts';
 
 import useBepro from 'hooks/useBepro';
 
-const ButtonMint = ({ amount, contractAddress }) => {
+const ButtonMint = ({ amount, contractAddress, ...props }) => {
   const { open } = useModal('mint');
   const { ethBalance } = useBepro();
 
   const {
-    approved,
+    balanceOf,
     enabled,
+    erc20Enabled,
+    erc20Minimum,
+    erc20Balance,
     paused,
     cost,
     symbol,
     whitelistMintEnabled,
     isAddressWhitelisted,
     whitelistClaimed,
+    maxMintAmountPerTx,
+    maxMintAmountPerWallet,
     operation,
   } = useContracts(contractAddress);
 
   const onClick = async () => {
     open({
+      balanceOf,
       amount,
       contractAddress,
       cost,
@@ -34,6 +40,8 @@ const ButtonMint = ({ amount, contractAddress }) => {
       isAddressWhitelisted,
       whitelistMintEnabled,
       whitelistClaimed,
+      maxMintAmountPerTx,
+      maxMintAmountPerWallet,
       operation,
     });
   };
@@ -57,16 +65,18 @@ const ButtonMint = ({ amount, contractAddress }) => {
       className="btn--size-min-150 btn-mint"
       disabled={
         (paused && !whitelistMintEnabled)
-        || !approved
+        || (erc20Enabled && erc20Balance < erc20Minimum)
         || !enabled
         || (!isAddressWhitelisted && whitelistMintEnabled)
         || (paused && whitelistClaimed)
+        || (balanceOf >= maxMintAmountPerWallet && maxMintAmountPerWallet !== -1)
         || operation
         || ethBalance < (cost * amount)
       }
       onClick={ onClick }
       size="m"
       theme="orange"
+      { ...props }
     >
       { label }
     </Button>

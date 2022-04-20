@@ -1,5 +1,22 @@
 // SPDX-License-Identifier: MIT
 
+/*
+ ::::::::  :::::::::     :::     :::::::::  :::::::::: :::            :::     :::::::::   ::::::::
+:+:    :+: :+:    :+:  :+: :+:   :+:    :+: :+:        :+:          :+: :+:   :+:    :+: :+:    :+:
++:+        +:+    +:+ +:+   +:+  +:+    +:+ +:+        +:+         +:+   +:+  +:+    +:+ +:+
++#++:++#++ +#++:++#+ +#++:++#++: +#+    +:+ +#++:++#   +#+        +#++:++#++: +#++:++#+  +#++:++#++
+       +#+ +#+       +#+     +#+ +#+    +#+ +#+        +#+        +#+     +#+ +#+    +#+        +#+
+#+#    #+# #+#       #+#     #+# #+#    #+# #+#        #+#        #+#     #+# #+#    #+# #+#    #+#
+ ########  ###       ###     ### #########  ########## ########## ###     ### #########   ########
+:::::::::: :::::::::   ::::::::  :::::::::::  ::::::::    :::
+:+:        :+:    :+: :+:    :+: :+:     :+: :+:    :+: :+:+:
++:+        +:+    +:+ +:+               +:+        +:+    +:+
++#++:++#   +#++:++#:  +#+              +#+       +#+      +#+
++#+        +#+    +#+ +#+             +#+      +#+        +#+
+#+#        #+#    #+# #+#    #+#     #+#      #+#         #+#
+########## ###    ###  ########      ###     ########## #######
+*/
+
 pragma solidity >=0.8.9 <0.9.0;
 
 import "erc721a/contracts/ERC721A.sol";
@@ -7,7 +24,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-contract RandomEyes is ERC721A, Ownable, ReentrancyGuard {
+contract SpadeLabsERC721 is ERC721A, Ownable, ReentrancyGuard {
     using Strings for uint256;
 
     bytes32 public merkleRoot;
@@ -20,6 +37,7 @@ contract RandomEyes is ERC721A, Ownable, ReentrancyGuard {
     uint256 public cost;
     uint256 public maxSupply;
     uint256 public maxMintAmountPerTx;
+    uint256 public maxMintAmountPerWallet;
 
     bool public paused = true;
     bool public whitelistMintEnabled = false;
@@ -31,11 +49,13 @@ contract RandomEyes is ERC721A, Ownable, ReentrancyGuard {
         uint256 _cost,
         uint256 _maxSupply,
         uint256 _maxMintAmountPerTx,
+        uint256 _maxMintAmountPerWallet,
         string memory _hiddenMetadataUri
     ) ERC721A(_tokenName, _tokenSymbol) {
         cost = _cost;
         maxSupply = _maxSupply;
         maxMintAmountPerTx = _maxMintAmountPerTx;
+        maxMintAmountPerWallet = _maxMintAmountPerWallet;
         setHiddenMetadataUri(_hiddenMetadataUri);
     }
 
@@ -82,6 +102,11 @@ contract RandomEyes is ERC721A, Ownable, ReentrancyGuard {
         mintPriceCompliance(_mintAmount)
     {
         require(!paused, "The contract is paused!");
+
+        require(
+            balanceOf(_msgSender()) <= maxMintAmountPerWallet,
+            "Max NFTs per wallet"
+        );
 
         _safeMint(_msgSender(), _mintAmount);
     }
@@ -174,6 +199,13 @@ contract RandomEyes is ERC721A, Ownable, ReentrancyGuard {
         maxMintAmountPerTx = _maxMintAmountPerTx;
     }
 
+    function setMaxMintAmountPerWallet(uint256 _maxMintAmountPerWallet)
+        public
+        onlyOwner
+    {
+        maxMintAmountPerWallet = _maxMintAmountPerWallet;
+    }
+
     function setHiddenMetadataUri(string memory _hiddenMetadataUri)
         public
         onlyOwner
@@ -202,12 +234,6 @@ contract RandomEyes is ERC721A, Ownable, ReentrancyGuard {
     }
 
     function withdraw() public onlyOwner nonReentrant {
-        // This will pay 5% of the initial sale.
-        // =============================================================================
-        (bool hs, ) = payable(0x41077189D7E8f90680824d384D0DA501b3e7f33b).call{
-            value: (address(this).balance * 5) / 100
-        }("");
-        require(hs);
         // =============================================================================
 
         // This will transfer the remaining contract balance to the owner.

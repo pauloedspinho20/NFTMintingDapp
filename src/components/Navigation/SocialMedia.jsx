@@ -12,7 +12,7 @@ const NavigationSocialMedia = () => (
             target="_blank"
             title={ item.label }
           >
-            { item.label }
+            <svg src={ `/media/ico-social-${item.logo}.svg` } alt={ item.label } />
           </a>
         </li>
       )) }

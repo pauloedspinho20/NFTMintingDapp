@@ -1,3 +1,4 @@
+import { Web3Connection } from '@taikai/dappkit';
 import { MerkleTree } from 'merkletreejs';
 import keccak256 from 'keccak256';
 
@@ -16,14 +17,19 @@ import cookieConsent from 'utils/cookieConsent';
 
 import { chains } from 'config';
 import whitelistAddresses from 'whitelist.json';
-// import getOpenSea from 'utils/getOpenSea';
 import Numbers from './utils/Numbers';
 
-// ABIs
-const erc721ContractV1Abi = require('lib/abis/ERC721ContractV1.json');
+const contractType = process.env.NEXT_PUBLIC_CONTRACT_TYPE || 'ERC721';
+let contractABI;
+
+if (contractType === 'ERC721withERC20') {
+  contractABI = require('lib/abis/ERC721withERC20ContractV1.json');
+}
+else {
+  contractABI = require('lib/abis/ERC721ContractV1.json');
+}
 
 const env = process.env.NEXT_PUBLIC_ENVIRONMENT;
-
 const resolve = {};
 
 let bepro = null;
@@ -70,8 +76,9 @@ const eeBepro = new EventEmitter();
 // multi-chain...
 eeBepro.on('paramsChanged', async () => {
   const app = await bepro;
-  if (app && app.opt.provider) {
-    app.start(app.opt.provider);
+  if (app && app.options.provider) {
+    await app.start();
+    await app.connect();
   }
 });
 
@@ -111,7 +118,7 @@ const getNetworkNameFromId = networkId => {
 
 const getCurrentNetwork = async () => {
   const app = await bepro;
-  const web3 = await app?.getWeb3();
+  const web3 = await app?.Web3;
   if (web3) {
     const networkId = await web3?.eth?.net?.getId(); // TODO: test with walletconnect
     return getNetworkNameFromId(networkId);
@@ -138,9 +145,8 @@ const getWeb3 = async () => {
   // Only return bepro's instance of web3 if it's connected to the network that we want
   if (await isConnected()) {
     const app = await bepro;
-    return app.web3;
+    return app?.Web3;
   }
-
   const { web3Connection } = await params;
   if (web3Connection) {
     if (web3Connection.toLowerCase().includes('http')) {
@@ -161,7 +167,7 @@ const getERC721Contract = async contractAddress => {
     const web3 = await getWeb3();
 
     if (web3) {
-      const jsonInterface = erc721ContractV1Abi;
+      const jsonInterface = contractABI;
 
       const contract = new web3.eth.Contract(
         jsonInterface,
@@ -239,8 +245,8 @@ const approveContract = async contractAddress => {
 */
 const getContractAddress = () => (
   env === 'production'
-    ? process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_ETHEREUM
-    : process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_RINKEBY
+    ? process.env.NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS_ETHEREUM
+    : process.env.NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS_RINKEBY
 );
 
 const getMerkleTree = merkleTree => {
@@ -255,12 +261,10 @@ const getMerkleTree = merkleTree => {
 
 const getProofForAddress = address => getMerkleTree().getHexProof(keccak256(address));
 
-/* const getRawProofForAddress = address =>
- getProofForAddress(address).toString().replaceAll('\'', '').replaceAll(' ', ''); */
-
 const whitelistContains = async address => (
   getMerkleTree().getLeafIndex(Buffer.from(keccak256(address))) >= 0
 );
+
 /*
 * GET COLLECTION
 */
@@ -268,13 +272,10 @@ const getCollection = async () => {
   const web3 = await getWeb3();
 
   if (web3) {
-    /* const openSea = getOpenSea();
-    console.log(openSea); */
     const address = await getAddress();
     const contractAddress = getContractAddress();
     const nftContract = await getERC721Contract(contractAddress);
-    // const merkleRoot = await nftContract?.methods.merkleRoot().call();
-    const enabled = process.env.NEXT_PUBLIC_COLLECTION_ENABLED === 'true';
+    const enabled = process.env.NEXT_PUBLIC_ERC721_COLLECTION_ENABLED === 'true';
     const approved = address ? await nftContract?.methods.isApprovedForAll(address, contractAddress).call() : false;
     const name = await nftContract?.methods.name().call();
     const paused = await nftContract?.methods.paused().call();
@@ -293,6 +294,14 @@ const getCollection = async () => {
     const isAddressWhitelisted = address && await whitelistContains(address);
     const userTokensIds = address ? await nftContract?.methods.walletOfOwner(address).call() : false;
     const userTokens = [];
+
+    const erc20Name = contractType === 'ERC721withERC20' ? await nftContract?.methods.erc20Name().call() : null;
+    const erc20Symbol = contractType === 'ERC721withERC20' ? await nftContract?.methods.erc20Symbol().call() : null;
+    const erc20Enabled = contractType === 'ERC721withERC20' ? await nftContract?.methods.erc20Enabled().call() : false;
+    const erc20Minimum = contractType === 'ERC721withERC20' ? Number(Numbers.fromDecimals(await nftContract?.methods.erc20Minimum().call(), 18)) : 0;
+    const erc20Token = contractType === 'ERC721withERC20' ? await nftContract?.methods.erc20Token().call() : null;
+    const erc20Balance = contractType === 'ERC721withERC20' && !!address ? Number(Numbers.fromDecimals(await nftContract?.methods.erc20Balance(address).call(), 18)) : null;
+    const maxMintAmountPerWallet = Number(await nftContract?.methods.maxMintAmountPerWallet().call());
 
     if (userTokensIds.length > 0 && address) {
       await Promise.all(userTokensIds.map(async tokenId => {
@@ -336,6 +345,7 @@ const getCollection = async () => {
       maxSupply,
       totalSupply,
       maxMintAmountPerTx,
+      maxMintAmountPerWallet,
       uriPrefix,
       uriSuffix,
       hiddenMetadataUri,
@@ -343,10 +353,15 @@ const getCollection = async () => {
       whitelistClaimed,
       isAddressWhitelisted,
       userTokens,
+      erc20Name,
+      erc20Symbol,
+      erc20Enabled,
+      erc20Minimum,
+      erc20Token,
+      erc20Balance,
     };
 
     if (collection) {
-      console.log('collection', collection);
       return collection;
     }
   }
@@ -612,16 +627,12 @@ const libBepro = {
       console.error(ex);
     }
     if (provider) {
-      const { Application } = await import('bepro-js');
+      const appParams = { web3Host: web3Connection };
 
-      const appParams = { opt: { provider, web3Connection } };
-      /*   if (/kovan/.test(web3Connection)) {
-        appParams.opt.privateKey = '0x1234567890123456789012345678901234567890123456789012345678901234';
-        // bogus key just so bepro doesn't freak out
-        appParams.test = true;
-      } */
+      const app = new Web3Connection(appParams);
+      await app?.start();
+      await app?.connect();
 
-      const app = new Application(appParams);
       if (app) {
         // Internal reference to the wallet provider currently active.
         web3Provider = walletProvider;
@@ -654,8 +665,8 @@ const libBepro = {
         web3Provider.on('message', (...args) => {
           eeBepro.emit('message', ...args);
         });
-        web3Provider.on('networkChanged', (...args) => {
-          eeBepro.emit('networkChanged', ...args);
+        web3Provider.on('chainChanged', (...args) => {
+          eeBepro.emit('chainChanged', ...args);
         });
 
         // bepro is initialized, fulfill any waiting promises.
@@ -691,10 +702,10 @@ const libBepro = {
     eeBepro.emit('disconnect');
   },
 
-  getETHBalance: async () => {
+  getBalance: async () => {
     const app = await bepro;
-    const amount = await app?.getETHBalance();
-    return amount ? parseFloat(amount) : 0;
+    const amount = await app?.getBalance();
+    return amount ? Number(Numbers.fromDecimals(amount, 18)) : 0;
   },
 
   off: (event, handler) => {

@@ -9,15 +9,17 @@ import logo from './assets/logo.png';
 const Logo = ({ className }) => {
   const img = false;
   return (
-    img ? (
-      <Image
-        alt="logo"
-        className={ classnames('logo', className) }
-        src={ logo }
-      />
-    ) : (
-      <h4 className={ classnames('logo', className) }>{ process.env.NEXT_PUBLIC_DAPP_NAME || 'NFTMintingDapp' }</h4>
-    )
+    <h1 className={ classnames('main-logo', { 'logo-text': !img }) }>
+      { img ? (
+        <Image
+          alt="logo"
+          className={ classnames('logo', className) }
+          src={ logo?.src }
+        />
+      ) : (
+        <div className={ classnames('logo', className) }>SPADE LABS</div>
+      ) }
+    </h1>
   );
 };
 

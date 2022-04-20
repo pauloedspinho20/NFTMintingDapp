@@ -1,17 +1,28 @@
-.section--home-hero{
-  height: 98vh;
-  background: $gradient_yellow;
+.section--home-hero {
+  min-height: 92vh;
+  padding-top: 150px;
+  background-color: $purple;
+  color: $color-text;
   box-shadow: 0 3px 11px 3px rgba($purple, 0.1);
   position: relative;
   z-index: 10;
-  padding-top: 250px;
-  padding-bottom: 400px;
   background-size: 100% 100%;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 80%);
+  display: flex;
+  align-items: center;
 
+  ul {
+    margin-left: 20px;
+
+    li {
+      list-style:initial;
+      font-size: 18px;
+      line-height: 20px;
+      margin-bottom: 12px;
+    }
+  }
   @include breakpoint(until-landscape) {
-    padding-top: 100px;
-    padding-bottom: 260px;
+    min-height: initial;
+    padding-top: 50px;
 
     .col-md-6 {
       flex: 0 0 100%;
@@ -19,7 +30,11 @@
     }
 
     .home-hero--col-1 {
-      margin-bottom: 180px;
+      margin-bottom: 100px;
+    }
+    .home-hero--col-2 {
+      display: flex;
+      align-items: center;
     }
 
     .home-hero--img.home-hero--img-4 {
@@ -35,9 +50,9 @@
 
   .home-hero--title {
     margin-top: 30px;
-    font-size: 4.3rem;
+    font-size: 80px;
+    font-weight: 900;
     line-height: 0.9em;
-    // text-shadow: 0 10px 20px rgba(29, 53, 117, 0.6), 0 10px 20px rgba(29, 53, 117, 0.6);
 
     @include breakpoint(until-landscape) {
       font-size: 4rem;
@@ -62,30 +77,20 @@
   }
 
   .home-hero--desc {
+    text-transform: uppercase;
     max-width: 520px;
-    font-size: 1.25rem;
+    font-size: 30px;
     line-height: 1.25em;
     margin-top: 15px;
+    color: $yellow;
 
     @include breakpoint(until-portrait) {
-      font-size: 1.15rem;
-    }
-    ul {
-
-    margin-left: 20px;
-
-      li {
-        list-style:initial;
-        font-size: 1rem;
-      }
+      font-size: 20px;
     }
   }
 
   .btn {
-    padding-top: 26px;
-    padding-bottom: 26px;
-    margin-top: 10px;
-    box-shadow: 0 25px 50px rgba(29, 53, 117, 0.5);
+    margin-top: 30px;
 
     @include breakpoint(until-portrait) {
       width: 100%;
@@ -93,21 +98,19 @@
   }
 
   .home-hero--img-wrapper {
-
-    width: 130%;
     position: relative;
-    top: -80px;
-    pointer-events: none;
+    display: flex;
+    justify-content: center;
 
-    @include breakpoint(until-landscape) {
-      width: 100%;
-      left: -10%;
+    img {
+      width: 80%;
     }
 
     @include breakpoint(until-portrait) {
-      width: 130%;
-      left: -14%;
-      top: -120px;
+      margin-bottom: 30px;
+      img {
+        width: 60%;
+      }
     }
   }
 
@@ -116,30 +119,6 @@
     display: block;
     position: relative;
     z-index: 10;
-  }
-
-  .home-hero--img-2,
-  .home-hero--img-3,
-  .home-hero--img-4 {
-    width: 100%;
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 20;
-  }
-
-  .home-hero--img-3 {
-    z-index: 30;
-    mix-blend-mode: lighten;
-  }
-
-  .home-hero--img-4 {
-    z-index: 40;
-
-    @include breakpoint(until-portrait) {
-      top: -10%;
-    }
   }
 
   .btn-get-involved {

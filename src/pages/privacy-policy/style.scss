@@ -1,127 +1,134 @@
-.container--legal-body {
-  h3 {
-    font-size: 1.5rem;
-    line-height: 1.2em;
-    color: $yellow;
-    display: block;
-    margin-top: 60px;
-    margin-bottom: 20px;
-  }
+.pg-privacy-policy {
+  #main-content {
+    padding-top: 200px;
+    padding-bottom: 100px;
 
-  h4 {
-    font-size: 1.15rem;
-    line-height: 1.2em;
-    color: $white;
-    display: block;
-    margin-bottom: 8px;
-  }
-
-  h5 {
-    font-size: 1rem;
-    line-height: 1.2em;
-    color: $white;
-    display: block;
-    margin-bottom: 8px;
-    letter-spacing: 0.02em;
-  }
-
-  p {
-    line-height: 1.45em;
-    margin-bottom: 25px;
-  }
-
-  a {
-    color: $yellow;
-    text-decoration: underline;
-
-    &:hover {
-      color: darken($yellow, 10%);
-      text-decoration: none;
-    }
-  }
-
-  ul {
-    margin-left: 10px;
-
-    li {
-      position: relative;
-      margin-bottom: 15px;
-      padding-left: 25px;
-
-      &::before {
-        content: '';
-        width: 15px;
-        height: 15px;
-        border-radius: 15px;
-        position: absolute;
-        top: 0;
-        left: 0;
-        transform: translate(0, 0);
-        background: url('../../scss/media/ico-check.svg') 50% 50% no-repeat;
-        background-size: 15px auto;
+    .container--legal-body {
+      h3 {
+        font-size: 1.5rem;
+        line-height: 1.2em;
+        color: $yellow;
+        display: block;
+        margin-top: 60px;
+        margin-bottom: 20px;
       }
-    }
-  }
 
-  ol {
-    margin-left: 10px;
+      h4 {
+        font-size: 1.15rem;
+        line-height: 1.2em;
+        color: $white;
+        display: block;
+        margin-bottom: 8px;
+      }
 
-    li {
-      margin-bottom: 15px;
-      counter-increment: line-number;
-      position: relative;
-      padding-left: 32px;
+      h5 {
+        font-size: 1rem;
+        line-height: 1.2em;
+        color: $white;
+        display: block;
+        margin-bottom: 8px;
+        letter-spacing: 0.02em;
+      }
 
-      &::before {
-        width: 25px;
-        height: 25px;
-        background: $white;
-        border-radius: 15px;
-        text-align: center;
-        font-size: 0.8rem;
-        line-height: 27px;
-        font-weight: 500;
-        color: $blue;
-        content: counter(line-number);
-        position: absolute;
-        top: 0;
-        left: 0;
-        transform: translate(0, -5px);
+      p {
+        line-height: 1.45em;
+        margin-bottom: 25px;
+      }
+
+      a {
+        color: $yellow;
+        text-decoration: underline;
+
+        &:hover {
+          color: darken($yellow, 10%);
+          text-decoration: none;
+        }
+      }
+
+      ul {
+        margin-left: 10px;
+
+        li {
+          position: relative;
+          margin-bottom: 15px;
+          padding-left: 25px;
+
+          &::before {
+            content: '';
+            width: 15px;
+            height: 15px;
+            border-radius: 15px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translate(0, 0);
+            background: url('../../scss/media/ico-check.svg') 50% 50% no-repeat;
+            background-size: 15px auto;
+          }
+        }
       }
 
       ol {
-        padding-top: 20px;
-      }
+        margin-left: 10px;
 
-      li {
-        text-transform: none;
-        margin-bottom: 17px;
-        counter-increment: line-number-sub;
+        li {
+          margin-bottom: 15px;
+          counter-increment: line-number;
+          position: relative;
+          padding-left: 32px;
 
-        &::before {
-          content: counter(line-number) '.'counter(line-number-sub);
+          &::before {
+            width: 25px;
+            height: 25px;
+            background: $white;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 0.8rem;
+            line-height: 27px;
+            font-weight: 500;
+            color: $blue;
+            content: counter(line-number);
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translate(0, -5px);
+          }
+
+          ol {
+            padding-top: 20px;
+          }
+
+          li {
+            text-transform: none;
+            margin-bottom: 17px;
+            counter-increment: line-number-sub;
+
+            &::before {
+              content: counter(line-number) '.'counter(line-number-sub);
+            }
+          }
+        }
+
+        // stylelint-disable-next-line no-descending-specificity
+        a {
+          color: $white;
+          text-decoration: none;
+          &:hover { color: $yellow; }
         }
       }
+
+      table,
+      table td {
+        border: 1px solid rgba($white, 0.3);
+        padding: 10px;
+        margin: 30px auto 50px;
+      }
+
+      table thead td {
+        font-weight: 500;
+        color: $white;
+        text-transform: uppercase;
+      }
     }
-
-    // stylelint-disable-next-line no-descending-specificity
-    a {
-      color: $white;
-      text-decoration: none;
-      &:hover { color: $yellow; }
-    }
-  }
-
-  table,
-  table td {
-    border: 1px solid rgba($white, 0.3);
-    padding: 10px;
-    margin: 30px auto 50px;
-  }
-
-  table thead td {
-    font-weight: 500;
-    color: $white;
-    text-transform: uppercase;
   }
 }

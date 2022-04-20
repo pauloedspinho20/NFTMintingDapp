@@ -15,7 +15,7 @@ const ModalConfirmTransaction = () => {
     >
       <div className="popup--title">{ title }</div>
       <div className="popup--desc">
-        Transation pending on your wallet.
+        Transaction pending on your wallet.
         <br />
         Can take some time confirm.
       </div>

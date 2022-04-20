@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import Button from 'components/Button/Button';
+import ButtonApprove from 'components/Button/Approve';
 import Modal from 'components/Modal/Modal';
 
 import useBepro from 'hooks/useBepro';
@@ -19,6 +20,7 @@ const ModalTransferNFT = () => {
   const { setOperation } = useContracts();
 
   const {
+    approved,
     title,
     tokenId,
     name,
@@ -48,64 +50,81 @@ const ModalTransferNFT = () => {
   return (
     <Modal name="transfer-nft">
       <div className="popup--title">{ `Transfer ${name} #${tokenId}` }</div>
-      <div className="popup--desc">
-        Place the address for your NFT transfer.
-      </div>
-      <div className="transfer-address-wrapper">
-        <input
-          id="transfer-to-address"
-          name="transfer-to-address"
-          type="text"
-          className="form-control mb-3"
-          value={ toAddress }
-          onChange={ async e => validateAddress(e.target.value) }
-        />
 
-        { !isValidAddress
-          ? (<div className="mb-3 red">{ message }</div>)
-          : (<div className="mb-3 green">{ message }</div>) }
+      { !approved && contractAddress ? (
+        <div className="popup--desc mb-5">
+          You must approve first
+        </div>
+      ) : (
+        <>
+          <div className="popup--desc mb-3">
+            Recipient address
+          </div>
+          <div className="transfer-address-wrapper">
+            <input
+              id="transfer-to-address"
+              name="transfer-to-address"
+              type="text"
+              placeholder="0xWF829Rs..35"
+              className="form-control mb-4"
+              value={ toAddress }
+              onChange={ async e => validateAddress(e.target.value) }
+            />
 
-      </div>
+            { !isValidAddress
+              ? (<div className="mb-3 red">{ message }</div>)
+              : (<div className="mb-3 green">{ message }</div>) }
+          </div>
+        </>
+      ) }
 
       <ul className="popup--actions">
         <li>
-          <Button
-            className="btn-primary"
-            onClick={ async () => {
-              confirm.close();
-              setToAddress();
-              setOperation('transfer-nft');
+          { !approved && contractAddress ? (
+            <ButtonApprove
+              contractAddress={ contractAddress }
+              theme="orange"
+            />
+          ) : (
+            <Button
+              className="btn-primary"
+              onClick={ async () => {
+                confirm.close();
+                setToAddress();
+                setOperation('transfer-nft');
 
-              follow.open({ title });
+                follow.open({ title });
 
-              if (!await safeTransferFrom(
-                toAddress, // to
-                tokenId, // tokenId
-                contractAddress,
-              ).then(request => {
+                if (!await safeTransferFrom(
+                  toAddress, // to
+                  tokenId, // tokenId
+                  contractAddress,
+                ).then(request => {
+                  follow.close();
+                  show.open({ title: `${name} #${tokenId} Transferred`, transactionHash: request?.transactionHash });
+                })) {
+                  // If operation succeeds, this variable will be set when fetching new pool data
+                  setOperation('');
+                }
+
                 follow.close();
-                show.open({ title: `${name} #${tokenId} Transferred`, transactionHash: request?.transactionHash });
-              })) {
-                // If operation succeeds, this variable will be set when fetching new pool data
-                setOperation('');
-              }
-
-              follow.close();
-              updateContracts();
-            } }
-            disabled={ !isValidAddress }
-            size="m"
-            theme="orange"
-          >
-            Yes
-          </Button>
+                updateContracts();
+              } }
+              disabled={ !isValidAddress }
+              size="m"
+              theme="orange"
+            >
+              Yes
+            </Button>
+          ) }
         </li>
         <li>
           <Button
             onClick={ confirm.close }
             size="m"
+            theme="yellow"
           >
-            No
+            Cancel
           </Button>
         </li>
       </ul>

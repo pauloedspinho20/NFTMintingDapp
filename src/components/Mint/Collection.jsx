@@ -11,6 +11,7 @@ import useModal from 'hooks/useModal';
 import useBepro from 'hooks/useBepro';
 
 const MintCollection = ({
+  approved,
   balanceOf,
   contractAddress,
   name,
@@ -26,15 +27,16 @@ const MintCollection = ({
   } = useBepro();
   const { open } = useModal('transfer-nft');
 
-  const envOpenSea = process.env.NEXT_PUBLIC_OPENSEA_URL;
+  // const envOpenSea = process.env.NEXT_PUBLIC_ERC721_OPENSEA_URL;
   const baseOpenseaItemUrl = (
-    (networkActive === 'rinkeby' && envOpenSea !== '')
+    (networkActive === 'rinkeby')
       ? `https://testnets.opensea.io/assets/${contractAddress}/`
       : `https://opensea.io/assets/${contractAddress}/`
   );
 
   const onClick = async tokenId => {
     open({
+      approved,
       tokenId,
       name,
       contractAddress,
@@ -47,11 +49,9 @@ const MintCollection = ({
       <>
         <div className="minting-container--title">
           <div className="minting-container--title-txt">
-            <h4 className="mb-3">
-              My Collection of
-              { ' ' }
-              { name }
-            </h4>
+            <h3 className="mb-3">
+              My Collection
+            </h3>
 
             { contractAddress && (
               <CollectionButtons className="mb-4" contractAddress={ contractAddress } />
@@ -112,7 +112,7 @@ const MintCollection = ({
                         <Button
                           to={ baseOpenseaItemUrl + token?.tokenId }
                           target="_blank"
-                          theme="white"
+                          theme="orange"
                           size="xs"
                           external
                         >
@@ -126,7 +126,7 @@ const MintCollection = ({
                         size="xs"
                         external
                       >
-                        Tranfer
+                        Transfer
                       </Button>
                     </div>
 
@@ -143,6 +143,7 @@ const MintCollection = ({
 };
 
 MintCollection.propTypes = {
+  approved: bool,
   balanceOf: number,
   name: string,
   contractAddress: string,
@@ -161,6 +162,7 @@ MintCollection.propTypes = {
 };
 
 MintCollection.defaultProps = {
+  approved: null,
   balanceOf: null,
   name: string,
   contractAddress: null,

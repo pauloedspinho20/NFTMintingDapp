@@ -33,7 +33,7 @@ var metadataList = [];
 var hiddenMetadataList = {
   name: `${namePrefix}`,
   description: description,
-  image: `${hiddenBaseUri}/hidden.png`,
+  image: `${hiddenBaseUri}/hidden.jpg`,
 };
 
 var attributesList = [];
@@ -124,15 +124,15 @@ const layersSetup = (layersOrder) => {
 
 const saveImage = (_editionCount) => {
   fs.writeFileSync(
-    `${buildDir}/images/${_editionCount}.png`,
-    canvas.toBuffer("image/png")
+    `${buildDir}/images/${_editionCount}.jpg`,
+    canvas.toBuffer("image/jpg")
   );
 };
 
 const saveHiddenImage = () => {
   fs.writeFileSync(
-    `${buildDir}/hidden_image/hidden.png`,
-    canvas.toBuffer("image/png")
+    `${buildDir}/hidden_image/hidden.jpg`,
+    canvas.toBuffer("image/jpg")
   );
 };
 
@@ -156,7 +156,7 @@ const addMetadata = (_dna, _edition) => {
     tempMetadata = {
       name: `${namePrefix} #${_edition}`,
       description: description,
-      image: `${baseUri}/${_edition}.png`,
+      image: `${baseUri}/${_edition}.jpg`,
       animation_url: `${animationBaseUri}/${_edition}.gif`,
       dna: sha1(_dna),
       edition: _edition,
@@ -169,7 +169,7 @@ const addMetadata = (_dna, _edition) => {
     tempMetadata = {
       name: `${namePrefix} #${_edition}`,
       description: description,
-      image: `${baseUri}/${_edition}.png`,
+      image: `${baseUri}/${_edition}.jpg`,
       dna: sha1(_dna),
       edition: _edition,
       date: dateTime,
@@ -187,7 +187,7 @@ const addMetadata = (_dna, _edition) => {
       description: tempMetadata.description,
       //Added metadata for solana
       seller_fee_basis_points: solanaMetadata.seller_fee_basis_points,
-      image: `${_edition}.png`,
+      image: `${_edition}.jpg`,
       //Added metadata for solana
       external_url: solanaMetadata.external_url,
       edition: _edition,
@@ -196,8 +196,8 @@ const addMetadata = (_dna, _edition) => {
       properties: {
         files: [
           {
-            uri: `${_edition}.png`,
-            type: "image/png",
+            uri: `${_edition}.jpg`,
+            type: "image/jpg",
           },
         ],
         category: "image",

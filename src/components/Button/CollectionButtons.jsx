@@ -8,7 +8,7 @@ const CollectionButtons = ({ contractAddress, ...props }) => {
   } = useBepro();
 
   const ethercanUrl = (networkWanted === 'rinkeby') ? `https://rinkeby.etherscan.io/address/${contractAddress}` : `https://etherscan.io/address/${contractAddress}`;
-  const envOpenSea = process.env.NEXT_PUBLIC_OPENSEA_URL;
+  const envOpenSea = process.env.NEXT_PUBLIC_ERC721_OPENSEA_URL;
   let openSeaUrl;
 
   if (envOpenSea !== '') {
@@ -23,7 +23,7 @@ const CollectionButtons = ({ contractAddress, ...props }) => {
           className="me-2 mb-4"
           to={ openSeaUrl }
           target="_blank"
-          theme="white"
+          theme="yellow"
           size="xxs"
           external
         >
@@ -34,11 +34,11 @@ const CollectionButtons = ({ contractAddress, ...props }) => {
       <Button
         to={ ethercanUrl }
         target="_blank"
-        theme="white"
+        theme="yellow"
         size="xxs"
         external
       >
-        View on Ethersacan
+        View on Etherscan
       </Button>
     </div>
 

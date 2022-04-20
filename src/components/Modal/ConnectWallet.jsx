@@ -64,7 +64,7 @@ const ModalConnectWallet = () => {
 
       { !show?.wrongNetwork && (
         <>
-          <div className="popup--title mb-5">Connect your wallet</div>
+          <div className="popup--title mb-5">Connect wallet</div>
 
           <div className="wallet-actions">
             <ul className="popup--actions">
@@ -80,21 +80,21 @@ const ModalConnectWallet = () => {
 
               <li>
                 <ButtonConnectWallet
-                  label="WalletConnect"
-                  theme="walletconnect-gradient"
-                  wallet="walletConnect"
-                >
-                  <IconWalletConnect />
-                </ButtonConnectWallet>
-              </li>
-
-              <li>
-                <ButtonConnectWallet
                   label="Trust Wallet"
                   theme="trustwallet-gradient"
                   wallet="trustWallet"
                 >
                   <IconTrustWallet />
+                </ButtonConnectWallet>
+              </li>
+
+              <li>
+                <ButtonConnectWallet
+                  label="WalletConnect"
+                  theme="walletconnect-gradient"
+                  wallet="walletConnect"
+                >
+                  <IconWalletConnect />
                 </ButtonConnectWallet>
               </li>
             </ul>

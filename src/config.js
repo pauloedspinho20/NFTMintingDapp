@@ -10,7 +10,7 @@ export const metamaskLink = 'https://metamask.io/download.html';
 export const trustWalletLink = 'https://trustwallet.com/';
 
 export const pageMeta = {
-  description: 'TEMPLATE FOR ERC721 NFT MINTING DAPPS',
+  description: 'DEPLOY ANY NFT COLLECTION',
   image: '/media/share-img.jpg',
   title: process.env.NEXT_PUBLIC_DAPP_NAME || 'NFTMintingDapp',
 };
@@ -48,6 +48,13 @@ export const menuLinks = [
     link: '/collection',
   },
 ];
+
+if (process.env.NEXT_PUBLIC_ENVIRONMENT === 'development') {
+  menuLinks.push({
+    label: 'Canvas',
+    link: '/canvas',
+  });
+}
 
 export const cookiesBanner = {
   body: 'Cookie Disclaimer. By navigating this site data will be stored in your browser, in order to enhance your browsing experience.',
